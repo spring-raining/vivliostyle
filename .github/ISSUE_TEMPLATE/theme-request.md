@@ -2,7 +2,7 @@
 name: Theme request
 about: Suggest a template idea
 title: "[Theme request]:"
-labels: enhancement
+labels: theme request
 assignees: ''
 
 ---
