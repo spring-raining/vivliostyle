@@ -1,0 +1,38 @@
+{
+  "name": "vivliostyle-themes",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "lint": "pnpm run lint:prettier && pnpm run lint:eslint",
+    "lint:prettier": "prettier -c . --cache --plugin-search-dir=.",
+    "lint:eslint": "eslint --cache .",
+    "format": "pnpm run format:imports && pnpm run format:prettier",
+    "format:imports": "organize-imports-cli ./www/tsconfig.json",
+    "format:prettier": "prettier -w . --cache --plugin-search-dir=.",
+    "prepare": "husky install"
+  },
+  "packageManager": "pnpm@8.3.1",
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=7"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.59.1",
+    "@typescript-eslint/parser": "^5.59.1",
+    "eslint": "^8.39.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-astro": "^0.26.1",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.2",
+    "organize-imports-cli": "^0.10.0",
+    "prettier": "^2.8.8",
+    "prettier-plugin-astro": "^0.8.0",
+    "turbo": "^1.9.3",
+    "typescript": "~5.0.4"
+  }
+}
