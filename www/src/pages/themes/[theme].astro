@@ -1,0 +1,37 @@
+---
+import { viewerVersion } from '@/const';
+import Layout from '@/layouts/Layout.astro';
+import { themes } from '@/lib/themes';
+
+export interface Props {
+  packageName: string;
+}
+
+export async function getStaticPaths() {
+  return Object.entries(themes).map(([theme, packageName]) => ({
+    params: { theme },
+    props: { packageName },
+  }));
+}
+
+const { theme } = Astro.params;
+const { packageName } = Astro.props;
+
+const contentUrl = new URL(Astro.url.origin);
+contentUrl.pathname = `/themes/source/${theme}/publication.json`;
+const viewerUrl = `https://vivliostyle.github.io/viewer/v${viewerVersion}#src=${contentUrl}`;
+---
+
+<Layout title={packageName}>
+  <main>
+    <h1>{packageName}</h1>
+    <ul>
+      <li>
+        <a href={viewerUrl}>Vivliostyle Viewer</a>
+      </li>
+      <li>
+        <a href={`source/${theme}/example/index.html`}>Raw HTML</a>
+      </li>
+    </ul>
+  </main>
+</Layout>
