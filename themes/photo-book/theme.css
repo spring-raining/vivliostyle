@@ -1,7 +1,94 @@
-@import url(../../@vivliostyle/theme-base/theme-all.css);
-
-@import url(../../@vivliostyle/theme-base/css/lib/prism/base.css);
-@import url(../../@vivliostyle/theme-base/css/lib/prism/theme-okaidia.css);
+@import url(../../@vivliostyle/theme-base/theme-basic.css);
+@import url(../../@vivliostyle/theme-base/css/partial/page.css);
 
 :root {
+  --vs-theme--page-grid-template: repeat(2, 1fr) / repeat(2, 1fr);
+  --vs-theme--facing-pages-grid-template: repeat(2, 1fr) / repeat(4, 1fr);
+  --vs-theme--page-height-on-screen: 100vh;
+}
+
+.grid-page {
+  ---logical-direction-sign-x: 1;
+  ---logical-direction-sign-y: 1;
+  page: grid;
+  page-break-before: always;
+  page-break-after: always;
+  page-break-inside: avoid;
+  display: grid;
+  grid-template: var(--vs-theme--page-grid-template);
+}
+
+.facing-pages {
+  break-before: verso;
+  break-after: verso;
+}
+
+.facing-pages > .grid-page {
+  --vs-theme--page-grid-template: var(--vs-theme--facing-pages-grid-template);
+}
+
+@container style(--vs-writing-mode: vertical-rl) or style(--vs-direction: rtl) {
+  .grid-page {
+    ---logical-direction-sign-x: -1;
+    ---logical-direction-sign-y: 1;
+  }
+}
+
+/*
+ * The .direction-rtl class is provided for environment which doesn't support style container query.
+ */
+:is([dir='rtl'], .direction-rtl) .grid-page,
+.grid-page:is([dir='rtl'], .direction-rtl) {
+  ---logical-direction-sign-x: -1;
+  ---logical-direction-sign-y: 1;
+}
+
+@page grid {
+  margin: 0;
+}
+
+@media print {
+  .grid-page {
+    width: calc(var(---facing-pages-width, 100vw) + var(--vs-page--bleed) * 2);
+    height: calc(100vh + var(--vs-page--bleed) * 2);
+
+    /*
+     * Hacks avoiding page feed of Vivliostyle
+     */
+    margin-block-start: -32768px;
+    margin-inline-start: -32768px;
+    transform: translateX(
+        calc(
+          32768px * var(---logical-direction-sign-x) - var(--vs-page--bleed) *
+            var(---logical-direction-sign-x) +
+            var(---facing-recto-page-transform, 0)
+        )
+      )
+      translateY(
+        calc(
+          32768px * var(---logical-direction-sign-y) - var(--vs-page--bleed) *
+            var(---logical-direction-sign-y)
+        )
+      );
+  }
+
+  .facing-pages > .grid-page {
+    ---facing-pages-width: 200vw;
+  }
+
+  .facing-pages > .grid-page:nth-child(2n) {
+    ---facing-recto-page-transform: calc(
+      -100vw * var(---logical-direction-sign-x)
+    );
+  }
+}
+
+@media screen {
+  .grid-page {
+    height: var(--vs-theme--page-height-on-screen);
+  }
+
+  .facing-pages > .grid-page:not(:first-child) {
+    display: none;
+  }
 }
