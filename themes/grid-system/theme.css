@@ -2,9 +2,30 @@
 @import url(../../@vivliostyle/theme-base/css/partial/page.css);
 
 :root {
-  --vs-theme--page-grid-template: repeat(2, 1fr) / repeat(2, 1fr);
-  --vs-theme--facing-pages-grid-template: repeat(2, 1fr) / repeat(4, 1fr);
+  --vs-page--bleed: 0px; /* don't set 0! */
+  --vs-theme--page-width-on-screen: 100%;
   --vs-theme--page-height-on-screen: 100vh;
+  --vs-theme--page-grid-gap: 0;
+  --vs-theme--page-grid-inner-template-rows: 1fr;
+  --vs-theme--page-grid-inner-template-cols: 1fr;
+  --vs-theme--page-grid-outer-size: calc(10mm + var(--vs-page--bleed));
+  --vs-theme--page-grid-template: [page-outer-start]
+    var(--vs-theme--page-grid-outer-size) [page-inner-start]
+    var(--vs-theme--page-grid-inner-template-rows) [page-inner-end]
+    var(--vs-theme--page-grid-outer-size) [page-outer-end] / [page-outer-start]
+    var(--vs-theme--page-grid-outer-size) [page-inner-start]
+    var(--vs-theme--page-grid-inner-template-cols) [page-inner-end]
+    var(--vs-theme--page-grid-outer-size) [page-outer-end];
+  --vs-theme--facing-pages-gutter-size: var(--vs-theme--page-grid-outer-size);
+  --vs-theme--facing-pages-grid-template: [page-outer-start]
+    var(--vs-theme--page-grid-outer-size) [page-inner-start]
+    var(--vs-theme--page-grid-inner-template-rows) [page-inner-end]
+    var(--vs-theme--page-grid-outer-size) [page-outer-end] / [page-outer-start]
+    var(--vs-theme--page-grid-outer-size) [page-inner-start]
+    var(--vs-theme--page-grid-inner-template-cols)
+    repeat(2, var(--vs-theme--facing-pages-gutter-size))
+    var(--vs-theme--page-grid-inner-template-cols) [page-inner-end]
+    var(--vs-theme--page-grid-outer-size) [page-outer-end];
 }
 
 .grid-page {
@@ -15,7 +36,11 @@
   page-break-after: always;
   page-break-inside: avoid;
   display: grid;
+  gap: var(--vs-theme--page-grid-gap);
   grid-template: var(--vs-theme--page-grid-template);
+}
+.grid-page > * {
+  grid-area: var(--vs-theme--page-grid-area, auto);
 }
 
 .facing-pages {
@@ -84,11 +109,124 @@
 }
 
 @media screen {
+  :root {
+    --vs-theme--facing-pages-gutter-size: 0;
+  }
+
   .grid-page {
+    width: var(--vs-theme--page-width-on-screen);
     height: var(--vs-theme--page-height-on-screen);
+  }
+
+  .facing-pages {
+    overflow-x: auto;
+  }
+
+  .facing-pages > .grid-page {
+    width: calc(var(--vs-theme--page-width-on-screen) * 2);
   }
 
   .facing-pages > .grid-page:not(:first-child) {
     display: none;
   }
+}
+
+/*
+ * Utility classes
+ */
+
+.grid-page-rows-1 {
+  --vs-theme--page-grid-inner-template-rows: repeat(1, 1fr);
+}
+
+.grid-page-rows-2 {
+  --vs-theme--page-grid-inner-template-rows: repeat(2, 1fr);
+}
+
+.grid-page-rows-3 {
+  --vs-theme--page-grid-inner-template-rows: repeat(3, 1fr);
+}
+
+.grid-page-rows-4 {
+  --vs-theme--page-grid-inner-template-rows: repeat(4, 1fr);
+}
+
+.grid-page-rows-5 {
+  --vs-theme--page-grid-inner-template-rows: repeat(5, 1fr);
+}
+
+.grid-page-rows-6 {
+  --vs-theme--page-grid-inner-template-rows: repeat(6, 1fr);
+}
+
+.grid-page-rows-7 {
+  --vs-theme--page-grid-inner-template-rows: repeat(7, 1fr);
+}
+
+.grid-page-rows-8 {
+  --vs-theme--page-grid-inner-template-rows: repeat(8, 1fr);
+}
+
+.grid-page-rows-9 {
+  --vs-theme--page-grid-inner-template-rows: repeat(9, 1fr);
+}
+
+.grid-page-rows-10 {
+  --vs-theme--page-grid-inner-template-rows: repeat(10, 1fr);
+}
+
+.grid-page-rows-11 {
+  --vs-theme--page-grid-inner-template-rows: repeat(11, 1fr);
+}
+
+.grid-page-rows-12 {
+  --vs-theme--page-grid-inner-template-rows: repeat(12, 1fr);
+}
+
+.grid-page-cols-1 {
+  --vs-theme--page-grid-inner-template-cols: repeat(1, 1fr);
+}
+
+.grid-page-cols-2 {
+  --vs-theme--page-grid-inner-template-cols: repeat(2, 1fr);
+}
+
+.grid-page-cols-3 {
+  --vs-theme--page-grid-inner-template-cols: repeat(3, 1fr);
+}
+
+.grid-page-cols-4 {
+  --vs-theme--page-grid-inner-template-cols: repeat(4, 1fr);
+}
+
+.grid-page-cols-5 {
+  --vs-theme--page-grid-inner-template-cols: repeat(5, 1fr);
+}
+
+.grid-page-cols-6 {
+  --vs-theme--page-grid-inner-template-cols: repeat(6, 1fr);
+}
+
+.grid-page-cols-7 {
+  --vs-theme--page-grid-inner-template-cols: repeat(7, 1fr);
+}
+
+.grid-page-cols-8 {
+  --vs-theme--page-grid-inner-template-cols: repeat(8, 1fr);
+}
+
+.grid-page-cols-9 {
+  --vs-theme--page-grid-inner-template-cols: repeat(9, 1fr);
+}
+
+.grid-page-cols-10 {
+  --vs-theme--page-grid-inner-template-cols: repeat(10, 1fr);
+}
+
+.grid-page-cols-11 {
+  --vs-theme--page-grid-inner-template-cols: repeat(11, 1fr);
+}
+
+.grid-page-cols-12 {
+  --vs-theme--page-grid-inner-template-cols: repeat(12, 1fr);
 }

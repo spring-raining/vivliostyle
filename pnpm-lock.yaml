@@ -60,11 +60,27 @@ importers:
         specifier: ^0.3.5
         version: 0.3.5
 
+  themes/photo-book:
+    dependencies:
+      '@spring-raining/vs-theme-grid-system':
+        specifier: workspace:*
+        version: link:../grid-system
+    devDependencies:
+      '@vivliostyle/cli':
+        specifier: ^7.2.5
+        version: 7.2.5
+      vivliostyle-theme-scripts:
+        specifier: ^0.3.5
+        version: 0.3.5
+
   www:
     dependencies:
       '@spring-raining/vs-theme-grid-system':
         specifier: workspace:*
         version: link:../themes/grid-system
+      '@spring-raining/vs-theme-photo-book':
+        specifier: workspace:*
+        version: link:../themes/photo-book
       astro:
         specifier: ^2.3.2
         version: 2.3.2

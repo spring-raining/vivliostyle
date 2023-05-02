@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@spring-raining/vs-theme-grid-system": "workspace:*",
+    "@spring-raining/vs-theme-photo-book": "workspace:*",
     "astro": "^2.3.2"
   },
   "devDependencies": {

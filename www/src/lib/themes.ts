@@ -14,6 +14,7 @@ const require = createRequire(import.meta.url);
 
 export const themes = {
   'grid-system': '@spring-raining/vs-theme-grid-system',
+  'photo-book': '@spring-raining/vs-theme-photo-book',
 } as const;
 
 export const buildThemeExamples = async (
