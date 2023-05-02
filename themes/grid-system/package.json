@@ -1,5 +1,5 @@
 {
-  "name": "@spring-raining/vivliostyle-theme-photo-book",
+  "name": "@spring-raining/vs-theme-grid-system",
   "description": "description",
   "version": "0.1.0",
   "author": "spring-raining <harusamex.com@gmail.com>",
@@ -35,10 +35,10 @@
   "license": "MIT",
   "vivliostyle": {
     "theme": {
-      "name": "Vivliostyle Theme Photo Book",
+      "name": "Grid system",
       "author": "spring-raining <harusamex.com@gmail.com>",
       "style": "./theme.css",
-      "category": "magazine",
+      "category": "misc",
       "topics": []
     }
   }

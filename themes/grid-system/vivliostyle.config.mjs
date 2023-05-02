@@ -1,6 +1,6 @@
 export default {
   language: 'en',
-  theme: ['.'],
+  theme: ['node_modules/@vivliostyle/theme-base', '.'],
   entry: ['example/index.md'],
   workspaceDir: '.vivliostyle',
   size: 'JIS-B5',

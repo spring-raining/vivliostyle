@@ -47,7 +47,7 @@ importers:
         specifier: ~5.0.4
         version: 5.0.4
 
-  themes/photo-book:
+  themes/grid-system:
     dependencies:
       '@vivliostyle/theme-base':
         specifier: beta
@@ -62,9 +62,9 @@ importers:
 
   www:
     dependencies:
-      '@spring-raining/vivliostyle-theme-photo-book':
+      '@spring-raining/vs-theme-grid-system':
         specifier: workspace:*
-        version: link:../themes/photo-book
+        version: link:../themes/grid-system
       astro:
         specifier: ^2.3.2
         version: 2.3.2
@@ -7016,7 +7016,7 @@ packages:
     dev: false
 
   /unpipe@1.0.0:
-    resolution: {integrity: sha1-sr9O6FFKrmFltIF4KdIbLvSZBOw=}
+    resolution: {integrity: sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==}
     engines: {node: '>= 0.8'}
     dev: true
 

@@ -13,7 +13,7 @@ import glob from 'tiny-glob';
 const require = createRequire(import.meta.url);
 
 export const themes = {
-  'photo-book': '@spring-raining/vivliostyle-theme-photo-book',
+  'grid-system': '@spring-raining/vs-theme-grid-system',
 } as const;
 
 export const buildThemeExamples = async (
