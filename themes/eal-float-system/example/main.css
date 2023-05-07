@@ -1,0 +1,38 @@
+:root {
+  --vs-font-family: system-ui, -apple-system, BlinkMacSystemFont;
+  --vs-font-size-on-print: 50%;
+  --vs-spacing-rlh: 0;
+  --vs-page--margin-top: 0px;
+  --vs-page--margin-bottom: 0px;
+  --vs-page--margin-outer: 0px;
+  --vs-page--margin-inner: 0px;
+}
+
+@-epubx-page-template {
+  @import url('../themes/packages/@spring-raining/vs-theme-eal-float-system/eal-float-selectors.css');
+
+  @-epubx-page-master {
+    @-epubx-partition body {
+      -epubx-flow-from: body;
+      -epubx-required: true;
+      top: 10mm;
+      bottom: 10mm;
+      left: 10mm;
+      right: 10mm;
+      writing-mode: horizontal-tb;
+      column-count: 6;
+      column-gap: 4mm;
+    }
+
+    @import url('../themes/packages/@spring-raining/vs-theme-eal-float-system/eal-float-partitions.css');
+  }
+
+  @-epubx-region .float {
+    div {
+      background-color: yellow;
+      border: 1px solid blue;
+      padding: 1rem;
+      position: relative;
+    }
+  }
+}

@@ -1,0 +1,199 @@
+.eal-float-block-start {
+  -epubx-flow-into: float-block-start;
+}
+
+.eal-float-block-end {
+  -epubx-flow-into: float-block-end;
+}
+
+.eal-float-inline-start {
+  -epubx-flow-into: float-inline-start;
+}
+
+.eal-float-inline-end {
+  -epubx-flow-into: float-inline-end;
+}
+
+.eal-float-start-start {
+  -epubx-flow-into: float-start-start;
+}
+
+.eal-float-start-end {
+  -epubx-flow-into: float-start-end;
+}
+
+.eal-float-end-start {
+  -epubx-flow-into: float-end-start;
+}
+
+.eal-float-end-end {
+  -epubx-flow-into: float-end-end;
+}
+
+.eal-float-start-col-1-span-1 {
+  -epubx-flow-into: float-start-col-1-span-1;
+}
+
+.eal-float-start-col-1-span-2 {
+  -epubx-flow-into: float-start-col-1-span-2;
+}
+
+.eal-float-start-col-1-span-3 {
+  -epubx-flow-into: float-start-col-1-span-3;
+}
+
+.eal-float-start-col-1-span-4 {
+  -epubx-flow-into: float-start-col-1-span-4;
+}
+
+.eal-float-start-col-1-span-5 {
+  -epubx-flow-into: float-start-col-1-span-5;
+}
+
+.eal-float-start-col-1-span-6 {
+  -epubx-flow-into: float-start-col-1-span-6;
+}
+
+.eal-float-start-col-2-span-1 {
+  -epubx-flow-into: float-start-col-2-span-1;
+}
+
+.eal-float-start-col-2-span-2 {
+  -epubx-flow-into: float-start-col-2-span-2;
+}
+
+.eal-float-start-col-2-span-3 {
+  -epubx-flow-into: float-start-col-2-span-3;
+}
+
+.eal-float-start-col-2-span-4 {
+  -epubx-flow-into: float-start-col-2-span-4;
+}
+
+.eal-float-start-col-2-span-5 {
+  -epubx-flow-into: float-start-col-2-span-5;
+}
+
+.eal-float-start-col-3-span-1 {
+  -epubx-flow-into: float-start-col-3-span-1;
+}
+
+.eal-float-start-col-3-span-2 {
+  -epubx-flow-into: float-start-col-3-span-2;
+}
+
+.eal-float-start-col-3-span-3 {
+  -epubx-flow-into: float-start-col-3-span-3;
+}
+
+.eal-float-start-col-3-span-4 {
+  -epubx-flow-into: float-start-col-3-span-4;
+}
+
+.eal-float-start-col-4-span-1 {
+  -epubx-flow-into: float-start-col-4-span-1;
+}
+
+.eal-float-start-col-4-span-2 {
+  -epubx-flow-into: float-start-col-4-span-2;
+}
+
+.eal-float-start-col-4-span-3 {
+  -epubx-flow-into: float-start-col-4-span-3;
+}
+
+.eal-float-start-col-5-span-1 {
+  -epubx-flow-into: float-start-col-5-span-1;
+}
+
+.eal-float-start-col-5-span-2 {
+  -epubx-flow-into: float-start-col-5-span-2;
+}
+
+.eal-float-start-col-6-span-1 {
+  -epubx-flow-into: float-start-col-6-span-1;
+}
+
+.eal-float-end-col-1-span-1 {
+  -epubx-flow-into: float-end-col-1-span-1;
+}
+
+.eal-float-end-col-1-span-2 {
+  -epubx-flow-into: float-end-col-1-span-2;
+}
+
+.eal-float-end-col-1-span-3 {
+  -epubx-flow-into: float-end-col-1-span-3;
+}
+
+.eal-float-end-col-1-span-4 {
+  -epubx-flow-into: float-end-col-1-span-4;
+}
+
+.eal-float-end-col-1-span-5 {
+  -epubx-flow-into: float-end-col-1-span-5;
+}
+
+.eal-float-end-col-1-span-6 {
+  -epubx-flow-into: float-end-col-1-span-6;
+}
+
+.eal-float-end-col-2-span-1 {
+  -epubx-flow-into: float-end-col-2-span-1;
+}
+
+.eal-float-end-col-2-span-2 {
+  -epubx-flow-into: float-end-col-2-span-2;
+}
+
+.eal-float-end-col-2-span-3 {
+  -epubx-flow-into: float-end-col-2-span-3;
+}
+
+.eal-float-end-col-2-span-4 {
+  -epubx-flow-into: float-end-col-2-span-4;
+}
+
+.eal-float-end-col-2-span-5 {
+  -epubx-flow-into: float-end-col-2-span-5;
+}
+
+.eal-float-end-col-3-span-1 {
+  -epubx-flow-into: float-end-col-3-span-1;
+}
+
+.eal-float-end-col-3-span-2 {
+  -epubx-flow-into: float-end-col-3-span-2;
+}
+
+.eal-float-end-col-3-span-3 {
+  -epubx-flow-into: float-end-col-3-span-3;
+}
+
+.eal-float-end-col-3-span-4 {
+  -epubx-flow-into: float-end-col-3-span-4;
+}
+
+.eal-float-end-col-4-span-1 {
+  -epubx-flow-into: float-end-col-4-span-1;
+}
+
+.eal-float-end-col-4-span-2 {
+  -epubx-flow-into: float-end-col-4-span-2;
+}
+
+.eal-float-end-col-4-span-3 {
+  -epubx-flow-into: float-end-col-4-span-3;
+}
+
+.eal-float-end-col-5-span-1 {
+  -epubx-flow-into: float-end-col-5-span-1;
+}
+
+.eal-float-end-col-5-span-2 {
+  -epubx-flow-into: float-end-col-5-span-2;
+}
+
+.eal-float-end-col-6-span-1 {
+  -epubx-flow-into: float-end-col-6-span-1;
+}

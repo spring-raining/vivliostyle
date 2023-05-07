@@ -1,0 +1,42 @@
+@import url(./css/basic.css);
+@import url(./css/eal.css);
+
+.break-before-page-h {
+  break-before: page;
+}
+
+:root {
+  --vs-columns: 12rem;
+  --vs-column-fill: auto;
+  --vs-column-gap: 6mm;
+  --vs-page--margin-top: 15mm;
+  --vs-page--margin-bottom: 15mm;
+  --vs-page--margin-inner: 15mm;
+  --vs-page--margin-outer: 15mm;
+
+  --vs-theme--floating-quote-background: linear-gradient(
+    180deg,
+    transparent 30%,
+    var(--vs-theme--floating-quote-marker-color) 30%,
+    80%,
+    transparent 80%
+  );
+}
+
+@media print {
+  :root {
+    --vs-writing-mode: horizontal-tb;
+  }
+}
+
+@-epubx-define {
+  vs-writing-mode: horizontal-tb;
+  vs-columns: 12rem;
+  vs-column-fill: auto;
+  vs-column-gap: 6mm;
+  vs-page--margin-top: 15mm;
+  vs-page--margin-bottom: 15mm;
+  vs-page--margin-left: 15mm;
+  vs-page--margin-right: 15mm;
+  vs-theme--page-number-partition-enabled: true;
+}

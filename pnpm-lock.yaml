@@ -47,8 +47,33 @@ importers:
         specifier: ~5.0.4
         version: 5.0.4
 
+  themes/eal-float-system:
+    devDependencies:
+      '@vivliostyle/cli':
+        specifier: ^7.2.5
+        version: 7.2.5
+      vivliostyle-theme-scripts:
+        specifier: ^0.3.5
+        version: 0.3.5
+
   themes/grid-system:
     dependencies:
+      '@vivliostyle/theme-base':
+        specifier: beta
+        version: 1.0.0-beta.1(@vivliostyle/cli@7.2.5)
+    devDependencies:
+      '@vivliostyle/cli':
+        specifier: ^7.2.5
+        version: 7.2.5
+      vivliostyle-theme-scripts:
+        specifier: ^0.3.5
+        version: 0.3.5
+
+  themes/magazine:
+    dependencies:
+      '@spring-raining/vs-theme-eal-float-system':
+        specifier: workspace:*
+        version: link:../eal-float-system
       '@vivliostyle/theme-base':
         specifier: beta
         version: 1.0.0-beta.1(@vivliostyle/cli@7.2.5)
@@ -75,9 +100,15 @@ importers:
 
   www:
     dependencies:
+      '@spring-raining/vs-theme-eal-float-system':
+        specifier: workspace:*
+        version: link:../themes/eal-float-system
       '@spring-raining/vs-theme-grid-system':
         specifier: workspace:*
         version: link:../themes/grid-system
+      '@spring-raining/vs-theme-magazine':
+        specifier: workspace:*
+        version: link:../themes/magazine
       '@spring-raining/vs-theme-photo-book':
         specifier: workspace:*
         version: link:../themes/photo-book

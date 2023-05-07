@@ -1,0 +1,31 @@
+/**
+ * Dummy theme file
+ * To use the eal-float-system, Please place @import like this
+ *
+ * ```css
+ * @-epubx-page-template {
+ *   @import url('@spring-raining/vs-theme-eal-float-system/eal-float-selectors.css');
+ *
+ *   @-epubx-page-master {
+ *     @-epubx-partition body {
+ *       -epubx-flow-from: body;
+ *       -epubx-required: true;
+ *       top: 15mm;
+ *       bottom: 15mm;
+ *       left: 15mm;
+ *       right: 15mm;
+ *       writing-mode: horizontal-tb;
+ *       column-width: 8rem;
+ *       column-fill: auto;
+ *       column-gap: 6mm;
+ *     }
+ *
+ *     @import url('@spring-raining/vs-theme-eal-float-system/eal-float-partitions.css');
+ *   }
+ * }
+ * ```
+ *
+ * Please note that you need to declare a partition named `body` above the
+ * import statement of eal-float-partitions.
+ * In the body partition, top/bottom/left/right/writing-mode property is required.
+ */

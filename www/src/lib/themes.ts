@@ -13,8 +13,10 @@ import glob from 'tiny-glob';
 const require = createRequire(import.meta.url);
 
 export const themes = {
+  'eal-float-system': '@spring-raining/vs-theme-eal-float-system',
   'grid-system': '@spring-raining/vs-theme-grid-system',
   'photo-book': '@spring-raining/vs-theme-photo-book',
+  magazine: '@spring-raining/vs-theme-magazine',
 } as const;
 
 export const buildThemeExamples = async (

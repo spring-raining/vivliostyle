@@ -1,0 +1,57 @@
+@-epubx-page-template {
+  @import url('../../../@spring-raining/vs-theme-eal-float-system/eal-float-selectors.css');
+
+  .pull-inline-start,
+  .pull-inline-end {
+    float: none;
+  }
+
+  @-epubx-page-master {
+    @-epubx-partition body class(body) {
+      -epubx-flow-from: body;
+      -epubx-required: true;
+      top: -epubx-expr(vs-page--margin-top);
+      bottom: -epubx-expr(vs-page--margin-bottom);
+      left: -epubx-expr(vs-page--margin-left);
+      right: -epubx-expr(vs-page--margin-right);
+      columns: -epubx-expr(vs-columns);
+      column-fill: -epubx-expr(vs-column-fill);
+      column-gap: -epubx-expr(vs-column-gap);
+      writing-mode: -epubx-expr(vs-writing-mode);
+    }
+
+    @-epubx-partition page-number-left class(page-number) class(page-number-left) {
+      -epubx-enabled: -epubx-expr(
+        page-number % 2== (body.writing-mode== 'vertical-rl' ? 1: 0) &&
+          vs-theme--page-number-partition-enabled
+      );
+      content: counter(page);
+      writing-mode: horizontal-tb;
+      position: absolute;
+      bottom: 0;
+      right: -epubx-expr(page-width - vs-page--margin-left);
+      height: -epubx-expr(vs-page--margin-bottom);
+      line-height: -epubx-expr(vs-page--margin-bottom);
+      text-align: right;
+      margin-inline: 1em;
+    }
+
+    @-epubx-partition page-number-right class(page-number) class(page-number-right) {
+      -epubx-enabled: -epubx-expr(
+        page-number % 2== (body.writing-mode== 'vertical-rl' ? 0: 1) &&
+          vs-theme--page-number-partition-enabled
+      );
+      content: counter(page);
+      writing-mode: horizontal-tb;
+      position: absolute;
+      bottom: 0;
+      left: -epubx-expr(page-width - vs-page--margin-right);
+      height: -epubx-expr(vs-page--margin-bottom);
+      line-height: -epubx-expr(vs-page--margin-bottom);
+      text-align: left;
+      margin-inline: 1em;
+    }
+
+    @import url('../../../@spring-raining/vs-theme-eal-float-system/eal-float-partitions.css');
+  }
+}

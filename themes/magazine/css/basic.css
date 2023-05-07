@@ -1,0 +1,171 @@
+@import url(../../../@vivliostyle/theme-base/theme-all.css);
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP&family=Zen+Kaku+Gothic+New:wght@500&display=swap');
+
+:root {
+  --vs-theme--float-margin-inline: 1.5rem;
+  --vs-theme--float-margin-block: 1rem;
+  --vs-theme--float-overhang: 1rem;
+  --vs-theme--hr-content: '❖';
+  --vs-theme--hr-height: height;
+  --vs-theme--hr-text-align: center;
+  --vs-theme--lead-margin-block: var(--vs-spacing-rlh);
+  --vs-theme--lead-margin-inline: 0;
+  --vs-theme--lead-padding-block: var(--vs-spacing-rlh);
+  --vs-theme--lead-padding-inline: 0;
+  --vs-theme--lead-border-block: 2px double currentColor;
+  --vs-theme--lead-border-inline: none;
+  --vs-theme--floating-quote-font-family: var(--vs--heading-font-family);
+  --vs-theme--floating-quote-font-size: 140%;
+  --vs-theme--floating-quote-line-height: 1.3;
+  --vs-theme--floating-quote-marker-color: hsl(25 25% 70% / 0.5);
+  --vs-theme--dropcap-font-size: 2rem;
+  --vs-theme--aside-font-family: var(--vs--heading-font-family);
+  --vs-theme--aside-font-size: 85%;
+}
+
+:root {
+  --vs-font-size-on-print: 80%;
+  --vs-font-family: 'Noto Serif JP', serif;
+  --vs-hanging-punctuation: first allow-end;
+  --vs-widows-orphans: 2;
+  --vs-spacing-inline-indent: 1ch;
+  --vs--heading-font-family: 'Zen Kaku Gothic New', sans-serif;
+  --vs--ul-minimum-inline-indent-size: 0px;
+  --vs--ol-minimum-inline-indent-size: 0px;
+  --vs--hr-border-color: transparent;
+  --vs-footnote--font-family: var(--vs-theme--aside-font-family);
+  --vs-footnote--font-size: var(--vs-theme--aside-font-size);
+}
+
+p:has(> strong:first-child) {
+  --vs--p-text-indent: 0;
+}
+
+hr {
+  height: var(--vs-theme--hr-height);
+  text-align: var(--vs-theme--hr-text-align);
+}
+
+hr::before {
+  content: var(--vs-theme--hr-content);
+}
+
+.lead {
+  --vs--heading-margin-block: 0.5rem;
+  margin-block: var(--vs-theme--lead-margin-block);
+  margin-inline: var(--vs-theme--lead-margin-inline);
+  padding-block: var(--vs-theme--lead-padding-block);
+  padding-inline: var(--vs-theme--lead-padding-inline);
+  border-block: var(--vs-theme--lead-border-block);
+  border-inline: var(--vs-theme--lead-border-inline);
+  break-inside: avoid;
+}
+
+.lead > *:first-child {
+  margin-block-start: 0;
+}
+
+.lead > *:last-child {
+  margin-block-end: 0;
+}
+
+.floating-quote {
+  --vs--blockquote-margin-block: 0;
+  --vs--blockquote-margin-inline: 0;
+  display: inline;
+  background: var(--vs-theme--floating-quote-background);
+  font-family: var(--vs-theme--floating-quote-font-family);
+  font-size: var(--vs-theme--floating-quote-font-size);
+  line-height: var(--vs-theme--floating-quote-line-height);
+}
+
+.tcy {
+  text-combine-upright: all;
+}
+
+.upright {
+  text-orientation: upright;
+}
+
+.drop-cap {
+  text-indent: 0;
+}
+
+.drop-cap::first-letter {
+  float: left;
+  font-size: var(--vs-theme--dropcap-font-size);
+  margin-inline-end: 0.5rem;
+}
+
+aside {
+  --vs--p-text-indent: 0;
+  margin-block: var(--vs-spacing-rlh);
+  font-family: var(--vs-theme--aside-font-family);
+  font-size: var(--vs-theme--aside-font-size);
+}
+
+.pull-inline-start {
+  float: left;
+  margin-block: var(--vs-theme--float-margin-block);
+  margin-inline: var(--vs-theme--float-margin-inline);
+  margin-left: calc(var(--vs-theme--float-overhang) * -1);
+}
+
+@supports (float: inline-start) {
+  .pull-inline-start {
+    float: inline-start;
+    margin-block: var(--vs-theme--float-margin-block);
+    margin-inline: var(--vs-theme--float-margin-inline);
+    margin-inline-start: calc(var(--vs-theme--float-overhang) * -1);
+  }
+}
+
+.pull-inline-end {
+  float: right;
+  margin-block: var(--vs-theme--float-margin-block);
+  margin-inline: var(--vs-theme--float-margin-inline);
+  margin-right: calc(var(--vs-theme--float-overhang) * -1);
+}
+
+@supports (float: inline-end) {
+  .pull-inline-end {
+    float: inline-end;
+    margin-block: var(--vs-theme--float-margin-block);
+    margin-inline: var(--vs-theme--float-margin-inline);
+    margin-inline-end: calc(var(--vs-theme--float-overhang) * -1);
+  }
+}
+
+@media screen {
+  body {
+    max-width: 50rem;
+    margin: 3rem auto;
+  }
+
+  .break-before-page-h,
+  .break-before-page-v {
+    display: none;
+  }
+
+  .footnote,
+  [role='doc-footnote'] {
+    float: none;
+    margin-block: var(--vs-spacing-rlh);
+  }
+
+  :is(.footnote, [role='doc-footnote'])::before {
+    content: '[';
+  }
+
+  :is(.footnote, [role='doc-footnote'])::after {
+    content: ']';
+  }
+}
+
+@media print {
+  :root {
+    --vs--p-text-indent: 1em;
+    --vs--p-margin-block: 0;
+  }
+}

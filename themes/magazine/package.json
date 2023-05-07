@@ -1,0 +1,46 @@
+{
+  "name": "@spring-raining/vs-theme-magazine",
+  "description": "description",
+  "version": "0.1.0",
+  "author": "spring-raining <harusamex.com@gmail.com>",
+  "scripts": {
+    "build": "vivliostyle build",
+    "preview": "vivliostyle preview",
+    "validate": "vivliostyle-theme-scripts validate"
+  },
+  "dependencies": {
+    "@spring-raining/vs-theme-eal-float-system": "workspace:*",
+    "@vivliostyle/theme-base": "beta"
+  },
+  "devDependencies": {
+    "@vivliostyle/cli": "^7.2.5",
+    "vivliostyle-theme-scripts": "^0.3.5"
+  },
+  "peerDependencies": {
+    "@vivliostyle/cli": ">=7"
+  },
+  "peerDependenciesMeta": {
+    "@vivliostyle/cli": {
+      "optional": true
+    }
+  },
+  "files": [
+    "*.css",
+    "example",
+    "vivliostyle.config.js"
+  ],
+  "keywords": [
+    "vivliostyle",
+    "vivliostyle-theme"
+  ],
+  "license": "MIT",
+  "vivliostyle": {
+    "theme": {
+      "name": "Photo book",
+      "author": "spring-raining <harusamex.com@gmail.com>",
+      "style": "./theme-h.css",
+      "category": "magazine",
+      "topics": []
+    }
+  }
+}

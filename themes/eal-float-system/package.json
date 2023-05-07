@@ -1,0 +1,42 @@
+{
+  "name": "@spring-raining/vs-theme-eal-float-system",
+  "description": "description",
+  "version": "0.1.0",
+  "author": "spring-raining <harusamex.com@gmail.com>",
+  "scripts": {
+    "build": "vivliostyle build",
+    "preview": "vivliostyle preview",
+    "validate": "vivliostyle-theme-scripts validate"
+  },
+  "devDependencies": {
+    "@vivliostyle/cli": "^7.2.5",
+    "vivliostyle-theme-scripts": "^0.3.5"
+  },
+  "peerDependencies": {
+    "@vivliostyle/cli": ">=7"
+  },
+  "peerDependenciesMeta": {
+    "@vivliostyle/cli": {
+      "optional": true
+    }
+  },
+  "files": [
+    "*.css",
+    "example",
+    "vivliostyle.config.js"
+  ],
+  "keywords": [
+    "vivliostyle",
+    "vivliostyle-theme"
+  ],
+  "license": "MIT",
+  "vivliostyle": {
+    "theme": {
+      "name": "EPUB Adaptive Layout float system",
+      "author": "spring-raining <harusamex.com@gmail.com>",
+      "style": "./theme.css",
+      "category": "misc",
+      "topics": []
+    }
+  }
+}

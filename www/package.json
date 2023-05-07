@@ -11,7 +11,9 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@spring-raining/vs-theme-eal-float-system": "workspace:*",
     "@spring-raining/vs-theme-grid-system": "workspace:*",
+    "@spring-raining/vs-theme-magazine": "workspace:*",
     "@spring-raining/vs-theme-photo-book": "workspace:*",
     "astro": "^2.3.2"
   },

@@ -1,0 +1,637 @@
+/**
+ * block-start
+ */
+
+@-epubx-partition float-block-start class(float) class(float-block-start) {
+  -epubx-flow-from: float-block-start;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.right: body.top
+  );
+  inset-inline-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.top: body.left
+  );
+  inset-inline-end: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.bottom: body.right
+  );
+}
+
+/**
+ * block-end
+ */
+
+@-epubx-partition float-block-end class(float) class(float-block-end) {
+  -epubx-flow-from: float-block-end;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-end: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.left: body.bottom
+  );
+  inset-inline-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.top: body.left
+  );
+  inset-inline-end: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.bottom: body.right
+  );
+}
+
+/**
+ * block-start / inline-start
+ */
+
+@-epubx-partition float-start-start class(float) class(float-start-start) {
+  -epubx-flow-from: float-start-start;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.right: body.top
+  );
+  inset-inline-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.top: body.left
+  );
+}
+
+/**
+ * block-start / inline-end
+ */
+
+@-epubx-partition float-start-end class(float) class(float-start-end) {
+  -epubx-flow-from: float-start-end;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.right: body.top
+  );
+  inset-inline-end: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.bottom: body.right
+  );
+}
+
+/**
+ * block-end / inline-start
+ */
+
+@-epubx-partition float-end-start class(float) class(float-end-start) {
+  -epubx-flow-from: float-end-start;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-end: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.left: body.bottom
+  );
+  inset-inline-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.top: body.left
+  );
+}
+
+/**
+ * block-end / inline-end
+ */
+
+@-epubx-partition float-end-end class(float) class(float-end-end) {
+  -epubx-flow-from: float-end-end;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-end: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.left: body.bottom
+  );
+  inset-inline-end: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.bottom: body.right
+  );
+}
+
+/**
+ * block-start / col-span
+ */
+
+@-epubx-partition float-start-col-1-span-1 class(float) class(float-start-col-1-span-1) {
+  -epubx-flow-from: float-start-col-1-span-1;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.right: body.top
+  );
+  inset-inline-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.top: body.left
+  );
+  inline-size: -epubx-expr(body.columns(1));
+}
+
+@-epubx-partition float-start-col-1-span-2 class(float) class(float-start-col-1-span-2) {
+  -epubx-flow-from: float-start-col-1-span-2;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.right: body.top
+  );
+  inset-inline-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.top: body.left
+  );
+  inline-size: -epubx-expr(body.columns(2));
+}
+
+@-epubx-partition float-start-col-1-span-3 class(float) class(float-start-col-1-span-3) {
+  -epubx-flow-from: float-start-col-1-span-3;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.right: body.top
+  );
+  inset-inline-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.top: body.left
+  );
+  inline-size: -epubx-expr(body.columns(3));
+}
+
+@-epubx-partition float-start-col-1-span-4 class(float) class(float-start-col-1-span-4) {
+  -epubx-flow-from: float-start-col-1-span-4;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.right: body.top
+  );
+  inset-inline-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.top: body.left
+  );
+  inline-size: -epubx-expr(body.columns(4));
+}
+
+@-epubx-partition float-start-col-1-span-5 class(float) class(float-start-col-1-span-5) {
+  -epubx-flow-from: float-start-col-1-span-5;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.right: body.top
+  );
+  inset-inline-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.top: body.left
+  );
+  inline-size: -epubx-expr(body.columns(5));
+}
+
+@-epubx-partition float-start-col-1-span-6 class(float) class(float-start-col-1-span-6) {
+  -epubx-flow-from: float-start-col-1-span-6;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.right: body.top
+  );
+  inset-inline-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.top: body.left
+  );
+  inline-size: -epubx-expr(body.columns(6));
+}
+
+@-epubx-partition float-start-col-2-span-1 class(float) class(float-start-col-2-span-1) {
+  -epubx-flow-from: float-start-col-2-span-1;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.right: body.top
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(1) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(1));
+}
+
+@-epubx-partition float-start-col-2-span-2 class(float) class(float-start-col-2-span-2) {
+  -epubx-flow-from: float-start-col-2-span-2;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.right: body.top
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(1) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(2));
+}
+
+@-epubx-partition float-start-col-2-span-3 class(float) class(float-start-col-2-span-3) {
+  -epubx-flow-from: float-start-col-2-span-3;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.right: body.top
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(1) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(3));
+}
+
+@-epubx-partition float-start-col-2-span-4 class(float) class(float-start-col-2-span-4) {
+  -epubx-flow-from: float-start-col-2-span-4;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.right: body.top
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(1) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(4));
+}
+
+@-epubx-partition float-start-col-2-span-5 class(float) class(float-start-col-2-span-5) {
+  -epubx-flow-from: float-start-col-2-span-5;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.right: body.top
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(1) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(5));
+}
+
+@-epubx-partition float-start-col-3-span-1 class(float) class(float-start-col-3-span-1) {
+  -epubx-flow-from: float-start-col-3-span-1;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.right: body.top
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(2) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(1));
+}
+
+@-epubx-partition float-start-col-3-span-2 class(float) class(float-start-col-3-span-2) {
+  -epubx-flow-from: float-start-col-3-span-2;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.right: body.top
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(2) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(2));
+}
+
+@-epubx-partition float-start-col-3-span-3 class(float) class(float-start-col-3-span-3) {
+  -epubx-flow-from: float-start-col-3-span-3;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.right: body.top
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(2) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(3));
+}
+
+@-epubx-partition float-start-col-3-span-4 class(float) class(float-start-col-3-span-4) {
+  -epubx-flow-from: float-start-col-3-span-4;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.right: body.top
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(2) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(4));
+}
+
+@-epubx-partition float-start-col-4-span-1 class(float) class(float-start-col-4-span-1) {
+  -epubx-flow-from: float-start-col-4-span-1;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.right: body.top
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(3) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(1));
+}
+
+@-epubx-partition float-start-col-4-span-2 class(float) class(float-start-col-4-span-2) {
+  -epubx-flow-from: float-start-col-4-span-2;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.right: body.top
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(3) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(2));
+}
+
+@-epubx-partition float-start-col-4-span-3 class(float) class(float-start-col-4-span-3) {
+  -epubx-flow-from: float-start-col-4-span-3;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.right: body.top
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(3) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(3));
+}
+
+@-epubx-partition float-start-col-5-span-1 class(float) class(float-start-col-5-span-1) {
+  -epubx-flow-from: float-start-col-5-span-1;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.right: body.top
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(4) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(1));
+}
+
+@-epubx-partition float-start-col-5-span-2 class(float) class(float-start-col-5-span-2) {
+  -epubx-flow-from: float-start-col-5-span-2;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.right: body.top
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(4) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(2));
+}
+
+@-epubx-partition float-start-col-6-span-1 class(float) class(float-start-col-6-span-1) {
+  -epubx-flow-from: float-start-col-6-span-1;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.right: body.top
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(5) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(1));
+}
+
+/**
+ * block-end / col-span
+ */
+
+@-epubx-partition float-end-col-1-span-1 class(float) class(float-end-col-1-span-1) {
+  -epubx-flow-from: float-end-col-1-span-1;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-end: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.left: body.bottom
+  );
+  inset-inline-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.top: body.left
+  );
+  inline-size: -epubx-expr(body.columns(1));
+}
+
+@-epubx-partition float-end-col-1-span-2 class(float) class(float-end-col-1-span-2) {
+  -epubx-flow-from: float-end-col-1-span-2;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-end: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.left: body.bottom
+  );
+  inset-inline-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.top: body.left
+  );
+  inline-size: -epubx-expr(body.columns(2));
+}
+
+@-epubx-partition float-end-col-1-span-3 class(float) class(float-end-col-1-span-3) {
+  -epubx-flow-from: float-end-col-1-span-3;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-end: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.left: body.bottom
+  );
+  inset-inline-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.top: body.left
+  );
+  inline-size: -epubx-expr(body.columns(3));
+}
+
+@-epubx-partition float-end-col-1-span-4 class(float) class(float-end-col-1-span-4) {
+  -epubx-flow-from: float-end-col-1-span-4;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-end: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.left: body.bottom
+  );
+  inset-inline-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.top: body.left
+  );
+  inline-size: -epubx-expr(body.columns(4));
+}
+
+@-epubx-partition float-end-col-1-span-5 class(float) class(float-end-col-1-span-5) {
+  -epubx-flow-from: float-end-col-1-span-5;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-end: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.left: body.bottom
+  );
+  inset-inline-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.top: body.left
+  );
+  inline-size: -epubx-expr(body.columns(5));
+}
+
+@-epubx-partition float-end-col-1-span-6 class(float) class(float-end-col-1-span-6) {
+  -epubx-flow-from: float-end-col-1-span-6;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-end: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.left: body.bottom
+  );
+  inset-inline-start: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.top: body.left
+  );
+  inline-size: -epubx-expr(body.columns(6));
+}
+
+@-epubx-partition float-end-col-2-span-1 class(float) class(float-end-col-2-span-1) {
+  -epubx-flow-from: float-end-col-2-span-1;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-end: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.left: body.bottom
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(1) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(1));
+}
+
+@-epubx-partition float-end-col-2-span-2 class(float) class(float-end-col-2-span-2) {
+  -epubx-flow-from: float-end-col-2-span-2;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-end: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.left: body.bottom
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(1) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(2));
+}
+
+@-epubx-partition float-end-col-2-span-3 class(float) class(float-end-col-2-span-3) {
+  -epubx-flow-from: float-end-col-2-span-3;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-end: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.left: body.bottom
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(1) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(3));
+}
+
+@-epubx-partition float-end-col-2-span-4 class(float) class(float-end-col-2-span-4) {
+  -epubx-flow-from: float-end-col-2-span-4;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-end: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.left: body.bottom
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(1) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(4));
+}
+
+@-epubx-partition float-end-col-2-span-5 class(float) class(float-end-col-2-span-5) {
+  -epubx-flow-from: float-end-col-2-span-5;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-end: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.left: body.bottom
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(1) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(5));
+}
+
+@-epubx-partition float-end-col-3-span-1 class(float) class(float-end-col-3-span-1) {
+  -epubx-flow-from: float-end-col-3-span-1;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-end: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.left: body.bottom
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(2) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(1));
+}
+
+@-epubx-partition float-end-col-3-span-2 class(float) class(float-end-col-3-span-2) {
+  -epubx-flow-from: float-end-col-3-span-2;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-end: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.left: body.bottom
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(2) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(2));
+}
+
+@-epubx-partition float-end-col-3-span-3 class(float) class(float-end-col-3-span-3) {
+  -epubx-flow-from: float-end-col-3-span-3;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-end: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.left: body.bottom
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(2) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(3));
+}
+
+@-epubx-partition float-end-col-3-span-4 class(float) class(float-end-col-3-span-4) {
+  -epubx-flow-from: float-end-col-3-span-4;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-end: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.left: body.bottom
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(2) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(4));
+}
+
+@-epubx-partition float-end-col-4-span-1 class(float) class(float-end-col-4-span-1) {
+  -epubx-flow-from: float-end-col-4-span-1;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-end: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.left: body.bottom
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(3) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(1));
+}
+
+@-epubx-partition float-end-col-4-span-2 class(float) class(float-end-col-4-span-2) {
+  -epubx-flow-from: float-end-col-4-span-2;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-end: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.left: body.bottom
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(3) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(2));
+}
+
+@-epubx-partition float-end-col-4-span-3 class(float) class(float-end-col-4-span-3) {
+  -epubx-flow-from: float-end-col-4-span-3;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-end: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.left: body.bottom
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(3) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(3));
+}
+
+@-epubx-partition float-end-col-5-span-1 class(float) class(float-end-col-5-span-1) {
+  -epubx-flow-from: float-end-col-5-span-1;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-end: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.left: body.bottom
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(4) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(1));
+}
+
+@-epubx-partition float-end-col-5-span-2 class(float) class(float-end-col-5-span-2) {
+  -epubx-flow-from: float-end-col-5-span-2;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-end: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.left: body.bottom
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(4) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(2));
+}
+
+@-epubx-partition float-end-col-6-span-1 class(float) class(float-end-col-6-span-1) {
+  -epubx-flow-from: float-end-col-6-span-1;
+  writing-mode: -epubx-expr(body.writing-mode);
+  inset-block-end: -epubx-expr(
+    body.writing-mode== 'vertical-rl' ? body.left: body.bottom
+  );
+  inset-inline-start: -epubx-expr(
+    (body.writing-mode== 'vertical-rl' ? body.top: body.left) + body.columns(5) +
+      body.column-gap
+  );
+  inline-size: -epubx-expr(body.columns(1));
+}
