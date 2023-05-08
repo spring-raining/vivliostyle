@@ -8,24 +8,49 @@
   --vs-theme--page-grid-gap: 0;
   --vs-theme--page-grid-inner-template-rows: 1fr;
   --vs-theme--page-grid-inner-template-cols: 1fr;
-  --vs-theme--page-grid-outer-size: calc(10mm + var(--vs-page--bleed));
+  --vs-theme--page-grid-margin-top: calc(
+    var(--vs-page--margin-top) + var(--vs-page--bleed)
+  );
+  --vs-theme--page-grid-margin-bottom: calc(
+    var(--vs-page--margin-bottom) + var(--vs-page--bleed)
+  );
+  --vs-theme--page-grid-margin-inner: calc(
+    var(--vs-page--margin-inner) + var(--vs-page--bleed)
+  );
+  --vs-theme--page-grid-margin-outer: calc(
+    var(--vs-page--margin-outer) + var(--vs-page--bleed)
+  );
+  --vs-theme--page-grid-margin-left: calc(
+    0.5 *
+      (
+        var(--vs-theme--page-grid-margin-inner) +
+          var(--vs-theme--page-grid-margin-outer)
+      )
+  );
+  --vs-theme--page-grid-margin-right: calc(
+    0.5 *
+      (
+        var(--vs-theme--page-grid-margin-inner) +
+          var(--vs-theme--page-grid-margin-outer)
+      )
+  );
   --vs-theme--page-grid-template: [page-outer-start]
-    var(--vs-theme--page-grid-outer-size) [page-inner-start]
+    var(--vs-theme--page-grid-margin-top) [page-inner-start]
     var(--vs-theme--page-grid-inner-template-rows) [page-inner-end]
-    var(--vs-theme--page-grid-outer-size) [page-outer-end] / [page-outer-start]
-    var(--vs-theme--page-grid-outer-size) [page-inner-start]
+    var(--vs-theme--page-grid-margin-bottom) [page-outer-end] /
+    [page-outer-start] var(--vs-theme--page-grid-margin-left) [page-inner-start]
     var(--vs-theme--page-grid-inner-template-cols) [page-inner-end]
-    var(--vs-theme--page-grid-outer-size) [page-outer-end];
-  --vs-theme--facing-pages-gutter-size: var(--vs-theme--page-grid-outer-size);
+    var(--vs-theme--page-grid-margin-right) [page-outer-end];
+  --vs-theme--facing-pages-gutter-size: var(--vs-theme--page-grid-margin-inner);
   --vs-theme--facing-pages-grid-template: [page-outer-start]
-    var(--vs-theme--page-grid-outer-size) [page-inner-start]
+    var(--vs-theme--page-grid-margin-top) [page-inner-start]
     var(--vs-theme--page-grid-inner-template-rows) [page-inner-end]
-    var(--vs-theme--page-grid-outer-size) [page-outer-end] / [page-outer-start]
-    var(--vs-theme--page-grid-outer-size) [page-inner-start]
-    var(--vs-theme--page-grid-inner-template-cols)
+    var(--vs-theme--page-grid-margin-bottom) [page-outer-end] /
+    [page-outer-start] var(--vs-theme--page-grid-margin-outer)
+    [page-inner-start] var(--vs-theme--page-grid-inner-template-cols)
     repeat(2, var(--vs-theme--facing-pages-gutter-size))
     var(--vs-theme--page-grid-inner-template-cols) [page-inner-end]
-    var(--vs-theme--page-grid-outer-size) [page-outer-end];
+    var(--vs-theme--page-grid-margin-outer) [page-outer-end];
 }
 
 .grid-page {
