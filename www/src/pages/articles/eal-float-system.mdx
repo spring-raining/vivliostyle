@@ -1,0 +1,231 @@
+---
+layout: '@/layouts/Layout.astro'
+title: EPUB Adaptive Layoutを使った雑誌風レイアウト
+---
+
+import CodeExample from '@/components/CodeExample.astro';
+
+# EPUB Adaptive Layout を使った雑誌風レイアウト
+
+CSS 組版として取り上げられる機能は、基本的にはブラウザで実装されている（実装されようとしている）標準的な仕様が多いですが、Vivliostyle には組版を実現するもう一つの手段として**EPUB Adaptive Layout**が存在します。
+Vivliostyle は、もともとこの EPUB Adaptive Layout にもとづいた組版処理が実装されていますが、多くの CSS に関する機能が Vivliostyle に実装された今でも EPUB Adaptive Layout 由来の機能が維持されており、また表現力の面で EPUB Adaptive Layout を採用したほうが組版処理が有利なケースが残されています。
+とりわけ、このドキュメントで紹介するような雑誌のようなレイアウトを実現したい場合は、第一の選択肢になります。
+
+ただし、EPUB Adaptive Layout は Web 上に情報が少ない（というか Vivliostyle 関連でしか使われていない）ということもあり、初心者が使うには難易度が高いです。
+個人的には、可能であれば EPUB Adaptive Layout の使用は避け、CSS Paged Media とした CSS 標準の仕様により近い機能を使うことをおすすめしています。
+その上で、このドキュメントでは EPUB Adaptive Layout をどのようなケースで使うべきか、またより便利に使うための Vivliostyle Theme **eal-float-system** について紹介します。
+
+## EPUB Adaptive Layout を使わなくてもできる！ Vivliostyle に実装された CSS の新しい機能
+
+数年前まではモダンブラウザとの CSS の機能の乖離が大きかったものの、2023 年現在 Vivliostyle には多くの CSS に関する機能が実装されました。下記のグラフの通り 2021 年頃からは継続的にコードに変更が加えられており、この期間に CSS に関する様々な機能が追加されています。
+
+![Vivliostyle.jsのコントリビュート状況を表したスクリーンショット](/pages/articles/eal-float-system/fig-1.png)
+
+特にここ最近の Vivliostyle を使っていない人にとっては、どこまでが CSS の機能だけでできるかといったことが分かりにくくなっているかもしれません。
+そこで、まずは「組版で実現したいこと」の視点から CSS のみでできることを列挙してみます。
+
+### ページの端にページ番号をつけたい
+
+ページマージンボックスとページカウンターを使用して設定できます。また、`:left` `:right` 擬似クラスを使って、左ページと右ページでそれぞれ別の場所にページ番号をつけることもできます。
+
+参考：https://vivliostyle.org/ja/tutorials/configure-page-text/
+
+```css
+@page :left {
+  @bottom-left {
+    content: coutner(page);
+  }
+}
+@page :right {
+  @bottom-right {
+    content: coutner(page);
+  }
+}
+```
+
+### 特定のページだけ別のレイアウトにしたい
+
+これは以前の Vivliostyle が苦手にしていたことでしたが、[Named Page の実装](https://github.com/vivliostyle/vivliostyle.js/pull/714)により状況が大幅に改善しました。これは、`page` プロパティでその要素を表示するページに対して名前を付ける機能で、例えば各章の 1 ページ目だけ異なるレイアウトにする、タイトルページだけページの余白を無くす、といったことが簡単になっています。
+
+```css
+.hyoshi {
+  page: hyoshi;
+}
+@page hyoshi {
+  /* 表紙ページ用のレイアウト */
+}
+```
+
+### CSS 内で共通の値を一括で設定したい
+
+**CSS 変数** という機能があります。この機能も元々 Vivliostyle にはなかったものですが、今では使えるようになっています！
+さらに、`calc()` のような新しい CSS の機能も使えるようになっているので、ここ一年で CSS の設定の柔軟性は大幅に向上しました。
+
+```css
+:root {
+  --font-size: 16px;
+}
+p {
+  font-size: var(--font-size);
+}
+h1 {
+  font-size: calc(var(--font-size) * 2);
+}
+```
+
+CSS 変数に関しては以前私が書いた記事もあります。こちらもご覧ください：https://zenn.dev/spring_raining/articles/f0e58d120ccfae
+
+### 複数の段組みでレイアウトしたい
+
+`columns` や `column-gap` が使えます！
+
+```css
+:root {
+  columns: 2;
+  column-gap: 4rem;
+}
+```
+
+### ある要素をページの特定の場所に配置したい
+
+CSS では、要素に対して `float` というプロパティの値を設定すると、その要素が浮動ボックスという通常とは異なる配置になります。この仕様を紙のレイアウトに応用した[CSS Page Floats](https://drafts.csswg.org/css-page-floats/)という仕様があり、Vivliostyle ではそれを実装しています。
+
+例えば、ページの上部に画像を配置したい場合は以下のようにします。
+
+```css
+img {
+  float: top;
+}
+```
+
+## EPUB Adaptive Layout の採用を検討する条件
+
+以上のような多くのアップデートがあった上でも、EPUB Adaptive Layout を採用したほうがよいケースも依然としてあります。
+今の Vivlostyle の機能を振り返った上で、現時点では以下の 2 つの条件を満たすようなレイアウトを実現したい場合にのみ、EPUB Adaptive Layout を採用するのが良さそうという結論になっています。
+
+- 複数の段組で構成される紙面である
+- かつ、段組をまたぐような要素の配置を多用する
+
+## EPUB Adaptive Layout の概念
+
+それでは、EPUB Adaptive Layout とは一体どのようなものでしょうか？
+
+[EPUB Adaptive Layout](https://idpf.org/epub/pgt/)では、**ページマスター**（Page master）というものを用意して、通常の HTML ドキュメントの内容をページマスターに従って再配置するという仕組みで動作しています。
+一つのページマスターには**パーティション**（Partition）と呼ばれるコンテンツを配置するための領域を複数指定しておくことができます。
+そして、ドキュメントの内容を**フロー**（Flow）と呼ばれる情報で分類して、それぞれのフローの内容を順番にパーティションに割り当てていきます。
+
+![EPUB Adaptive Layoutの動作の概要図]()
+
+EPUB Adaptive Layout の強みは、CSS が通常扱う（組版とは関係ない）スタイルシートとは独立して、ページマスターを用意できる点です。
+複数のページマスターを用意しておくことで、ベージごとにレイアウトを変えたり、ページ中の意図した場所に要素を配置する、ということがやりやすくなっています。
+また、パーティション同士が重なった場合に後ろにあるパーティションが回り込まれるため、複数の段組で組まれていても他のパーティションを避けた回り込みがやりやすいという点もメリットです。
+
+ただし、ページマスターとフローが独立しているということによる弊害も大きいです。
+あるフローのコンテンツを表示させるためには、そのコンテンツを配置するだけの大きさを持つパーティションを確保しなければなりませんが、コンテンツの大きさによっては他のパーティションの配置と競合することがあります。
+この問題が起きたときの処理は非常に複雑で、処理の結果そのフローのコンテンツを配置できるパーティションが見つからずに消えてしまったり、期待した場所とはぜんぜん違うページに表示されてしまうという問題が起きがちです。
+こういった問題は予測が難しく、EPUB Adaptive Layout を使った設計が難しいという理由の一つになっています。
+
+また、もう一つ Vivliostyle の環境で重要な点として、**EPUB Adaptive Layout を使用した場合、CSS Paged Media など組版に関連する CSS の大部分の機能が無効化される**ことも注意が必要です。
+EPUB Adaptive Layout を使用する場合、Vivliostyle が提供する便利な CSS の機能が使えなくなってしまうことも認識しておいてください。
+
+# spring-raining 式 EAL Flow System
+
+以上のような弊害があるものの、やはり EPUB Adaptive Layout を使いたくなるケースがあるかもしれません。
+今回は、Vivliostyle で EPUB Adaptive Layout をより簡単に使用するため、**vs-theme-eal-float-system** という Vivliostyle Theme を作成しました。
+EAL（EPUB Adaptive Layout）を使う上での問題を理解した上で、活用してもらえると幸いです。
+
+テーマをインストールするには、`vivliostyle.config.js` に以下のように設定します。
+
+```js
+module.exports = {
+  theme: [
+    '@spring-raining/vs-theme-eal-float-system@1',
+    'main.css', // main.cssを用意してください
+  ],
+};
+```
+
+このテーマは、インストールするだけでは使用することができません。
+別途 `main.css` を作成して、次のようにインポートしてください。
+
+```css
+@-epubx-page-template {
+  @import url('@spring-raining/vs-theme-eal-float-system/eal-float-selectors.css');
+
+  @-epubx-page-master {
+    @-epubx-partition body {
+      /* ここに本文用のパーティションを作成 */
+      top: 15mm;
+      bottom: 15mm;
+      left: 15mm;
+      right: 15mm;
+      writing-mode: horizontal-tb;
+      column-width: 8rem;
+      column-fill: auto;
+      column-gap: 6mm;
+    }
+
+    @import url('@spring-raining/vs-theme-eal-float-system/eal-float-partitions.css');
+  }
+}
+```
+
+## EAL Flow System による要素配置
+
+EAL Flow System が実現していることは、**ある程度定型的なパーティションを自動的に作成しておき、そのパーティションに割り当てるためのクラス名を提供する**ことです。
+
+例えば、横書きで書かれたドキュメントで、ある要素をページの右上に配置したい場合、以下のようにします。
+
+```html
+<div class="eal-float-start-end">右上に配置</div>
+```
+
+また、4 段組で組まれたドキュメントで、ページの下の 2 段目と 3 段目を結合した場所に配置したい場合は以下のようにします。
+
+```html
+<div class="eal-float-end-col-2-span-2">ページの下の2段目〜3段目に配置</div>
+```
+
+EAL Flow System で用意しているクラス名はできるだけ分かりやすくなるように意識したつもりですが、若干慣れが必要かもしれません。使用できるクラス名の詳細について紹介します。
+
+### 上下、四隅への配置
+
+ページの上下左右に添わせて配置させる方法です。
+
+| クラス名                | 配置                                                                                          |
+| ----------------------- | --------------------------------------------------------------------------------------------- |
+| `eal-float-block-start` | <img src="/pages/articles/eal-float-system/position-fig/block-start.svg" alt="" width="50" /> |
+| `eal-float-block-end`   | <img src="/pages/articles/eal-float-system/position-fig/block-end.svg" alt="" width="50" />   |
+| `eal-float-start-start` | <img src="/pages/articles/eal-float-system/position-fig/start-start.svg" alt="" width="50" /> |
+| `eal-float-start-end`   | <img src="/pages/articles/eal-float-system/position-fig/start-end.svg" alt="" width="50" />   |
+| `eal-float-end-start`   | <img src="/pages/articles/eal-float-system/position-fig/end-start.svg" alt="" width="50" />   |
+| `eal-float-end-end`     | <img src="/pages/articles/eal-float-system/position-fig/end-end.svg" alt="" width="50" />     |
+
+### 段組の幅に合わせた配置
+
+ページの段組の幅に沿わせて配置させる方法です。
+`eal-float-start-col-{number}-span-{number}` または `eal-float-end-col-{number}-span-{number}` の形式で指定します。
+また、以下の表では 4 段組の例までしかありませんが、実際には 6 段組まで用意しています。
+
+| クラス名                             | 配置（`start`）                                                                                      | 配置（`end`）                                                                                      |
+| ------------------------------------ | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `eal-float-{start,end}-col-1-span-1` | <img src="/pages/articles/eal-float-system/position-fig/start-col-1-span-1.svg" alt="" width="50" /> | <img src="/pages/articles/eal-float-system/position-fig/end-col-1-span-1.svg" alt="" width="50" /> |
+| `eal-float-{start,end}-col-1-span-2` | <img src="/pages/articles/eal-float-system/position-fig/start-col-1-span-2.svg" alt="" width="50" /> | <img src="/pages/articles/eal-float-system/position-fig/end-col-1-span-2.svg" alt="" width="50" /> |
+| `eal-float-{start,end}-col-1-span-3` | <img src="/pages/articles/eal-float-system/position-fig/start-col-1-span-3.svg" alt="" width="50" /> | <img src="/pages/articles/eal-float-system/position-fig/end-col-1-span-3.svg" alt="" width="50" /> |
+| `eal-float-{start,end}-col-1-span-4` | <img src="/pages/articles/eal-float-system/position-fig/start-col-1-span-4.svg" alt="" width="50" /> | <img src="/pages/articles/eal-float-system/position-fig/end-col-1-span-4.svg" alt="" width="50" /> |
+| `eal-float-{start,end}-col-2-span-1` | <img src="/pages/articles/eal-float-system/position-fig/start-col-2-span-1.svg" alt="" width="50" /> | <img src="/pages/articles/eal-float-system/position-fig/end-col-2-span-1.svg" alt="" width="50" /> |
+| `eal-float-{start,end}-col-2-span-2` | <img src="/pages/articles/eal-float-system/position-fig/start-col-2-span-2.svg" alt="" width="50" /> | <img src="/pages/articles/eal-float-system/position-fig/end-col-2-span-2.svg" alt="" width="50" /> |
+| `eal-float-{start,end}-col-2-span-3` | <img src="/pages/articles/eal-float-system/position-fig/start-col-2-span-3.svg" alt="" width="50" /> | <img src="/pages/articles/eal-float-system/position-fig/end-col-2-span-3.svg" alt="" width="50" /> |
+| `eal-float-{start,end}-col-3-span-1` | <img src="/pages/articles/eal-float-system/position-fig/start-col-3-span-1.svg" alt="" width="50" /> | <img src="/pages/articles/eal-float-system/position-fig/end-col-3-span-1.svg" alt="" width="50" /> |
+| `eal-float-{start,end}-col-3-span-2` | <img src="/pages/articles/eal-float-system/position-fig/start-col-3-span-2.svg" alt="" width="50" /> | <img src="/pages/articles/eal-float-system/position-fig/end-col-3-span-2.svg" alt="" width="50" /> |
+| `eal-float-{start,end}-col-4-span-1` | <img src="/pages/articles/eal-float-system/position-fig/start-col-4-span-1.svg" alt="" width="50" /> | <img src="/pages/articles/eal-float-system/position-fig/end-col-4-span-1.svg" alt="" width="50" /> |
+
+### 縦書き時の配置
+
+以上の配置例は文章が横書きで書かれていたときの配置を表していますが、縦書き時は 90° 回転させた位置になることに注意してください。
+例えば、`eal-flaot-start-start` は横書き時は左上にありますが、縦書き時は右上に配置されます。
+
+| クラス名                       | 横書き時の配置                                                                                       | 縦書き時の配置                                                                                                |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `eal-float-start-start`        | <img src="/pages/articles/eal-float-system/position-fig/start-start.svg" alt="" width="50" />        | <img src="/pages/articles/eal-float-system/position-fig/vertical-start-start.svg" alt="" width="50" />        |
+| `eal-float-start-col-2-span-2` | <img src="/pages/articles/eal-float-system/position-fig/start-col-2-span-2.svg" alt="" width="50" /> | <img src="/pages/articles/eal-float-system/position-fig/vertical-start-col-2-span-2.svg" alt="" width="50" /> |
