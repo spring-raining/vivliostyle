@@ -1,3 +1,15 @@
-<div class="code-example-wrapper border border-black p-4">
-  <slot />
+<div>
+  {
+    Astro.slots.has('code') && (
+      <div class="border-2 border-gray-300 p-4 mb-6">
+        <slot name="code" />
+      </div>
+    )
+  }
+
+  <div
+    class="grid place-items-center border-2 border-gray-300 p-4 break-inside-avoid"
+  >
+    <slot />
+  </div>
 </div>

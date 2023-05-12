@@ -39,15 +39,17 @@ Grid レイアウトは、要素に対して `display: grid` を設定するこ�
 これで `.grid` 要素がグリッドコンテナとなり、子要素がグリッドに沿って配置されるようになります。
 さらに、`grid-template-columns` や `grid-template-rows` プロパティなどを使って、グリッドの行と列を定義します。
 
-```css
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-}
-```
-
 <CodeExample>
+  <div slot="code">
+    ```css
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+    }
+    ```
+  </div>
+
   <div class="relative">
     <div class="grid grid-cols-3 grid-rows-3 font-bold">
       <div class="bg-blue-300 p-4 rounded-xl grid place-items-center">
@@ -84,24 +86,26 @@ Grid レイアウトは、要素に対して `display: grid` を設定するこ�
 `grid-column` や `grid-row` プロパティを使って、グリッド内の各アイテムの位置を調整します。
 さらに、グリッドを縦方向や横方向に結合させたり、グリッド間に Gap と呼ばれる隙間を設置することも可能です。
 
-```css
-.grid {
-  gap: 0.75rem;
-}
-.container-1 {
-  grid-column-start: 1;
-  grid-column-end: 3;
-}
-.container-3 {
-  grid-column: 3;
-  grid-row: 1 / 3;
-}
-.container-4 {
-  grid-area: 3 / 1 / 4 / 4;
-}
-```
-
 <CodeExample>
+  <div slot="code">
+    ```css
+    .grid {
+      gap: 0.75rem;
+    }
+    .container-1 {
+      grid-column-start: 1;
+      grid-column-end: 3;
+    }
+    .container-3 {
+      grid-column: 3;
+      grid-row: 1 / 3;
+    }
+    .container-4 {
+      grid-area: 3 / 1 / 4 / 4;
+    }
+    ```
+  </div>
+
   <div class="relative">
     <div class="grid absolute inset-0 grid-cols-3 grid-rows-3 pointer-events-none">
       <div class="border-2 border-black border-dashed"></div>
@@ -209,11 +213,13 @@ module.exports = {
 
 さらに、以下の `grid-page-cols-2`、`grid-page-rows-3` ようなクラス名を追加することで、上下左右のグリッド領域の大きさを維持したまま中心のグリッドを分割することができます。
 
-```html
-<div class="grid-page grid-page-cols-2 grid-page-rows-3"></div>
-```
-
 <CodeExample>
+  <div slot="code">
+    ```html
+    <div class="grid-page grid-page-cols-2 grid-page-rows-3"></div>
+    ```
+  </div>
+
   <div class="grid relative grid-cols-[2.5rem_1fr_1fr_2.5rem] grid-rows-[2.5rem_1fr_1fr_1fr_2.5rem] gap-2 font-bold w-[18rem] h-[22rem]">
     <div class="bg-gray-300 p-4 rounded-md"></div>
     <div class="bg-gray-300 p-4 rounded-md"></div>
@@ -264,15 +270,15 @@ Grid System が用意するグリッドコンテナには、以下のような[�
       <div class="bg-gray-300 rounded-md"></div>
     </div>
     <div class="grid absolute inset-0 grid-cols-[3rem_1fr_3rem_8rem] grid-rows-[3rem_1fr_3rem] font-bold w-[26rem] h-[22rem] pointer-events-none">
-      <div class="border-2 border-red-500 col-[1/4] row-[1/4]"></div>
+      <div class="border-2 border-blue-700 col-[1/4] row-[1/4]"></div>
       <div class="col-[4/5] row-[1/2]">
-        <span class="relative top-4 bg-red-500 text-white px-2 py-1 rounded-r-lg">
+        <span class="relative top-4 bg-blue-700 text-white px-2 py-1 rounded-r-lg">
           page-outer
         </span>
       </div>
-      <div class="border-2 border-red-500 col-[2/3] row-[2/3]"></div>
+      <div class="border-2 border-blue-700 col-[2/3] row-[2/3]"></div>
       <div class="col-[3/5] row-[2/3]">
-        <span class="relative top-4 bg-red-500 text-white px-2 py-1 rounded-r-lg">
+        <span class="relative top-4 bg-blue-700 text-white px-2 py-1 rounded-r-lg">
           page-inner
         </span>
       </div>

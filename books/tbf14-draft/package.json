@@ -1,0 +1,21 @@
+{
+  "name": "tbf-14draft",
+  "description": "tbf14-draft",
+  "version": "0.0.0",
+  "author": "spring-raining <harusamex.com@gmail.com>",
+  "scripts": {
+    "build": "vivliostyle build",
+    "preview": "vivliostyle preview"
+  },
+  "dependencies": {
+    "@spring-raining/vs-theme-magazine": "workspace:*",
+    "@spring-raining/vs-theme-photo-book": "workspace:*",
+    "tbf14-theme": "workspace:*",
+    "www": "workspace:*"
+  },
+  "devDependencies": {
+    "@vivliostyle/cli": "^7.2.5"
+  },
+  "license": "CC-BY-3.0",
+  "private": true
+}

@@ -47,6 +47,25 @@ importers:
         specifier: ~5.0.4
         version: 5.0.4
 
+  books/tbf14-draft:
+    dependencies:
+      '@spring-raining/vs-theme-magazine':
+        specifier: workspace:*
+        version: link:../../themes/magazine
+      '@spring-raining/vs-theme-photo-book':
+        specifier: workspace:*
+        version: link:../../themes/photo-book
+      tbf14-theme:
+        specifier: workspace:*
+        version: link:../../themes/tbf14
+      www:
+        specifier: workspace:*
+        version: link:../../www
+    devDependencies:
+      '@vivliostyle/cli':
+        specifier: ^7.2.5
+        version: 7.2.5
+
   themes/eal-float-system:
     devDependencies:
       '@vivliostyle/cli':
@@ -98,6 +117,15 @@ importers:
         specifier: ^0.3.5
         version: 0.3.5
 
+  themes/tbf14:
+    dependencies:
+      '@vivliostyle/theme-base':
+        specifier: beta
+        version: 1.0.0-beta.1(@vivliostyle/cli@7.2.5)
+      '@vivliostyle/theme-techbook':
+        specifier: beta
+        version: 1.0.0-beta.1
+
   www:
     dependencies:
       '@astrojs/mdx':
@@ -121,9 +149,15 @@ importers:
       astro:
         specifier: ^2.4.2
         version: 2.4.2
+      astro-relative-links:
+        specifier: ^0.3.4
+        version: 0.3.4
       tailwindcss:
         specifier: ^3.0.24
         version: 3.3.2
+      tbf14-theme:
+        specifier: workspace:*
+        version: link:../themes/tbf14
     devDependencies:
       '@types/mime':
         specifier: ^3.0.1
@@ -1459,6 +1493,17 @@ packages:
       '@vivliostyle/cli': 7.2.5
     dev: false
 
+  /@vivliostyle/theme-techbook@1.0.0-beta.1:
+    resolution: {integrity: sha512-y/mgOh93AwZsBDTLr3lilLkhjPkf4U364UARIFpC/KpC07IY3eILGrGBs0aaEHk7qvuLP0uVbpwD6QdNDWVY2g==}
+    peerDependencies:
+      '@vivliostyle/cli': '>=7'
+    peerDependenciesMeta:
+      '@vivliostyle/cli':
+        optional: true
+    dependencies:
+      '@vivliostyle/theme-base': 1.0.0-beta.1(@vivliostyle/cli@7.2.5)
+    dev: false
+
   /@vivliostyle/vfm@1.3.0:
     resolution: {integrity: sha512-1VlIWNn74Zfz3fWWUmAzTmxgmubE3LDR0Ve7jfYEwuKzPq7SuHYEysDHPL6H02VIOO+bUkIPq9cPOukV/R1msA==}
     engines: {node: '>= 12'}
@@ -1810,6 +1855,22 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /astro-relative-links@0.3.4:
+    resolution: {integrity: sha512-wM+zvAL7jSy2X4+VZ0dxCaPlWhtINdiOn/zs5txlySCN7qySInQpeuQ0TLPLuBk8SEVtMYZdsc+HoWyZoiOubw==}
+    dependencies:
+      astro: 2.4.2
+      glob: 9.3.5
+    transitivePeerDependencies:
+      - '@types/node'
+      - less
+      - sass
+      - sharp
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+    dev: false
 
   /astro@2.4.2:
     resolution: {integrity: sha512-9eZ6YLDkZT0bDBpTjCbJ5ve5Zdxg4Gzre0pTEZvgAZEdKsrVlNi6YQPmV/asb5ikDRXLEhEk30v9hI3Oz1r6ew==}
@@ -3525,6 +3586,16 @@ packages:
       inherits: 2.0.4
       minimatch: 5.1.6
       once: 1.4.0
+
+  /glob@9.3.5:
+    resolution: {integrity: sha512-e1LleDykUz2Iu+MTYdkSsuWX8lvAjAcs0Xef0lNIu0S2wOAzuTxCJtcd9S3cijlwYF18EsU3rzb8jPVobxDh9Q==}
+    engines: {node: '>=16 || 14 >=14.17'}
+    dependencies:
+      fs.realpath: 1.0.0
+      minimatch: 8.0.4
+      minipass: 4.2.8
+      path-scurry: 1.7.0
+    dev: false
 
   /globals@11.12.0:
     resolution: {integrity: sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==}
@@ -5371,6 +5442,13 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       brace-expansion: 2.0.1
+
+  /minimatch@8.0.4:
+    resolution: {integrity: sha512-W0Wvr9HyFXZRGIDgCicunpQ299OKXs9RgZfaukz4qAW/pJhcpUfupc9c+OObPOFueNy8VSrZgEmDtk6Kh4WzDA==}
+    engines: {node: '>=16 || 14 >=14.17'}
+    dependencies:
+      brace-expansion: 2.0.1
+    dev: false
 
   /minimatch@9.0.0:
     resolution: {integrity: sha512-0jJj8AvgKqWN05mrwuqi8QYKx1WmYSUoKSxu5Qhs9prezTz10sxAHGNZe9J9cqIJzta8DWsleh2KaVaLl6Ru2w==}
