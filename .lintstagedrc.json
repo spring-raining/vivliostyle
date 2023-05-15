@@ -1,5 +1,5 @@
 {
   "*.{js,jsx,ts,tsx}": ["organize-imports-cli", "prettier -w", "eslint"],
   "*.{astro}": ["prettier -w --plugin-search-dir=.", "eslint"],
-  "*.{css,html,json,md,mdx,yaml,yml}": ["prettier -w"]
+  "*.{css,html,json,yaml,yml}": ["prettier -w"]
 }
