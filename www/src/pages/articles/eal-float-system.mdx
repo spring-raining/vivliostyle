@@ -5,30 +5,31 @@ title: EPUB Adaptive Layoutを使った雑誌風レイアウト
 
 import CodeExample from '@/components/CodeExample.astro';
 
-# EPUB Adaptive Layout を使った雑誌風レイアウト
+# EPUB Adaptive Layoutを使った雑誌風レイアウト
 
-CSS 組版として取り上げられる機能は、基本的にはブラウザで実装されている（実装されようとしている）標準的な仕様が多いですが、Vivliostyle には組版を実現するもう一つの手段として**EPUB Adaptive Layout**が存在します。
-Vivliostyle は、もともとこの EPUB Adaptive Layout にもとづいた組版処理が実装されていますが、多くの CSS に関する機能が Vivliostyle に実装された今でも EPUB Adaptive Layout 由来の機能が維持されており、また表現力の面で EPUB Adaptive Layout を採用したほうが組版処理が有利なケースが残されています。
+CSS組版として取り上げられる機能は、基本的にはブラウザで実装されている（実装されようとしている）標準的な仕様が多いですが、Vivliostyleには組版を実現するもう一つの手段として **EPUB Adaptive Layout** が存在します。
+Vivliostyleは、もともとこのEPUB Adaptive Layoutにもとづいた組版処理が実装されていますが、多くのCSSに関する機能がVivliostyleに実装された今でもEPUB Adaptive Layout由来の機能が維持されており、また表現力の面でEPUB Adaptive Layoutを採用したほうが組版処理が有利なケースが残されています。
 とりわけ、このドキュメントで紹介するような雑誌のようなレイアウトを実現したい場合は、第一の選択肢になります。
 
-ただし、EPUB Adaptive Layout は Web 上に情報が少ない（というか Vivliostyle 関連でしか使われていない）ということもあり、初心者が使うには難易度が高いです。
-個人的には、可能であれば EPUB Adaptive Layout の使用は避け、CSS Paged Media とした CSS 標準の仕様により近い機能を使うことをおすすめしています。
-その上で、このドキュメントでは EPUB Adaptive Layout をどのようなケースで使うべきか、またより便利に使うための Vivliostyle Theme **eal-float-system** について紹介します。
+ただし、EPUB Adaptive LayoutはWeb上に情報が少ない（というかVivliostyle関連でしか使われていない）ということもあり、初心者が使うには難易度が高いです。
+個人的には、可能であればEPUB Adaptive Layoutの使用は避け、CSS Paged MediaとしたCSS標準の仕様により近い機能を使うことをおすすめしています。
+その上で、このドキュメントではEPUB Adaptive Layoutをどのようなケースで使うべきか、またより便利に使うためのVivliostyle Theme **eal-float-system** について紹介します。
 
-## EPUB Adaptive Layout を使わなくてもできる！ Vivliostyle に実装された CSS の新しい機能
+## EPUB Adaptive Layoutを使わなくてもできる！ Vivliostyleに実装されたCSSの新しい機能
 
-数年前まではモダンブラウザとの CSS の機能の乖離が大きかったものの、2023 年現在 Vivliostyle には多くの CSS に関する機能が実装されました。下記のグラフの通り 2021 年頃からは継続的にコードに変更が加えられており、この期間に CSS に関する様々な機能が追加されています。
+数年前まではモダンブラウザとのCSSの機能の乖離が大きかったものの、2023年現在Vivliostyleには多くのCSSに関する機能が実装されました。
+下記のグラフの通り2021年頃からは継続的にコードに変更が加えられており、この期間にCSSに関する様々な機能が追加されています。
 
 ![Vivliostyle.jsのコントリビュート状況を表したスクリーンショット](/pages/articles/eal-float-system/fig-1.png)
 
-特にここ最近の Vivliostyle を使っていない人にとっては、どこまでが CSS の機能だけでできるかといったことが分かりにくくなっているかもしれません。
-そこで、まずは「組版で実現したいこと」の視点から CSS のみでできることを列挙してみます。
+特にここ最近のVivliostyleを使っていない人にとっては、どこまでがCSSの機能だけでできるかといったことが分かりにくくなっているかもしれません。
+そこで、まずは「組版で実現したいこと」の視点からCSSのみでできることを列挙してみます。
 
 ### ページの端にページ番号をつけたい
 
 ページマージンボックスとページカウンターを使用して設定できます。また、`:left` `:right` 擬似クラスを使って、左ページと右ページでそれぞれ別の場所にページ番号をつけることもできます。
 
-参考：https://vivliostyle.org/ja/tutorials/configure-page-text/
+参考：[チュートリアル④用紙と文字のスタイル | Vivliostyle](https://vivliostyle.org/ja/tutorials/configure-page-text/)
 
 ```css
 @page :left {
@@ -45,7 +46,8 @@ Vivliostyle は、もともとこの EPUB Adaptive Layout にもとづいた組�
 
 ### 特定のページだけ別のレイアウトにしたい
 
-これは以前の Vivliostyle が苦手にしていたことでしたが、[Named Page の実装](https://github.com/vivliostyle/vivliostyle.js/pull/714)により状況が大幅に改善しました。これは、`page` プロパティでその要素を表示するページに対して名前を付ける機能で、例えば各章の 1 ページ目だけ異なるレイアウトにする、タイトルページだけページの余白を無くす、といったことが簡単になっています。
+これは以前のVivliostyleが苦手にしていたことでしたが、[Named Pageの実装](https://github.com/vivliostyle/vivliostyle.js/pull/714)により状況が大幅に改善しました。
+これは、`page` プロパティでその要素を表示するページに対して名前を付ける機能で、例えば各章の1ページ目だけ異なるレイアウトにする、タイトルページだけページの余白を無くす、といったことが簡単になっています。
 
 ```css
 .hyoshi {
@@ -56,10 +58,10 @@ Vivliostyle は、もともとこの EPUB Adaptive Layout にもとづいた組�
 }
 ```
 
-### CSS 内で共通の値を一括で設定したい
+### CSS内で共通の値を一括で設定したい
 
-**CSS 変数** という機能があります。この機能も元々 Vivliostyle にはなかったものですが、今では使えるようになっています！
-さらに、`calc()` のような新しい CSS の機能も使えるようになっているので、ここ一年で CSS の設定の柔軟性は大幅に向上しました。
+**CSS変数** という機能があります。この機能も元々Vivliostyleにはなかったものですが、今では使えるようになっています！
+さらに、`calc()` のような新しいCSSの機能も使えるようになっているので、ここ一年でCSSの設定の柔軟性は大幅に向上しました。
 
 ```css
 :root {
@@ -73,8 +75,8 @@ h1 {
 }
 ```
 
-CSS 変数に関しては以前私が書いた記事もあります。こちらもご覧ください：
-[あなたが知らないかもしれない CSS 変数活用法](https://zenn.dev/spring_raining/articles/f0e58d120ccfae)
+CSS変数に関しては以前私が書いた記事もあります。こちらもご覧ください：
+[あなたが知らないかもしれないCSS変数活用法](https://zenn.dev/spring_raining/articles/f0e58d120ccfae)
 
 ### 複数の段組みでレイアウトしたい
 
@@ -89,7 +91,7 @@ CSS 変数に関しては以前私が書いた記事もあります。こちら�
 
 ### ある要素をページの特定の場所に配置したい
 
-CSS では、要素に対して `float` というプロパティの値を設定すると、その要素が浮動ボックスという通常とは異なる配置になります。この仕様を紙のレイアウトに応用した[CSS Page Floats](https://drafts.csswg.org/css-page-floats/)という仕様があり、Vivliostyle ではそれを実装しています。
+CSSでは、要素に対して `float` というプロパティの値を設定すると、その要素が **浮動ボックス** という通常とは異なる配置になります。この仕様を紙のレイアウトに応用した[CSS Page Floats](https://drafts.csswg.org/css-page-floats/)という仕様があり、Vivliostyle ではそれを実装しています。
 
 例えば、ページの上部に画像を配置したい場合は以下のようにします。
 
@@ -99,40 +101,43 @@ img {
 }
 ```
 
-## EPUB Adaptive Layout の採用を検討する条件
+## EPUB Adaptive Layoutの採用を検討する条件
 
-以上のような多くのアップデートがあった上でも、EPUB Adaptive Layout を採用したほうがよいケースも依然としてあります。
-今の Vivlostyle の機能を振り返った上で、現時点では以下の 2 つの条件を満たすようなレイアウトを実現したい場合にのみ、EPUB Adaptive Layout を採用するのが良さそうという結論になっています。
+以上のような多くのアップデートがあった上でも、EPUB Adaptive Layoutを採用したほうがよいケースも依然としてあります。
+今のVivlostyleの機能を振り返った上で、現時点では以下の2つの条件を満たすようなレイアウトを実現したい場合にのみ、EPUB Adaptive Layoutを採用するのが良さそうという結論になっています。
 
 - 複数の段組で構成される紙面である
 - かつ、段組をまたぎテキストを回り込ませるような要素の配置を多用する
 
-## EPUB Adaptive Layout の概念
+## EPUB Adaptive Layoutの概念
 
-それでは、EPUB Adaptive Layout とは一体どのようなものでしょうか？
+それでは、EPUB Adaptive Layoutとは一体どのようなものでしょうか？
 
-[EPUB Adaptive Layout](https://idpf.org/epub/pgt/)では、**ページマスター**（Page master）というものを用意して、通常の HTML ドキュメントの内容をページマスターに従って再配置するという仕組みで動作しています。
+EPUB Adaptive Layoutでは、**ページマスター**（Page master）というものを用意して、通常のHTMLドキュメントの内容をページマスターに従って再配置するという仕組みで動作しています。
 一つのページマスターには**パーティション**（Partition）と呼ばれるコンテンツを配置するための領域を複数指定しておくことができます。
 そして、ドキュメントの内容を**フロー**（Flow）と呼ばれる情報で分類して、それぞれのフローの内容を順番にパーティションに割り当てていきます。
 
-![EPUB Adaptive Layoutの動作の概要図]()
+<figure>
+<img src="/pages/articles/eal-float-system/fig-2.png" alt="EPUB Adaptive Layoutの動作の概要図" />
+<figcaption>EPUB Adaptive Layoutの動作パイプライン（[EPUB Adaptive Layout Informational Document](https://idpf.org/epub/pgt/)より引用）</figcaption>
+</figure>
 
-EPUB Adaptive Layout の強みは、CSS が通常扱う（組版とは関係ない）スタイルシートとは独立して、ページマスターを用意できる点です。
+EPUB Adaptive Layoutの強みは、CSSが通常扱う（組版とは関係ない）スタイルシートとは独立して、ページマスターを用意できる点です。
 複数のページマスターを用意しておくことで、ベージごとにレイアウトを変えたり、ページ中の意図した場所に要素を配置する、ということがやりやすくなっています。
 また、パーティション同士が重なった場合に後ろにあるパーティションが回り込まれるため、複数の段組で組まれていても他のパーティションを避けた回り込みがやりやすいという点もメリットです。
 
 ただし、ページマスターとフローが独立しているということによる弊害も大きいです。
 あるフローのコンテンツを表示させるためには、そのコンテンツを配置するだけの大きさを持つパーティションを確保しなければなりませんが、コンテンツの大きさによっては他のパーティションの配置と競合することがあります。
 この問題が起きたときの処理は非常に複雑で、処理の結果そのフローのコンテンツを配置できるパーティションが見つからずに消えてしまったり、期待した場所とはぜんぜん違うページに表示されてしまうという問題が起きがちです。
-こういった問題は予測が難しく、EPUB Adaptive Layout を使った設計が難しいという理由の一つになっています。
+こういった問題は予測が難しく、EPUB Adaptive Layoutを使った設計が難しいという理由の一つになっています。
 
-また、もう一つ Vivliostyle の環境で重要な点として、**EPUB Adaptive Layout を使用した場合、CSS Paged Media など組版に関連する CSS の大部分の機能が無効化される**ことも注意が必要です。
-EPUB Adaptive Layout を使用する場合、Vivliostyle が提供する便利な CSS の機能が使えなくなってしまうことも認識しておいてください。
+また、もう一つVivliostyleの環境で重要な点として、**EPUB Adaptive Layoutを使用した場合、CSS Paged Mediaなど組版に関連するCSSの大部分の機能が無効化される** ことも注意が必要です。
+EPUB Adaptive Layoutを使用する場合、Vivliostyleが提供する便利なCSSの機能が使えなくなってしまうことも認識しておいてください。
 
-# spring-raining 式 EAL Flow System
+## spring-raining式EAL Flow System
 
-以上のような弊害があるものの、やはり EPUB Adaptive Layout を使いたくなるケースがあるかもしれません。
-今回は、Vivliostyle で EPUB Adaptive Layout をより簡単に使用するため、**vs-theme-eal-float-system** という Vivliostyle Theme を作成しました。
+以上のような弊害があるものの、やはりEPUB Adaptive Layoutを使いたくなるケースがあるかもしれません。
+今回は、VivliostyleでEPUB Adaptive Layoutをより簡単に使用するため、**vs-theme-eal-float-system** というVivliostyle Themeを作成しました。
 EAL（EPUB Adaptive Layout）を使う上での問題を理解した上で、活用してもらえると幸いです。
 
 テーマをインストールするには、`vivliostyle.config.js` に以下のように設定します。
@@ -171,9 +176,9 @@ module.exports = {
 }
 ```
 
-## EAL Flow System による要素配置
+## EAL Flow Systemによる要素配置
 
-EAL Flow System が実現していることは、**ある程度定型的なパーティションを自動的に作成しておき、そのパーティションに割り当てるためのクラス名を提供する**ことです。
+EAL Flow Systemが実現していることは、**ある程度定型的なパーティションを自動的に作成しておき、そのパーティションに割り当てるためのクラス名を提供する** ことです。
 
 例えば、横書きで書かれたドキュメントで、ある要素をページの右上に配置したい場合、以下のようにします。
 
@@ -181,13 +186,13 @@ EAL Flow System が実現していることは、**ある程度定型的なパ�
 <div class="eal-float-start-end">右上に配置</div>
 ```
 
-また、4 段組で組まれたドキュメントで、ページの下の 2 段目と 3 段目を結合した場所に配置したい場合は以下のようにします。
+また、4段組で組まれたドキュメントで、ページの下の2段目と3段目を結合した場所に配置したい場合は以下のようにします。
 
 ```html
 <div class="eal-float-end-col-2-span-2">ページの下の2段目〜3段目に配置</div>
 ```
 
-EAL Flow System で用意しているクラス名はできるだけ分かりやすくなるように意識したつもりですが、若干慣れが必要かもしれません。使用できるクラス名の詳細について紹介します。
+EAL Flow Systemで用意しているクラス名はできるだけ分かりやすくなるように意識したつもりですが、若干慣れが必要かもしれません。使用できるクラス名の詳細について紹介します。
 
 ### 上下、四隅への配置
 
@@ -206,7 +211,7 @@ EAL Flow System で用意しているクラス名はできるだけ分かりや�
 
 ページの段組の幅に沿わせて配置させる方法です。
 `eal-float-start-col-{number}-span-{number}` または `eal-float-end-col-{number}-span-{number}` の形式で指定します。
-また、以下の表では 4 段組の例までしかありませんが、実際には 6 段組まで用意しています。
+また、以下の表では4段組の例までしかありませんが、実際には6段組まで用意しています。
 
 | クラス名                             | 配置（`start`）                                                                                      | 配置（`end`）                                                                                      |
 | ------------------------------------ | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
@@ -223,7 +228,7 @@ EAL Flow System で用意しているクラス名はできるだけ分かりや�
 
 ### 縦書き時の配置
 
-以上の配置例は文章が横書きで書かれていたときの配置を表していますが、縦書き時は 90° 回転させた位置になることに注意してください。
+以上の配置例は文章が横書きで書かれていたときの配置を表していますが、縦書き時は90度回転させた位置になることに注意してください。
 例えば、`eal-flaot-start-start` は横書き時は左上にありますが、縦書き時は右上に配置されます。
 
 | クラス名                       | 横書き時の配置                                                                                       | 縦書き時の配置                                                                                                |

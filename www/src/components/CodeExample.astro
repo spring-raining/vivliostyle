@@ -1,11 +1,5 @@
 <div>
-  {
-    Astro.slots.has('code') && (
-      <div class="border-2 border-gray-300 p-4 mb-6">
-        <slot name="code" />
-      </div>
-    )
-  }
+  <slot name="code" />
 
   <div
     class="grid place-items-center border-2 border-gray-300 p-4 break-inside-avoid"

@@ -5,20 +5,20 @@ title: Gridレイアウトを使ったページレイアウト
 
 import CodeExample from '@/components/CodeExample.astro';
 
-# Grid レイアウトを使ったページレイアウト
+# Gridレイアウトを使ったページレイアウト
 
-Web デザインの世界では、近年 Grid レイアウトという新しい CSS のレイアウト手法が登場しました。
-この手法は柔軟性のあるレイアウトが可能な点が特徴で、Web デザイナーやフロントエンドエンジニアにとって、Web のデザインを向上させる有力な手段となっています。
+Webデザインの世界では、近年Gridレイアウトという新しいCSSのレイアウト手法が登場しました。
+この手法は柔軟性のあるレイアウトが可能な点が特徴で、Webデザイナーやフロントエンドエンジニアにとって、Webのデザインを向上させる有力な手段となっています。
 
-Grid レイアウトの仕様である CSS Grid Layout Module Level 1 は 2016 年に Candidate Recommendation となり、およそ 2017 年に主要なブラウザでの実装が完了しました。
-Vivliostyle では長らく Grid レイアウトに対応していませんでしたが、Vivliostyle.js v2.17.0（2022 年 7 月 29 日リリース）よりモダンブラウザの大部分の CSS プロパティがサポートされ、Grid レイアウトも使用できるようになりました。
-Web デザインにおいて長年求められてきた機能だけに、非常に強力なレイアウト手法であるため、組版においても活用できる点は多いです。
-このドキュメントでは、Grid レイアウトを使用する際の CSS 組版ならではの考慮点について紹介します。
+Gridレイアウトの仕様であるCSS Grid Layout Module Level 1は2016年にCandidate Recommendationとなり、およそ2017年に主要なブラウザでの実装が完了しました。
+Vivliostyleでは長らくGridレイアウトに対応していませんでしたが、Vivliostyle.js v2.17.0（2022年7月29日リリース）よりモダンブラウザの大部分のCSSプロパティがサポートされ、Gridレイアウトも使用できるようになりました。
+Webデザインにおいて長年求められてきた機能だけに、非常に強力なレイアウト手法であるため、組版においても活用できる点は多いです。
+このドキュメントでは、Gridレイアウトを使用する際のCSS組版ならではの考慮点について紹介します。
 
-## Grid レイアウトの概要
+## Gridレイアウトの概要
 
-Grid レイアウトはその名の通り、グリッドと呼ばれる縦方向と横方向で区切られた領域をベースとしたレイアウト手法です。
-Grid レイアウトは、要素に対して `display: grid` を設定することで適用します。
+Gridレイアウトはその名の通り、グリッドと呼ばれる縦方向と横方向で区切られた領域をベースとしたレイアウト手法です。
+Gridレイアウトは、要素に対して `display: grid` を設定することで適用します。
 
 ```html
 <div class="grid">
@@ -51,22 +51,12 @@ Grid レイアウトは、要素に対して `display: grid` を設定するこ�
   </div>
 
   <div class="relative">
-    <div class="grid grid-cols-3 grid-rows-3 font-bold">
-      <div class="bg-blue-300 p-4 rounded-xl grid place-items-center">
-        Container 1
-      </div>
-      <div class="bg-blue-300 p-4 rounded-xl grid place-items-center">
-        Container 2
-      </div>
-      <div class="bg-blue-300 p-4 rounded-xl grid place-items-center">
-        Container 3
-      </div>
-      <div class="bg-blue-300 p-4 rounded-xl grid place-items-center">
-        Container 4
-      </div>
-      <div class="bg-blue-300 p-4 rounded-xl grid place-items-center">
-        Container 5
-      </div>
+    <div class="grid grid-cols-3 grid-rows-3 font-bold text-xs h-[200px]">
+      <div class="bg-blue-300 px-4 rounded-xl grid place-items-center">Container 1</div>
+      <div class="bg-blue-300 px-4 rounded-xl grid place-items-center">Container 2</div>
+      <div class="bg-blue-300 px-4 rounded-xl grid place-items-center">Container 3</div>
+      <div class="bg-blue-300 px-4 rounded-xl grid place-items-center">Container 4</div>
+      <div class="bg-blue-300 px-4 rounded-xl grid place-items-center">Container 5</div>
     </div>
     <div class="grid absolute inset-0 grid-cols-3 grid-rows-3 pointer-events-none">
       <div class="border-2 border-black border-dashed"></div>
@@ -84,7 +74,7 @@ Grid レイアウトは、要素に対して `display: grid` を設定するこ�
 
 グリッドコンテナの子要素は、デフォルトでは左上から順にグリッドに配置されていきますが、配置される位置も制御できます。
 `grid-column` や `grid-row` プロパティを使って、グリッド内の各アイテムの位置を調整します。
-さらに、グリッドを縦方向や横方向に結合させたり、グリッド間に Gap と呼ばれる隙間を設置することも可能です。
+さらに、グリッドを縦方向や横方向に結合させたり、グリッド間にGapと呼ばれる隙間を設置することも可能です。
 
 <CodeExample>
   <div slot="code">
@@ -118,33 +108,23 @@ Grid レイアウトは、要素に対して `display: grid` を設定するこ�
       <div class="border-2 border-black border-dashed border-t-0 border-l-0"></div>
       <div class="border-2 border-black border-dashed border-t-0 border-l-0"></div>
     </div>
-    <div class="grid relative grid-cols-3 grid-rows-3 gap-3 font-bold p-2">
-      <div class="bg-blue-300 p-4 rounded-xl grid place-items-center col-[1/3]">
-        Container 1
-      </div>
-      <div class="bg-blue-300 p-4 rounded-xl grid place-items-center">
-        Container 2
-      </div>
-      <div class="bg-blue-300 p-4 rounded-xl grid place-items-center col-start-3 row-[1/3]">
-        Container 3
-      </div>
-      <div class="bg-blue-300 p-4 rounded-xl grid place-items-center col-[1/4] row-[3/4]">
-        Container 4
-      </div>
-      <div class="bg-blue-300 p-4 rounded-xl grid place-items-center">
-        Container 5
-      </div>
+    <div class="grid relative grid-cols-3 grid-rows-3 gap-3 font-bold p-2 text-xs h-[200px]">
+      <div class="bg-blue-300 px-4 rounded-xl grid place-items-center col-[1/3]">Container 1</div>
+      <div class="bg-blue-300 px-4 rounded-xl grid place-items-center">Container 2</div>
+      <div class="bg-blue-300 px-4 rounded-xl grid place-items-center col-start-3 row-[1/3]">Container 3</div>
+      <div class="bg-blue-300 px-4 rounded-xl grid place-items-center col-[1/4] row-[3/4]">Container 4</div>
+      <div class="bg-blue-300 px-4 rounded-xl grid place-items-center">Container 5</div>
     </div>
   </div>
 </CodeExample>
 
-これらのプロパティを利用することで、Web ページ上の要素を簡単に配置し、柔軟なレイアウトを実現しています。
+これらのプロパティを利用することで、Webページ上の要素を簡単に配置し、柔軟なレイアウトを実現しています。
 
-## CSS 組版における Grid レイアウト
+## CSS組版におけるGridレイアウト
 
-紙面をレイアウトする CSS 組版は、Web とは異なりスクロールという概念がないため、縦方向（縦書きなら横方向）に物理的なサイズの制限があります。
-このとき、一つのグリッドコンテナを複数ページにまたがって扱おうとするとページ送りの処理で意図しないレイアウトになることが多いため、基本的には 1 ページを一つのグリッドコンテナとみなすと直感的に扱えるかと思います。
-Vivliostyle では、`100vw` をページの横幅、`100vh` をページの縦幅として解釈してくれるため、以下のようにすると（上下左右の余白を除いた）ページの領域全体にグリッドコンテナが配置されます。
+紙面をレイアウトするCSS組版は、Webとは異なりスクロールという概念がないため、縦方向（縦書きなら横方向）に物理的なサイズの制限があります。
+このとき、一つのグリッドコンテナを複数ページにまたがって扱おうとするとページ送りの処理で意図しないレイアウトになることが多いため、基本的には1ページを一つのグリッドコンテナとみなすと直感的に扱えるかと思います。
+Vivliostyleでは、`100vw` をページの横幅、`100vh` をページの縦幅として解釈してくれるため、以下のようにすると（上下左右の余白を除いた）ページの領域全体にグリッドコンテナが配置されます。
 
 ```css
 .grid {
@@ -157,12 +137,12 @@ Vivliostyle では、`100vw` をページの横幅、`100vh` をページの縦�
 ![紙面上のグリッドコンテナのイメージ図](/pages/articles/grid-system/fig-1.svg)
 
 ページを縦方向や横方向に分割できる機能はあたかも段組レイアウトのようですが、グリッドの領域はお互いに重ね合わせることができても、グリッドの領域を四角形以外に形作ることができません。
-そのため、いわゆる文章の流し込み（複数の段組みやページに沿って文章を配置すること）などは Grid レイアウトを使っても表現することはできません。
-Grid レイアウトは、例えば写真集のように、画像や短い文章など一つのグリッド領域で要素が完結するものを柔軟に並べ替えたいときに力を発揮するでしょう。
+そのため、いわゆる文章の流し込み（複数の段組みやページに沿って文章を配置すること）などはGridレイアウトを使っても表現することはできません。
+Gridレイアウトは、例えば写真集のように、画像や短い文章など一つのグリッド領域で要素が完結するものを柔軟に並べ替えたいときに力を発揮するでしょう。
 
-# spring-raining 式 Grid System
+## spring-raining式Grid System
 
-以上の点を考慮した上で、Vivliostyle で Grid レイアウトを扱いやすくした Vivliostyle Theme **vs-theme-grid-system** を作成してみました。
+以上の点を考慮した上で、VivliostyleでGridレイアウトを扱いやすくしたVivliostyle Theme **vs-theme-grid-system** を作成してみました。
 
 テーマをインストールするには `vivliostyle.config.js` に以下のように設定します。
 
@@ -175,9 +155,9 @@ module.exports = {
 };
 ```
 
-テーマをインストールすると、class 名に `grid-page` を指定した要素が 1 ページ全体のグリッドコンテナになります。
+テーマをインストールすると、class名に `grid-page` を指定した要素が1ページ全体のグリッドコンテナになります。
 そして、このグリッドコンテナ以下にそのページに配置したい要素を追加していくことでレイアウトしていきます。
-それぞれの要素は `grid-column` や `grid-row` を設定しても良いですし、`--vs-theme--page-grid-area` という CSS 変数が用意されているのでそれを使って配置しても良いです。
+それぞれの要素は `grid-column` や `grid-row` を設定しても良いですし、`--vs-theme--page-grid-area` というCSS変数が用意されているのでそれを使って配置しても良いです。
 
 ```html
 <div class="grid-page">
@@ -192,10 +172,10 @@ module.exports = {
 
 ## グリッド分割の概念
 
-この Grid System は、デフォルトでは以下のようにグリッドコンテナが分割されています。
+このGrid Systemは、デフォルトでは以下のようにグリッドコンテナが分割されています。
 
 <CodeExample>
-  <div class="grid relative grid-cols-[2.5rem_1fr_2.5rem] grid-rows-[2.5rem_1fr_2.5rem] gap-2 font-bold w-[18rem] h-[22rem]">
+  <div class="grid relative grid-cols-[2.5rem_1fr_2.5rem] grid-rows-[2.5rem_1fr_2.5rem] gap-2 font-bold w-[16rem] h-[20rem]">
     <div class="bg-gray-300 p-4 rounded-md"></div>
     <div class="bg-gray-300 p-4 rounded-md"></div>
     <div class="bg-gray-300 p-4 rounded-md"></div>
@@ -208,7 +188,7 @@ module.exports = {
   </div>
 </CodeExample>
 
-3×3 に分割された領域のうち、上下左右の辺はページの余白に合わせて設定されています。
+3×3に分割された領域のうち、上下左右の辺はページの余白に合わせて設定されています。
 そのため、真ん中のグリッド領域に要素を配置することでページの内側に、それ以外のグリッド領域に要素を配置することでページの外側にはみ出た状態で出力されます。
 
 さらに、以下の `grid-page-cols-2`、`grid-page-rows-3` ようなクラス名を追加することで、上下左右のグリッド領域の大きさを維持したまま中心のグリッドを分割することができます。
@@ -220,7 +200,7 @@ module.exports = {
     ```
   </div>
 
-  <div class="grid relative grid-cols-[2.5rem_1fr_1fr_2.5rem] grid-rows-[2.5rem_1fr_1fr_1fr_2.5rem] gap-2 font-bold w-[18rem] h-[22rem]">
+  <div class="grid relative grid-cols-[2.5rem_1fr_1fr_2.5rem] grid-rows-[2.5rem_1fr_1fr_1fr_2.5rem] gap-2 font-bold w-[16rem] h-[20rem]">
     <div class="bg-gray-300 p-4 rounded-md"></div>
     <div class="bg-gray-300 p-4 rounded-md"></div>
     <div class="bg-gray-300 p-4 rounded-md"></div>
@@ -244,7 +224,7 @@ module.exports = {
   </div>
 </CodeExample>
 
-または、以下のように CSS 変数を使って指定することも可能です。
+または、以下のようにCSS変数を使って指定することも可能です。
 
 ```css
 :root {
@@ -254,11 +234,11 @@ module.exports = {
 ```
 
 グリッド領域を指定する方法には、`1 / 2` のような線番号による指定以外にも、`page-outer` `page-inner` というキーワードを使うこともできます。
-Grid System が用意するグリッドコンテナには、以下のような[名前付きグリッド線](https://developer.mozilla.org/ja/docs/Web/CSS/CSS_Grid_Layout/Layout_using_Named_Grid_Lines)が用意されています。
+Grid Systemが用意するグリッドコンテナには、以下のような[名前付きグリッド線](https://developer.mozilla.org/ja/docs/Web/CSS/CSS_Grid_Layout/Layout_using_Named_Grid_Lines)が用意されています。
 
 <CodeExample>
   <div class="relative">
-    <div class="grid relative grid-cols-[2.5rem_1fr_2.5rem] grid-rows-[2.5rem_1fr_2.5rem] font-bold gap-2 w-[18rem] h-[22rem] p-1">
+    <div class="grid relative grid-cols-[2.5rem_1fr_2.5rem] grid-rows-[2.5rem_1fr_2.5rem] font-bold gap-2 w-[16rem] h-[20rem] p-1">
       <div class="bg-gray-300 rounded-md"></div>
       <div class="bg-gray-300 rounded-md"></div>
       <div class="bg-gray-300 rounded-md"></div>
@@ -269,18 +249,14 @@ Grid System が用意するグリッドコンテナには、以下のような[�
       <div class="bg-gray-300 rounded-md"></div>
       <div class="bg-gray-300 rounded-md"></div>
     </div>
-    <div class="grid absolute inset-0 grid-cols-[3rem_1fr_3rem_8rem] grid-rows-[3rem_1fr_3rem] font-bold w-[26rem] h-[22rem] pointer-events-none">
+    <div class="grid absolute inset-0 grid-cols-[3rem_1fr_3rem_8rem] grid-rows-[3rem_1fr_3rem] font-bold w-[24rem] h-[20rem] pointer-events-none">
       <div class="border-2 border-blue-700 col-[1/4] row-[1/4]"></div>
       <div class="col-[4/5] row-[1/2]">
-        <span class="relative top-4 bg-blue-700 text-white px-2 py-1 rounded-r-lg">
-          page-outer
-        </span>
+        <span class="relative top-4 bg-blue-700 text-white px-2 py-1 rounded-r-lg text-xs">page-outer</span>
       </div>
       <div class="border-2 border-blue-700 col-[2/3] row-[2/3]"></div>
       <div class="col-[3/5] row-[2/3]">
-        <span class="relative top-4 bg-blue-700 text-white px-2 py-1 rounded-r-lg">
-          page-inner
-        </span>
+        <span class="relative top-4 bg-blue-700 text-white px-2 py-1 rounded-r-lg text-xs">page-inner</span>
       </div>
     </div>
   </div>
@@ -301,10 +277,10 @@ Grid System が用意するグリッドコンテナには、以下のような[�
 
 ## 見開きページへの対応
 
-Vivliostyle は、これまで他の組版システムにあるような見開きページ（左右 2 ページが連続したレイアウト）への対応を苦手としてきました。
-今回作成した Grid System は、実験的にこの見開きページに対応するための設定を追加しています。
+Vivliostyleは、これまで他の組版システムにあるような見開きページ（左右2ページが連続したレイアウト）への対応を苦手としてきました。
+今回作成したGrid Systemは、実験的にこの見開きページに対応するための設定を追加しています。
 
-例えば左右 2 ページ全体に一枚の画像を表示させたい場合、以下のようにします。
+例えば左右2ページ全体に一枚の画像を表示させたい場合、以下のようにします。
 
 ```html
 <div class="facing-pages">
@@ -325,16 +301,16 @@ Vivliostyle は、これまで他の組版システムにあるような見開�
 </div>
 ```
 
-まず、クラス名 `facing-pages` の div 要素を配置し、その中に `grid-page` 要素を**2 つ**用意します。
-HTML 上では画像が 2 つ用意されていますが、Vivliostyle で表示するとちゃんと 2 ページに分割された見開きページになっているかと思います。
+まず、クラス名 `facing-pages` のdiv要素を配置し、その中に `grid-page` 要素を**2つ**用意します。
+HTML上では画像が2つ用意されていますが、Vivliostyleで表示するとちゃんと2ページに分割された見開きページになっているかと思います。
 
-ではなぜ同じページを 2 つ用意するのでしょうか？
-これは、Vivliosyle のレイアウト処理に関係しています。
-Vivliostyle では、組版処理の過程で HTML 要素を特定の 1 ページに割り当てていきます。
-そのため、HTML 要素が 1 つだけの場合、どうしても左右いずれかのページにしか表示されなくなります。
-この問題を回避するため、Grid System では全く同じページを 2 つ用意しておきます。
-そして、片方のページは左半分のみ、もう片方のページは右半分のみ表示させる、というレイアウトにより見た目上は 1 つの見開きページとなるようにしています。
+ではなぜ同じページを2つ用意するのでしょうか？
+これは、Vivliosyleのレイアウト処理に関係しています。
+Vivliostyleでは、組版処理の過程でHTML要素を特定の1ページに割り当てていきます。
+そのため、HTML要素が1つだけの場合、どうしても左右いずれかのページにしか表示されなくなります。
+この問題を回避するため、Grid Systemでは全く同じページを2つ用意しておきます。
+そして、片方のページは左半分のみ、もう片方のページは右半分のみ表示させる、というレイアウトにより見た目上は1つの見開きページとなるようにしています。
 
 ![見開きページレイアウトのイメージ図](/pages/articles/grid-system/fig-2.svg)
 
-ちなみに、Vivliostyle 以外では 1 つ目の `grid-page` 以外は非可視化されているので、通常の画面表示でも問題なく表示されます。
+ちなみに、HTML上では要素が2つ存在しますが、CSSの設定でVivliostyle以外での環境では1つ目の `grid-page` 以外は非可視化されているので、通常の画面表示でも問題なく表示されます。

@@ -1,0 +1,53 @@
+---
+layout: '@/layouts/Layout.astro'
+title: 'Vivliostyle Theme: vs-theme-photo-book'
+class: theme-description
+---
+
+# vs-theme-photo-book
+
+Vivliostyle用テーマ `vs-theme-photo-book` は、イラスト集や写真集といった画像を中心としたレイアウトに適したテーマです。
+
+このテーマは[vs-theme-grid-system](https://github.com/spring-raining/vivliostyle-themes/tree/main/themes/grid-system)をベースとして作成されています。
+vs-theme-grid-systemについては、「[Gridレイアウトを使ったページレイアウト](./grid-system)」も参考にしてください。
+
+<div class="screen-only">
+
+### テーマサンプル
+
+* [HTMLを閲覧](/themes/source/photo-book/example/index.html)
+
+</div>
+
+### インストール方法
+
+`vivliostyle.config.js` に以下のように設定します。
+
+```js
+module.exports = {
+  theme: '@spring-raining/vs-theme-photo-book@1',
+};
+```
+
+### 使用方法
+
+メインのコンテンツは全て `main` 要素の中に設置します。
+各ページごとに `grid-page` クラスを設置することで、1ページごとにグリッドコンテナが用意されます。
+
+```html
+<main>
+  <div class="grid-page">1ページ目</div>
+  <div class="grid-page">2ページ目</div>
+</main>
+```
+
+それぞれのグリッドコンテナの中に、[Gridレイアウトを使ったページレイアウト](./grid-system)に従って画像やテキストを配置します。
+
+見開きページを設置するには、まず `facing-pages` クラスを持つ要素を置き、その中に `grid-page` を2つ設置します。
+
+```html
+<div class="facing-pages">
+  <div class="grid-page">見開きページ1ページ目</div>
+  <div class="grid-page">見開きページ2ページ目</div>
+</div>
+```
