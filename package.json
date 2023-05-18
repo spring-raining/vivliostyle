@@ -12,7 +12,8 @@
     "format": "pnpm run format:imports && pnpm run format:prettier",
     "format:imports": "organize-imports-cli ./www/tsconfig.json",
     "format:prettier": "prettier -w . --cache --plugin-search-dir=.",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "version": "changeset version && pnpm install --no-frozen-lockfile"
   },
   "packageManager": "pnpm@8.3.1",
   "engines": {
