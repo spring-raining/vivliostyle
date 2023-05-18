@@ -2,7 +2,12 @@
 @import url(./css/eal.css);
 
 .break-before-page-h {
+  display: block;
   break-before: page;
+}
+
+.break-before-page-v:not(.break-before-page-h) {
+  display: none;
 }
 
 :root {

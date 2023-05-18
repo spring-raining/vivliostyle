@@ -1,7 +1,12 @@
 @import url(./css/basic.css);
 @import url(./css/eal.css);
 
+.break-before-page-h:not(.break-before-page-v) {
+  display: none;
+}
+
 .break-before-page-v {
+  display: block;
   break-before: page;
 }
 
