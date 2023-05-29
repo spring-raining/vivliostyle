@@ -8,7 +8,7 @@
     "preview": "vivliostyle preview"
   },
   "dependencies": {
-    "@spring-raining/vs-theme-magazine": "workspace:*",
+    "@spring-raining/vs-theme-eal-magazine": "workspace:*",
     "@spring-raining/vs-theme-photo-book": "workspace:*",
     "tbf14-theme": "workspace:*",
     "www": "workspace:*"

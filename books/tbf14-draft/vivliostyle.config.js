@@ -31,8 +31,8 @@ module.exports = {
       path: 'node_modules/www/dist/articles/theme-eal-magazine/index.html',
     },
     {
-      path: 'node_modules/@spring-raining/vs-theme-magazine/example/index.md',
-      theme: ['../../themes/eal-float-system', '../../themes/magazine'],
+      path: 'node_modules/@spring-raining/vs-theme-eal-magazine/example/index.md',
+      theme: ['../../themes/eal-float-system', '../../themes/eal-magazine'],
     },
     {
       path: 'manuscripts/99_atogaki.md',
@@ -49,7 +49,7 @@ module.exports = {
   workspaceDir: '.vivliostyle',
   includeAssets: [
     'node_modules/www/dist/**/*',
-    'node_modules/@spring-raining/vs-theme-magazine/example/assets/**/*',
+    'node_modules/@spring-raining/vs-theme-eal-magazine/example/assets/**/*',
     'node_modules/@spring-raining/vs-theme-photo-book/example/assets/**/*',
   ],
 };
