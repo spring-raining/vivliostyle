@@ -33,6 +33,9 @@
     "vivliostyle-theme"
   ],
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "vivliostyle": {
     "theme": {
       "name": "Grid system",

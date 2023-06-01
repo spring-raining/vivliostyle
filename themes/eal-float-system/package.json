@@ -30,6 +30,9 @@
     "vivliostyle-theme"
   ],
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "vivliostyle": {
     "theme": {
       "name": "EPUB Adaptive Layout float system",
