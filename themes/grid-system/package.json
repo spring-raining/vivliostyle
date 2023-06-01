@@ -1,7 +1,7 @@
 {
   "name": "@spring-raining/vs-theme-grid-system",
   "description": "description",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": "spring-raining <harusamex.com@gmail.com>",
   "scripts": {
     "build": "vivliostyle build",
