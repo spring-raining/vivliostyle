@@ -1,0 +1,20 @@
+{
+  "name": "tbf15-theme",
+  "version": "0.1.0",
+  "author": "spring-raining <harusamex.com@gmail.com>",
+  "private": true,
+  "main": "theme.css",
+  "dependencies": {
+    "@vivliostyle/theme-base": "1"
+  },
+  "license": "MIT",
+  "vivliostyle": {
+    "theme": {
+      "name": "tbf15",
+      "author": "spring-raining <harusamex.com@gmail.com>",
+      "style": "./theme.css",
+      "category": "misc",
+      "topics": []
+    }
+  }
+}

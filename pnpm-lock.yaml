@@ -68,6 +68,15 @@ importers:
         specifier: workspace:*
         version: link:../../www
 
+  books/tbf15-draft:
+    dependencies:
+      tbf15-theme:
+        specifier: workspace:*
+        version: link:../../themes/tbf15
+      www:
+        specifier: workspace:*
+        version: link:../../www
+
   themes/eal-float-system:
     dependencies:
       '@vivliostyle/cli':
@@ -128,6 +137,12 @@ importers:
       '@vivliostyle/theme-techbook':
         specifier: beta
         version: 1.0.0-beta.1(@vivliostyle/cli@8.5.0)
+
+  themes/tbf15:
+    dependencies:
+      '@vivliostyle/theme-base':
+        specifier: '1'
+        version: 1.0.0(@vivliostyle/cli@8.5.0)
 
   www:
     dependencies:
@@ -2448,6 +2463,17 @@ packages:
       - bufferutil
       - supports-color
       - utf-8-validate
+
+  /@vivliostyle/theme-base@1.0.0(@vivliostyle/cli@8.5.0):
+    resolution: {integrity: sha512-DKYJJ8SwCFm1zuPYJiIQsf4zZigfx7k8tuHLQ2LjSN/fjb9AcifwhVyIFOS6nfgy4RJlY4sO3Gx+Xy7cezLuLg==}
+    peerDependencies:
+      '@vivliostyle/cli': '>=7'
+    peerDependenciesMeta:
+      '@vivliostyle/cli':
+        optional: true
+    dependencies:
+      '@vivliostyle/cli': 8.5.0
+    dev: false
 
   /@vivliostyle/theme-base@1.0.0-beta.1(@vivliostyle/cli@7.2.5):
     resolution: {integrity: sha512-mGDreDuIwTbg3pB4V6I8n8ri2KRl/POzkt6Gs8iIbnEIn1Lfuy2h18bTXkFRyUxm01/zeHHtM1MNdgavjaBm8A==}

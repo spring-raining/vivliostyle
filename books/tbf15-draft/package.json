@@ -1,0 +1,17 @@
+{
+  "name": "tbf-15draft",
+  "description": "tbf15-draft",
+  "version": "0.0.0",
+  "author": "spring-raining <harusamex.com@gmail.com>",
+  "type": "module",
+  "scripts": {
+    "build": "vivliostyle build",
+    "preview": "vivliostyle preview"
+  },
+  "dependencies": {
+    "tbf15-theme": "workspace:*",
+    "www": "workspace:*"
+  },
+  "license": "CC-BY-3.0",
+  "private": true
+}

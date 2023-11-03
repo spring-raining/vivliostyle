@@ -1,0 +1,5 @@
+@import url(node_modules/@vivliostyle/theme-base/theme-all.css);
+
+:root {
+  --vs-color-body: blue;
+}
