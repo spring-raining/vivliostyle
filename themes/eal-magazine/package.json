@@ -13,7 +13,6 @@
     "@vivliostyle/theme-base": "beta"
   },
   "devDependencies": {
-    "@vivliostyle/cli": "^7.2.5",
     "vivliostyle-theme-scripts": "^0.3.5"
   },
   "peerDependencies": {

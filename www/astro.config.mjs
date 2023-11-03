@@ -11,4 +11,10 @@ export default defineConfig({
     syntaxHighlight: 'prism',
   },
   integrations: [mdx(), tailwind(), relativeLinks()],
+
+  vite: {
+    optimizeDeps: {
+      exclude: ['fsevents', '@napi-rs/canvas-darwin-x64'],
+    },
+  },
 });

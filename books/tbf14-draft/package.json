@@ -13,9 +13,6 @@
     "tbf14-theme": "workspace:*",
     "www": "workspace:*"
   },
-  "devDependencies": {
-    "@vivliostyle/cli": "^7.2.5"
-  },
   "license": "CC-BY-3.0",
   "private": true
 }

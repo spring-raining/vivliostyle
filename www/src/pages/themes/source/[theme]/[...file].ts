@@ -23,11 +23,11 @@ export async function getStaticPaths() {
         return { theme, ...out };
       })
     )
-  ).flatMap(({ theme, workspaceDir, files }) =>
+  ).flatMap(({ theme, outputDir, files }) =>
     files.map((file) => ({
       params: { theme, file: slash(file) },
       props: {
-        filePath: path.join(workspaceDir, file),
+        filePath: path.join(outputDir, file),
       },
     }))
   );
