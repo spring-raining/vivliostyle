@@ -1,0 +1,86 @@
+---
+title: Webと出版物のハイブリッド開発とは？
+pubDate: 2023-11-11
+order: 10
+theme:
+  - /modules/tbf15-theme/theme.css
+class: part right-side-start
+---
+
+import Anchor from '@/components/tbf15/Anchor.astro';
+import Column from '@/components/tbf15/Column.astro';
+import Footnote from '@/components/tbf15/Footnote.astro';
+import Point from '@/components/tbf15/Point.astro';
+import URL from '@/components/tbf15/URL.astro';
+
+# Webと出版物のハイブリッド開発とは？
+
+突然ですが、出版物とWebページとの共通点について考えたことはあるでしょうか？ 両者は紙と電子デバイス、別々のメディアをターゲットにしており、DTPデザイナーとWebデザイナー・エンジニアでは全く違う職種のようですが、私見ではこの2つはそう遠くない位置にいると思っています。例えば、電子出版のフォーマットの一つであるEPUBは、Webの技術の元に成り立っており、その制作はほとんどWebページの制作といっても良いです。
+
+これから本書では出版物、すなわち印刷することを目的とした成果物と、Webページを同時に制作するための方法について紹介します。この章の内容を読み進めていくことで、両者は決して異なる領域ではなく、多くの面で共通の知識が使い回せるということについて理解してもらえると思います。
+
+## CSS組版による出版物の制作
+
+組版とは、コンテンツを印刷できる状態にレイアウトする作業のことを指し、レイアウトされたもののこと版下と呼びます。デジタルデータの組版には様々な方法がありますが、このレイアウトのための技術に、Webページのスタイルを決めるCSS（Cascading Style Sheet）を使ったものが **CSS組版** です。言葉で表すと難しく感じますが、要するにWebページとして見ている内容をそのままPDFとして出力したものが版下になるのです。
+
+CSS組版を実践する最も単純な方法は、印刷したい内容をWebページとして作り、ブラウザの印刷機能を使うことです。しかし、複雑な出版物をブラザの機能だけで実現するのは難しいことです。**Vivliostyle** は、そのような複雑な出版物の制作をサポートするためのツールです。
+
+## Astroについて
+
+本書のもう一つのトピックである **Astro** も紹介しましょう。Astroは、Webサイトを作るためのフロントエンドフレームワークです。Webサイトを作る際には、HTMLやCSS、JavaScriptといった技術を使い、CSS組版はこれらのWebサイトを作る際の技術を応用したものです。Astroをはじめとしたフレームワークは、より簡単にWebサイトを作るために使われるものです。
+
+<URL href="https://astro.build/">Astroの公式サイト</URL>
+
+![Astro公式サイトのスクリーンショット](/pages/articles/tbf15/10_a-screenshot-of-astro-homepage.png)
+
+[Astroの公式ドキュメント](https://docs.astro.build/ja/getting-started/)では、Astroについて「**コンテンツにフォーカスした高速なWebサイト**を構築するための**オールインワンWebフレームワーク**」と紹介されています。ここで言う「コンテンツ」とはつまり「原稿」のことで、Astroの持つコンテンツメインのWebサイトの作りやすさを利用することで、CSS組版の出版物も作りやすい環境を構築しようという発想により、出版物とのコンテンツの一元化を実現しています。
+
+## Astroを使う理由
+
+Web開発の世界では、Astro以外にも多くのフロントエンドフレームワークがあります。その中でも、今回Astroを採用した理由はいくつかあります。
+
+### デフォルトでMPAとしてビルドされる
+
+ある複数のページを持つWebサイトを作って公開しようとする際、最もシンプルな方法はそれぞれのページごとにHTMLファイルを作ることです。一方で、Webの表現をよりリッチにするために、異なる方法で複数のページを管理する手段が生まれてきました。最近は（といっても少なくとも10年以上前ですが）、JavaScriptを駆使して一つのHTMLファイルで複数のページを制御するシングルページアプリケーション（SPA）という方法が広く普及しており、現代のフレームワークはデフォルトで、あるいは選択肢の一つとして、SPAがビルド（Webページの公開前にHTML/CSS/JavaScriptを作成）されるようになっています。
+
+ところが、CSS組版とSPAをビルドするフレームワークはとても相性が悪いです。本来、CSS組版はHTMLとCSSを用意するだけで良いのですが、SPAはWebページを読み込んでからJavaScriptを使ってHTMLを生成するので、CSS組版ソフトウェアがJavaScriptを実行する必要があります。たとえJavaScriptを実行したとしても、その分だけビルド時間が伸びることになりますし、JavaScriptの実行後に組版ソフトウェアがレンダリングするタイミングの決定など、問題が多く残されています。VivliostyleではJavaScriptの実行に対応していますが、それでも個人的にはSPAのページをVivliostyleに読み込ませることはおすすめできません。
+
+<Column>
+
+<span slot="title">SPA以外の手段が見直された理由</span>
+
+CSS組版との相性の悪さ以外にも、SPAはページの表示速度などのパフォーマンスやSEO（検索エンジン最適化）に対する悪影響も指摘されています。Googleなどの検索エンジンは、クローラと呼ばれるWebページの自動収集プログラムによってあらかじめWebページの内容を取得していますが、SPAではクローラがJavaScriptを実行することができず、コンテンツが正しくインデックスされない場合があります。こういった問題を解決するため、サーバーサイドレンダリング（SSR）などSPAの利点を維持した別の解決策も生まれました。
+
+</Column>
+
+Astroは、SPAをビルドする他のフレームワークとは異なりマルチページアプリケーション（MPA）、すなわちページごとに複数のHTMLファイルを作るフレームワークです。ある意味では従来のシンプルな方法に逆戻りしたとも言えますが、Astroでは明確な意志を持ってこのような方法を採用しており、Webページに使われている技術も決してMPAがSPAと比べて劣っているということはありません。Astroの開発者がCSS組版を意識してMPAを採用したのかはわかりませんが、結果としてAstroは他のフレームワークと比べて格段にCSS組版のワークフローに組み込みやすくなっています。
+
+### 直感的なCSS-in-JS実装
+
+フロントエンドフレームワーク以外にも、CSSをどのように取り扱うかについても様々な方法があります。古典的にはCSSファイルを用意してスタイルを書いていきますが、そのような方法だけを推奨するフロントエンドフレームワークはほとんどなく、多くはJavaScriptファイルの中で直接CSSのスタイルを指定する方法（CSS-in-JSと呼ばれています）が採用されています。
+
+Astroも同様に、ビルトインのCSS-in-JS実装を提供しています。Web開発の経験がない人にとっては、CSSだけでなくJavaScriptを組み合わせることに抵抗がある方もいるかも知れません。ただ、AstroのCSS-in-JSはJavaScirptの部分がうまく隠されており、そこまで意識することなくCSS-in-JSの利点を得られます。
+
+### ドキュメント記法が用途で選べる
+
+Astroはドキュメントの記述環境を重視しており、シンプルなHTMLファイル以外に、Astroテンプレート（`.astro` ファイル）、Markdown、MDX、JavaScript/TypeScript（JSX/TSX）などのファイルでコンテンツを作成することができます。用途によって使い分けても良いですし、もちろん全てを使用する必要もありません。
+
+なお、VivliostyleではMarkdownの文法に出版物の執筆のための機能を加えたVFM（Vivliostyle Flavored Markdown）というフォーマットを提供していますが、本書で紹介する方法ではVFMは使用しません。この理由については、<Anchor article="tbf15/30_原稿を書く" secTitle="MDXで執筆する" />で説明しています。
+
+## Vivliostyleについて
+
+![Vivliostyle公式サイトのスクリーンショット](/pages/articles/tbf15/10_a-screenshot-of-vivliostyle-homepage.png)
+
+CSS組版を実現するライブラリVivliostyleは、いくつかのツールによって構成されています。その中で、今回の開発ワークフローに組み込む際に一番取り扱うのは **Vivliostyle CLI** です。Vivliostyle CLIは、Vivliostyleをコマンドライン経由で取り扱ったり、大規模な出版物の管理に使うためのNode.jsライブラリです。
+
+<URL href="https://vivliostyle.org/ja/">Vivliostyleの公式サイト</URL>
+
+<URL href="https://github.com/vivliostyle/vivliostyle-cli">Vivliostyle CLI GitHubプロジェクトページ</URL>
+
+このドキュメントを書くにあたり、Vivliostyle CLIに不足していたいくつかの機能を追加したバージョン8.5.0をリリースしました。すでにVivliostyle CLIをインストールしている方は、バージョンが8.5.0以上であることを確認してください。
+
+<style>{`
+p > img {
+  max-inline-size: 80%;
+}
+`}</style>

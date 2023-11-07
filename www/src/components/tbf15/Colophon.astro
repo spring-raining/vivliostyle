@@ -1,0 +1,89 @@
+---
+export interface Props {
+  title: string;
+  editions?: {
+    date: Date | string;
+    description: string;
+  }[];
+  info?: {
+    key: string;
+    value: string;
+  }[];
+}
+
+const { title, editions = [], info = [] } = Astro.props;
+---
+
+<section class="colophon" data-component="Colophon">
+  <h2>{title}</h2>
+
+  <ul class="editions">
+    {
+      editions.map(({ date, description }) => (
+        <li>
+          <time datetime={new Date(date).toISOString().split('T')[0]}>
+            {new Date(date).toLocaleString('ja-JP', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </time>
+          {description}
+        </li>
+      ))
+    }
+  </ul>
+
+  <div class="info">
+    {
+      info.map(({ key, value }) => (
+        <>
+          <div>{key}</div>
+          <div>{value}</div>
+        </>
+      ))
+    }
+  </div>
+
+  <div class="copyright">© Vivliostyle User Group</div>
+</section>
+
+<style>
+  .colophon {
+    --vs--h2-font-size: 1.4rem;
+    position: relative;
+    float: block-end;
+    float-reference: page;
+    margin-bottom: 0;
+  }
+
+  .editions {
+    margin: 0.5rem 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .editions time {
+    display: inline-block;
+    width: 12rem;
+  }
+
+  .info {
+    display: grid;
+    grid-template-columns: 6rem 1fr;
+    grid-auto-rows: min-content;
+    gap: 0.5rem;
+    border-top: 2px solid;
+    border-bottom: 1px solid;
+    border-color: var(
+      --vs--hr-border-color,
+      var(--vs-border-color, currentColor)
+    );
+    padding: 0.5rem 0;
+    white-space: pre-wrap;
+  }
+
+  .copyright {
+    margin: 0.5rem 0;
+  }
+</style>

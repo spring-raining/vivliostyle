@@ -1,0 +1,335 @@
+---
+title: CSSでデザインする
+pubDate: 2023-11-11
+order: 50
+theme:
+  - /modules/tbf15-theme/theme.css
+class: part right-side-start
+---
+
+import Anchor from '@/components/tbf15/Anchor.astro';
+import Column from '@/components/tbf15/Column.astro';
+import Footnote from '@/components/tbf15/Footnote.astro';
+import Point from '@/components/tbf15/Point.astro';
+import URL from '@/components/tbf15/URL.astro';
+
+# CSSでデザインする
+
+この章では、作成したコンテンツに対してスタイルを適用する方法について解説します。Webと出版物を同時に編集する場合、原稿データについては積極的に内容を共有するべきですが、スタイルシートに関しては必ずしも共有するのが良いとは限らないケースがあります。両者の媒体の特徴に応じて、共通のスタイルシートとWeb/出版物専用のスタイルシートそれぞれを上手く管理できるようにしましょう。
+
+## Web向けのCSSを編集する
+
+AstroでCSSを編集するにはいくつかの方法があります。これまでいくつかのAstroファイルを見てきた中ですでにお気づきの通り、コンポーネントテンプレートの中に直接 `<style>` タグで記述する方法もその中の一つです。また、 `<link>` タグで他のCSSファイルを指定する方法と `import 'style.css'` のようにコンポーネントスクリプト内でインポートする方法もあります。それぞれの方法の違いについて見ていきます。
+
+### `<style>` タグで記述
+
+Astroファイルのコンポーネントテンプレートの中に `<style>` タグを使ってCSSを書く方法です。この方法のポイントは、CSSに対して **スコープが適用される** 点です。スコープが適用されると、同じAstroファイル内にだけCSSセレクタが適用されるように、CSSが自動的に書き換えられます。
+
+スコープについて例を紹介します。以下のようなAstroファイルについて考えます。
+
+```astro
+<style>
+  h1 {
+    color: red;
+  }
+  .text {
+    color: blue;
+  }
+</style>
+<h1>aaa</h1>
+<div class="text">bbb</div>
+```
+
+このコンポーネントは、ビルドされると以下のように変換されます。
+
+```html
+<style>
+  h1[data-astro-cid-6d7mwtum] {
+    color: red
+  }
+  .text[data-astro-cid-6d7mwtum] {
+    color: blue
+  }
+</style>
+<h1 data-astro-cid-6d7mwtum>aaa</h1>
+<div class="text" data-astro-cid-6d7mwtum>bbb</div>
+```
+
+それぞれのタグやセレクタに `data-astro-cid-*` というランダムなdata属性が付与されました。これがAstroのCSSのスコープ機能です。スコープ機能により、コンポーネント内で使用されたCSSがコンポーネントの外の要素に適用されないようになります。
+
+この特徴から、 `<style>` タグにCSSを記述する方法は、そのファイル内で閉じたスタイルを適用したい場合に使います。
+
+### コンポーネントスクリプト内で別ファイルのCSSをインポート
+
+Astroでは、コンポーネントスクリプト内で以下のようにCSSをインポートすることができます。インポートする際は、JavaScript/TypeScriptのときと同じように相対パスで指定したり、 `@/` のようなエイリアスが使えます。
+
+```ts
+import './style.css';
+import '@/styles/global.css';
+```
+
+インポートされた時点で、そのCSSのすべての内容が適用されます。また、上記のようなスコープは適用されません。つまり、インポートしたCSSの内容が他のコンポーネントにも影響します。
+
+### `<link>` タグで別ファイルのCSSを指定
+
+似たような方法として、`<link>` タグで指定することもできます。こちらの方法も、CSSのスコープ機能は適用されず、指定したCSSの内容がそのまま適用されます。
+
+```astro
+<link rel="stylesheet" href="/style/global.css" />
+```
+
+コンポーネントスクリプト内でインポートする方法とは、ビルド結果の点で違いがあります。コンポーネントスクリプトでインポートされたCSSは、ビルド時にCSSの内容を読み込み、その内容を最適化した上でHTMLに埋め込みます。そのため、ビルド時に参照したCSSが見つからない場合エラーが発生します。
+
+一方で、 `<link>` タグで別ファイルのCSSをインポートした場合、CSSの内容は参照されずに `<link>` タグがそのままの状態でHTMLのビルド結果に反映されます。CSSを用意しないままビルドをしてもエラーにはなりませんが、ブラウザでページを表示しようとしたときに参照したCSSを読み込めずスタイルは適用されません。
+
+なお、 `www/src` の中にあるCSSファイルは、ビルド結果からは全て削除されます。そのため、上記の `<link>` タグの例で正しくCSSファイルを読み込ませるためには、 `www/src/styles/global.css` ではなく `www/public/styles/global.css` にCSSファイルを置く必要があります。
+
+## 出版物向けのCSSを編集する
+
+Vivliostyle CLIには、出版物向けのMarkdownファイルやHTMLファイルにスタイルシートを適用するテーマ機能があります。出版物向けのCSSを編集する際は、基本的にこの機能を使います。
+
+### vivliostyle.config.jsでのテーマ設定
+
+Vivliostyle CLIでは、「テーマ」とはCSSファイル単体とパッケージされたVivlostyle Themeの両方を指します。その指定方法によって、読み込むテーマのタイプが変わります。
+
+- `'./theme.css'` ：ローカルディレクトリにある単体のCSSファイル `theme.css` を読み込む
+- `'./path/to/my-theme'`：ローカルディレクトリにあるVivlioistyle Theme `my-theme` を読み込む
+- `'my-theme'` ：npmパッケージとして公開されたVivliostyle Theme `my-theme` を読み込む
+- `'@vivlostyle/theme-base'` ：npmパッケージとして公開されたVivliostyle Theme `@vivliostyle/theme-base` を読み込む
+
+Vivliostyle Themeのパッケージを用意するためには、最低限 `package.json` ファイルを用意して、その中に以下のように設定を含める必要があります。
+
+```json package.json
+{
+  …………
+  "vivliostyle": {
+    "theme": {
+      "name": "my-book-theme", // テーマ名
+      "author": "", // テーマの作者
+      "style": "./theme.css", // デフォルトで読み込ませるCSSファイル
+      "category": "misc", // テーマの主な用途を示すカテゴリ
+      "topics": [] // テーマのトピック: より詳しいテーマの説明
+    }
+  }
+}
+```
+
+テンプレートに用意されている `themes/my-book-theme` はこの仕様を満たしているため、パッケージされたVivliostyle Themeとして扱うことができます。Vivliostyle Themeの仕様については以下のURLを参照してください。
+
+<URL href="https://vivliostyle.github.io/themes/#/ja/spec">仕様 - Vivliostyle Themes</URL>
+
+出版物全体に対してテーマを適用する場合、以下のように `theme` に指定してください。複数のテーマがある場合、上から順に適用されます。
+
+```js vivliostyle.config.js
+export default {
+  theme: [
+    '@vilviostyle/theme-base',
+    'my-theme',
+    'style.css',
+  ],
+  entry: [
+    {
+      path: 'manuscript/01_maegaki.md',
+      // 特定のEntryに対してだけテーマを適用
+      theme: ['custom-theme.css'],
+    },
+    …………
+  ],
+  …………
+}
+```
+
+### @vivliostyle/theme-baseを使ったCSSテーマ
+
+すでに紹介した通り、テンプレートには `themes/my-book-theme` ディレクトリに設定済みのVivliostyle Themeが用意されています。この中の `theme.css` には、以下のようなCSSが入っています。
+
+```css themes/my-book-theme/theme.css
+@import url(https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700);
+@import url(../@vivliostyle/theme-base/theme-all.css);
+
+:root {
+  --vs-font-family: 'Noto Sans JP', sans-serif;
+  --vs-color-body: darkblue;
+}
+```
+
+短いCSSですが、これだけだとどういったスタイルが適用されているか分かりにくいかもしれません。
+
+1行目は、Web上でフォントを提供するGoogle FontsからWebフォントを読み込むためのimport文です。これにより、 `Noto Sans JP` フォントが使えるようになっています。
+
+<URL href="https://fonts.google.com/">Google Fonts公式サイト</URL>
+
+2行目では、別のVivliostyle Themeである `@vivliostyle/theme-base` を読み込んでいます。このテーマは、Vivliostyleが提供する「**テーマを作るためのベースとなるテーマ**」です。このテーマは一体どういったものでしょうか？
+
+`@vivliostyle/theme-base` は、それ自体ではほとんど見た目に変化を与えません。その代わりに、各要素セレクターのプロパティにさまざまな **CSS変数** を与えています。CSS変数は別のCSSで後から変更することができるプロパティのことで、 `--vs` で始まる名前のCSS変数が設定されています。 `themes/my-book-theme` では、このCSS変数を書き換えることでスタイルを適用しているのです。
+
+このテーマの使い方については、別途リリースブログも書いていますのでそちらも確認してみてください。 `@vivliostyle/theme-base` の使用は必須ではありませんが、テーマを作る上でぜひ活用してもらいたいと思っています。
+
+<URL href="https://vivliostyle.org/ja/blog/2023/04/23/intro-new-themes/">新しい Vivliostyle Themes のご紹介 | Vivliostyle</URL>
+
+`@vivliostyle/theme-base` が適用されていることをわかりやすくするため、`my-book-theme` ではあらかじめ `--vs-color-body` に `darkblue` を設定して文字の色を変えています。このCSS変数を編集してみて、文字色も同時に変わることを確認してみましょう。
+
+## Webと出版物でCSSを共有する
+
+以上の内容は、Webと出版物、それぞれ別々にスタイルを適用する場合についての方法でした。実際には、Webと出版物で同じようなスタイルにしたいというケースが多いかと思います。
+
+Webと出版物でCSSを共有する方法は、どういったWebページを公開したいかによって変わってくるのでケースバイケースです。そのため体系化された解説はできませんが、ここではスタイルを共有する方法についてのアイディアをいくつか紹介します。
+
+### テーマを読み込む
+
+上記の通り、Vivliostyle Themeの実態はCSSファイルです。そのため、作成したVivliostyle ThemeはそのままWebページに読み込むことができます。
+
+AstroからテーマのCSSファイルを読み込めるようにするため、Astroプロジェクトにもう一つファイルを用意しています。`www/src/pages/modules/[...file].ts` ファイルを見てみてください。
+
+```ts www/src/pages/modules/[...file].ts
+const targetModules = [
+  '@vivliostyle/theme-base/package.json',
+  '@vivliostyle/viewer',
+  'my-book-theme',
+];
+
+…………
+
+export const getStaticPaths = () =>
+  collectTargetFiles().then((xs) =>
+    xs.map((props) => ({ params: { file: props.file }, props }))
+  );
+
+export const GET: APIRoute<Props> = async ({ props }) => {
+  return new Response(await fs.promises.readFile(props.absPath));
+};
+```
+
+このファイルではAstroのエンドポイント機能を使用して、1〜4行目の `targetModules` で列挙したnpm packageにあるファイルを提供しています。コードの詳細な説明は省きますが、このファイルで `@vivliostyle/theme-base` と `@vivliostyle/viewer`、`my-book-theme` の3つのパッケージの内容をWebページからアクセスできるようにしています。たとえば、`my-book-theme` パッケージの `theme.css` ファイルを読み込むには、以下の `<link>` タグを追加します。
+
+```html
+<link rel="stylesheet" href="/modules/my-book-theme/theme.css">
+```
+
+これで、出版物に適用していたテーマと同様のスタイルがWebページにも適用されます。もしWebと出版物で似たような見た目を維持したい場合は、これが第一の選択肢になるでしょう。
+
+<Point>
+
+<span slot="title">Point</span>
+
+`www/src/pages/modules/[...file].ts` で提供するファイルは、Astroの開発サーバーが起動中にファイルが変更されたときに自動的にページを再読込するようになっています（実装の詳細はプラグインのソースコード `www/plugins/watch-module-files.ts` を見てください）。もし `targetModules` に別のnpm packageを加える場合は、`www/package.json` のdependencyにも同じ名前のパッケージを加えて `pnpm i` するようにしてください。そうしないと、ビルドに失敗したり編集時のページ再読み込みが効かなくなってしまいます。
+
+</Point>
+
+もしテーマファイル内で `@vivliostyle/theme-base` を使用している場合は、`--vs` で始まる名前のCSS変数がAstro側でも編集できることをぜひ知っておいてください！ 同じテーマファイルを参照したまま、Webと出版物で違うバリエーションを用意するためのかしこい方法です。
+
+```astro
+<link rel="stylesheet" href="/modules/my-book-theme/theme.css">
+<style>
+  :root {
+    --vs-font-size: 24px;
+  }
+</style>
+<!-- define:vars ディレクティブ経由でも設定できます -->
+<style define:vars={{'vs-color-body': 'red'}}></style>
+```
+
+<Point>
+
+<span slot="title">Point</span>
+
+Vivliostyle ThemeはCSSファイルであると同時に、npm packageでもあります。そのため、 `<link>` タグで読み込む方法以外にも、実は以下のようにコンポーネントスクリプト内で読み込むことも可能です。
+
+```tsx
+import 'my-book-theme';
+```
+
+ただ、この方法を採用する際は慎重に検討する必要があります。この方法でインポートしたCSSは、Astroのビルド時にCSSの内容を読み取り、その内容を最適化します。しかし、Vivliostyle ThemeのCSSにはWeb表示に必要なスタイル以外にも、Vivliostyleのレンダリング時にのみに適用される特殊なCSSもあります。そのようなCSSは、ビルド時の最適化のタイミングで省かれる可能性があり、Vivliostyleでのレンダリング時に同じ結果になることが保証できません。
+
+</Point>
+
+### インポートしたCSSの詳細度を制御する
+
+以上の方法を試してもなお、うまくテーマのスタイルシートが適用されないケースがあります。例えば、以下のように `BaseHead` コンポーネントと一緒に使った場合などです。
+
+```html
+<BaseHead title={title} description={SITE_DESCRIPTION} />
+<link rel="stylesheet" href="/modules/my-book-theme/theme.css">
+```
+
+そのような場合、テーマのスタイルシートがインポートした他のCSSの内容に上書きされている可能性があります。 `BaseHead` コンポーネントの中では `import '@/styles/global.css'` のように他のCSSを読み込んでおり、この `global.css` がテーマのスタイルシートを上書きしてしまっているためです。Astroでは、 `<link>` タグで読み込んだCSSよりもインポートしたCSSが後に出現する仕様になっているため、テーマ側からは優先度を制御することができません。
+
+これはなかなか難しい問題です。テーマのスタイルシートもコンポーネントスクリプト内で読み込むようにすれば解決しますが、上で述べた通りその方法は使えません。ややトリッキーですが、CSSの **カスケードレイヤー** の作成機能を利用して解決する方法を紹介します。
+
+この問題を解決するためには、 `global.css` の内容を以下のように `@layer global` の中に含めるようにします。
+
+```css www/src/styles/global.css
+@layer global {
+  …………
+}
+```
+
+すると、このCSSの内容はglobalという名前の新しいカスケードレイヤーに含まれます。レイヤーに含まれるスタイルは、レイヤーの外にあるスタイルよりも優先度が低くなる決まりがあるため、この時点でテーマのスタイルシートの内容が優先して適用されるようになります。
+
+逆に、テーマのスタイルシートではなく `global.css` の内容を優先させたい場合は、テーマのCSSファイルを読み込んでいる `<link>` タグを取り除いた上で以下のような `<style>` タグを追加します。
+
+```astro
+<style is:inline>
+  @layer theme, global;
+  @import url(/modules/my-book-theme/theme.css) layer(theme);
+</style>
+```
+
+`is:inline` はAstroに `<style>` タグ内の内容を最適化しないようにするための指示です。タグ内の `@layer theme, global;` では、レイヤーをtheme、globalの順番で適用する指示で、これによりthemeレイヤーよりもglobalレイヤーを優先するように設定します。次の行の `@import` で実際にテーマのCSSファイルを読み込んでいますが、このときに `layer(theme)` とすることにより、このCSSをthemeレイヤー内に読み込むようになります。
+
+### Markdownにスタイルを書き込む
+
+ドキュメント全体に適用するスタイル以外にも、個別に適用するスタイルについても検討します。例えば、特定の図のサイズだけ縮小したい、あるテキストだけ文字を大きくしたい、などのような状況です。
+
+これはとても単純な方法で解決することができます。単にMarkdownやMDXファイルの中に `<style>` タグを追加するだけです。
+
+```html
+<img src="/blog-placeholder-1.jpg" alt="小さな画像" class="small">
+
+<style>
+img.small {
+  …………
+}
+</style>
+```
+
+注意すべきなのは、これらのスタイルはAstroファイルのようにはスコープ化されない点です。このMarkdownを読み込むページの他の要素に間違えて適用されないよう、適切なセレクタを設定しましょう。
+
+さらに、個別に適用し、かつWebや出版物にのみ適用したいスタイルがある場合は、以下のように `@media` を使うことができます。
+
+```css
+/* 画面用(Webページ)にのみ適用 */
+@media screen {
+  img.small {
+    …………
+  }
+}
+/* 印刷用にのみ適用 */
+@media print {
+  img.small {
+    …………
+  }
+}
+```
+
+## WebページからVivliostyle Viewerを使う
+
+上記の編集の過程でAstroとVivliostyle CLI行ったり来たりするので、ときには煩わしく感じるかもしれません。そのようなときに、Vivliostyle CLIを使わずにVivliostyle Viewer単体で出版物をプレビューする方法を伝授します。
+
+<Anchor article="tbf15/50_cssでデザインする" secTitle="テーマを読み込む" />で少し紹介しましたが、Vivliostyle Viewerのnpm packageである `@vivliostyle/viewer` は、他のテーマファイルとともに `/modules/[...file].ts` で公開されています。実際に、Vivliostyle Viewerのエントリーポイント http://localhost:4321/modules/@vivliostyle/viewer/lib/index.html にアクセスすると、Vivliostyle Viewerの初期画面が表示されます。このURLに対して読み込ませたいページをURLハッシュで指定することで、Vivliostyle CLIを起動させずにVivliostyle Viewer上でプレビューできるのです。
+
+<figure>
+<img src="/pages/articles/tbf15/50_vivliostyle-viewer-in-astro.png" alt="Astroプロジェクトから見たVivliostyle Viewerのスクリーンショット"/>
+<figcaption aria-hidden="true">Astroプロジェクトから見たVivliostyle Viewerのスクリーンショット</figcaption>
+</figure>
+
+Vivliostyle Viewerに読み込ませるページを指定するには `#src=<URL>` の形式のハッシュパラメーターを追加します。例えば、http://localhost:4321/article/sample のプレビューを表示させる場合は http://localhost:4321/modules/@vivliostyle/viewer/lib/index.html#src=/article/sample とします。
+
+ただし、この機能で参照できるページはAstroプロジェクト内のファイルだけなので、例えばAstroプロジェクトとは別に `books/` に用意した原稿などは参照できません。また、この機能でプレビューするためのブラウザはVivliostyle CLIのものとは異なるため、実際のビルド時の結果とは異なります。プレビュー結果はあまり過信せず、あくまで参考として確認する程度にとどめてください。
+
+<style>{`
+figure > img {
+  max-inline-size: 80%;
+}
+`}</style>
+

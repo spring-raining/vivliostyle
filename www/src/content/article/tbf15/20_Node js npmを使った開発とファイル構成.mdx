@@ -1,0 +1,312 @@
+---
+title: Node.js/npmを使った開発とファイル構成
+pubDate: 2023-11-11
+order: 20
+theme:
+  - /modules/tbf15-theme/theme.css
+class: part right-side-start
+---
+
+import Anchor from '@/components/tbf15/Anchor.astro';
+import Column from '@/components/tbf15/Column.astro';
+import Footnote from '@/components/tbf15/Footnote.astro';
+import Point from '@/components/tbf15/Point.astro';
+import URL from '@/components/tbf15/URL.astro';
+
+# Node.js/npmを使った開発とファイル構成
+
+## 開発環境を用意する
+
+まずは、これから紹介する方法に必要な開発環境を整えるため、以下のソフトウェアをインストールしていきます。紙面の都合上、このドキュメントではWeb開発において一般的で、かつ基礎的な内容については必ずしも十分には紹介できていません。このドキュメントを読んで作業に詰まったときは、ぜひWebアプリケーション開発に関する他の資料も合わせて読み進めてください。
+
+#### VSCodeのインストール
+
+**VSCode**（Visual Studio Code）は、プログラミングのためのエディタです。実際にはどのようなエディタを使っても良いのですが、Astroファイルのシンタックスハイライト対応など様々な利点があるため本ドキュメントではVSCodeを推奨します。また、VSCode自体はソースコードを書くためのエディタですが、原稿自体の執筆にも使えます。
+
+<URL href="https://code.visualstudio.com/">VSCodeの公式サイト</URL>
+
+#### Gitのインストール
+
+もし **Git** がまだインストールされていなければインストールします。`git` コマンドが使えるようになればOKです。
+
+<URL href="https://git-scm.com/">Gitの公式サイト</URL>
+
+#### Node.js/npmのインストール
+
+AstroおよびVivliostyle CLI実行のために **Node.js** をインストールします。Node.jsのバージョンはAstroのサポート対象である18以上が必須ですが、最新の20の利用を推奨します。Node.jsをインストールすると、npmも自動でインストールされます。
+
+<URL href="https://nodejs.org/ja">Node.jsの公式サイト</URL>
+
+#### pnpmのインストール
+
+**pnpm** は、npmに似た後発のNode.js向けのパッケージマネージャーです。基本的な機能はnpmと変わりませんが、npmにはないいくつかの機能が含まれています。本来であればnpmとpnpmどちらを使っても問題ないのですが、今回は後述するpnpmのWorkspace機能が必須のため、pnpmをあらかじめインストールしておきます。
+
+<URL href="https://pnpm.io/ja/">pnpmの公式サイト</URL>
+
+#### プロジェクトテンプレートのセットアップ
+
+Node.jsおよびnpmをインストールすると、`npx` というコマンドが自動的に使えるようになります。以下のコマンドで今回作成するプロジェクトのテンプレートをセットアップしてください。`<your-project-name>` には好きなプロジェクト名を入れます。
+
+```
+npx degit spring-raining/hello-astro-vivliostyle <your-project-name>
+```
+
+<Point>
+
+<span slot="title">Point</span>
+
+ここでコマンドとは？ となった方は、これより先に進む前に、完璧に理解する必要はなくともコマンドライン（ターミナル）について予備知識を身につけることをおすすめします。おすすめの資料は、MDN Web Docsの「コマンドライン短期集中講座」です。
+
+</Point>
+
+<URL href="https://developer.mozilla.org/ja/docs/Learn/Tools_and_testing/Understanding_client-side_tools/Command_line">コマンドライン短期集中講座 - ウェブ開発を学ぶ | MDN</URL>
+
+これで `<your-project-name>` ディレクトリにプロジェクトのテンプレートが作成されます。さらに、以下のコマンドを実行して、プロジェクトに必要なライブラリをインストールします。
+
+```
+cd <your-project-name>
+pnpm i
+```
+
+ライブラリのインストールが完了し、`node_modules` というディレクトリが作成されていることを確認したら、どのようなファイルが作成されのかを見てみましょう。以下のコマンドを実行することで、プロジェクトをVSCodeで開くことができます。
+
+```
+code .
+```
+
+## プロジェクトテンプレートの構成
+
+プロジェクトテンプレートには、以下のようなファイルが含まれています。
+
+```
+hello-astro-vivliostyle
+├── README.md
+├── books
+│   └── my-first-book
+│       ├── cover.jpg
+│       ├── manuscript
+│       │   ├── 01_maegaki.md
+│       │   └── 99_atogaki.md
+│       ├── package.json
+│       └── vivliostyle.config.js
+├── package.json
+├── pnpm-lock.yaml
+├── pnpm-workspace.yaml
+├── themes
+│   └── my-book-theme
+│       ├── package.json
+│       └── theme.css
+├── turbo.json
+└── www
+    ├── README.md
+    ├── astro.config.js
+    ├── package.json
+    ├── plugins
+    ├── public
+    ├── src
+    └── tsconfig.json
+```
+
+大きく3つのディレクトリがあり、それぞれ以下の役割で分類しています。
+
+- `books/`: 出版物を管理するディレクトリです。テンプレートには、`my-first-book` という名前の出版物が1つあります。
+- `themes/`: Vivliostyle Themeを管理するディレクトリです。テンプレートには、`my-book-theme` という名前のテーマが1つあります。
+- `www/`: Webページを管理するディレクトリです。このディレクトリの中には、Astroのプロジェクトファイルが含まれています。
+
+### pnpm workspace機能によるMonorepo構成
+
+このプロジェクトには色々と説明する点がありますが、まずは `package.json` というファイルについて注目します。このファイルは、Node.jsにおいてそのパッケージ（アプリケーションの一つの単位）に関する情報を記述した設定ファイルです。このファイルはJSON形式で書かれており、そのパッケージの名前やバージョン、必要な依存ライブラリなどの情報が含まれています。基本的には、パッケージ一つに対して `package.json` を一つ用意する必要があります。
+
+<div class="break-before-page" />
+
+ところが、今回のプロジェクトの構成を見てみると、 `package.json` が4つ用意されていることがわかります。つまり、このプロジェクトには4つ
+<Footnote>厳密には `hello-astro-vivliostyle` は他の3つのパッケージを管理するための設定ファイルのため、実態は3つと言えます。</Footnote>
+のパッケージが含まれており、それぞれ `hello-astro-vivliostyle`、 `my-first-book`、 `my-book-theme`、 `www` という名前のパッケージです。このようなプロジェクト構成は **Monorepo** と呼ばれています。
+<Footnote>ただし、Webフロントエンド開発におけるMonorepoの定義は他の分野とはやや異なるため、ドキュメントを読む際には注意してください。</Footnote>
+
+Monorepoでは、同じプロジェクト内のあるパッケージについて、他のパッケージから参照できる機能があります。各 `package.json` の `dependencies` には、以下のように他のパッケージを参照する記述があります。
+
+```json books/my-first-book/package.json
+"dependencies": {
+  "my-book-theme": "*",
+  "www": "*"
+}
+```
+
+この設定により、`node_modules` の中に他のパッケージを参照するリンクが作成されます。3つのパッケージは、それぞれ以下のように参照でつながっています。
+
+![3つのパッケージの参照関係を表した図。my-first-book、my-book-theme、wwwと書かれた3つのノードがあり、my-first-bookはwwwとmy-book-themeを、wwwはmy-book-themeをそれぞれ矢印で参照している。](/pages/articles/tbf15/20_dependency-tree-diagram.svg)
+
+pnpmの場合、Monorepoのパッケージの設定は `pnpm-workspace.yaml` に記述します。
+
+```yaml pnpm-workspace.yaml
+packages:
+  - books/*
+  - themes/*
+  - www
+```
+
+この設定では、
+
+- `books/` ディレクトリにある全てのディレクトリ
+- `themes/` ディレクトリにある全てのディレクトリ
+- `www` ディレクトリ
+
+をMonorepoのパッケージとみなし、`pnpm i` コマンドを実行したタイミングで各パッケージのdependenciesの情報からパッケージ間の参照関係を構築します。
+
+今回プロジェクトテンプレートとしてMonorepo構成を採用した理由は、異なる役割を持つパッケージを分割して管理するためです。3つのパッケージはそれぞれ「出版物の管理」「出版物のテーマファイルの管理」「Webサイトの管理」という役割を持っています。それぞれの役割を全て一つのパッケージで管理することも可能ですが、必ずしもそれが良いこととは限りません。今回のようにAstroとVivliostyle CLIという2つのビルドシステムが混在するケースでは、パッケージという単位で分離できる方が都合が良いのです。
+
+<Column>
+
+<span slot="title">booksとthemesを分割する理由</span>
+
+このプロジェクトテンプレートでは、Webページを管理するディレクトリは `www` という名前の1つしか用意されていないのに対し、出版物を管理するディレクトリは `my-first-book` というように `books/` 以下に複数作れるようになっています。また、Vivliostyle Themesファイルも出版物を管理するディレクトリではなく、あえて `themes/` というディレクトリを用意してその中に分離するようになっています。この理由について疑問に感じる人も多いかと思います。
+
+私がこのようなファイル構成にしたのは、Webページと出版物の特性の違いを考慮したためです。出版物は一度完成したらもうそのコンテンツは更新される機会がないと思われがちですが、実際にはそのコンテンツを一度きりしか使わないとは限らず、複数作成する機会があります。例えば、デザインや紙面のレイアウトを変えたり、コンテンツを追加したり並び替えたりして増訂版として再利用する、ということが考えられます。
+
+一方で、Webページは出版物よりもずっと短い期間で内容が更新されます。出版物の「スナップショット」としての考え方よりも、同じWebサイトを継続的に変更していくという点で異なる考え方を持っています。同様に、出版物の内容自体とデザイン（Vivliostyle Theme）も分離して管理することが考えられます。つまり、同じデザインを使用して新しい出版物を作ったり、コンテンツ自体を維持したまま異なるデザインに差し替えるということです。
+
+ただ、`books` `themes` `www` の3つに分割するパラダイムも全ての要件において最適とは限りません。Workspace機能を使えば、これ以外にもあなたの要件により適したプロジェクト構成が作れるでしょう。
+
+</Column>
+
+### books: 出版物を管理
+
+まずは、 `books/my-first-book` ディレクトリの内容を見てみます。この中には `vivliostyle.config.js` という設定ファイルがあり、以下のような内容になっているはずです。
+
+```js books/my-first-book/vivliostyle.config.js
+/** @type {import('@vivliostyle/cli').VivliostyleConfigSchema} */
+export default {
+  title: '私の最初の本',
+  author: '名無しの権兵衛',
+  language: 'ja',
+  size: 'A4',
+  theme: [
+    '../../themes/my-book-theme/node_modules/@vivliostyle/theme-base',
+    '../../themes/my-book-theme',
+  ],
+  entry: ['manuscript/01_maegaki.md', 'manuscript/99_atogaki.md'],
+  output: ['./book.pdf'],
+  workspaceDir: '.vivliostyle',
+  toc: true,
+  cover: 'cover.jpg',
+  copyAsset: {
+    includes: ['node_modules/www/dist'],
+    excludes: ['node_modules/www/dist/article'],
+  },
+};
+```
+
+このファイルの内容を元に、Vivliostyle CLIは出版物を生成します。設定ファイルについては、<Anchor article="tbf15/40_出版物として出力する" secTitle="vivliostyle.config.jsを使った設定" />で改めて詳しく解説します。
+
+### themes: 出版物のテーマファイルを管理
+
+`themes/my-book-theme` ディレクトリの中には、my-book-themeという名前のVivliostyle Themeが含まれています。Vivliostyle Themeは、Vivliostyle CLIで管理している出版物に対してデザインを適用するテーマファイルのことで、その実態はスタイルを定義するCSSファイルと、テーマファイル自体の設定ファイルです。
+
+後者の設定は、`package.json` にあります。このファイルの中には、
+
+```json themes/my-book-theme/package.json
+{
+  "vivliostyle": {
+    "theme": {
+      "name": "my-book-tyeme",
+      "author": "",
+      "style": "./theme.css",
+      "category": "misc",
+      "topics": []
+    }
+  }
+}
+```
+
+といったようにテーマファイルに関する設定が書かれており、この例では `theme.css` ファイルがスタイルファイルであることが指定されています。 `theme.css` の中には、
+
+```css themes/my-book-theme/theme.css
+@import url(https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700);
+@import url(../@vivliostyle/theme-base/theme-all.css);
+
+:root {
+  --vs-font-family: 'Noto Sans JP', sans-serif;
+  --vs-color-body: darkblue;
+}
+```
+
+のようにあらかじめ短いスタイルシートを用意しています。このテーマをカスタマイズする方法は、<Anchor article="tbf15/50_cssでデザインする" secTitle="@vivliostyle/theme-baseを使ったCSSテーマ" />で紹介します。
+
+### www: Webサイトを管理
+
+`www` ディレクトリの中には、Webサイトを管理するためのAstroプロジェクトが用意されています。このディレクトリの中には、さらに以下のようなファイルが含まれています。
+
+```
+www
+├── README.md
+├── astro.config.js
+├── package.json
+├── plugins
+│   ├── _modules
+│   └── watch-module-files.ts
+├── public
+├── src
+│   ├── components
+│   │   ├── BaseHead.astro
+│   │   └── FormattedDate.astro
+│   ├── consts.ts
+│   ├── content
+│   │   ├── article
+│   │   │   └── sample.md
+│   │   └── config.ts
+│   ├── env.d.ts
+│   ├── layouts
+│   │   └── ArticlePage.astro
+│   ├── pages
+│   │   ├── article
+│   │   │   ├── [...slug].astro
+│   │   │   └── index.astro
+│   │   ├── index.astro
+│   │   └── modules
+│   │       └── [...file].ts
+│   └── styles
+│       └── global.css
+└── tsconfig.json
+```
+
+全てを紹介すると冗長になってしまうため、ここでは注目すべき点に絞って解説します。ぜひAstroの公式ドキュメントも参考にしてください。
+
+<URL href="https://docs.astro.build/ja/">Astroの公式ドキュメント</URL>
+
+`astro.config.js` はAstroプロジェクトに関する設定を記述します。テンプレートでは以下のようになっています。
+
+```js www/astro.config.js
+import mdx from '@astrojs/mdx';
+import relativeLinks from 'astro-relative-links';
+import { defineConfig } from 'astro/config';
+import { watchModuleFiles } from './plugins/watch-module-files';
+
+// https://astro.build/config
+export default defineConfig({
+  site: 'https://example.com',
+  integrations: [mdx(), relativeLinks(), watchModuleFiles()],
+  markdown: {
+    syntaxHighlight: 'prism',
+  },
+});
+
+```
+
+- `site` はWebサイトを公開する際のドメインです。テンプレートでは `https://example.com` になっていますが、公開時のドメインに応じて変更してください。
+- `integration` にはIntegrationと呼ばれるプラグインを設定します。テンプレートでは `@astrojs/mdx` というIntegrationを追加して、MDXファイルの読み込みに対応します。MDXファイルについては、<Anchor article="tbf15/30_原稿を書く" secTitle="MDXで執筆する" />で改めて紹介します。また、出版物向けのHTMLを出力する際に相対パスによるリンクに対応するための `astro-relative-links`、プロジェクトのファイルの編集状況を監視するための `./plugins/watch-module-files` プラグインを追加しています。
+- `markdown` はAstroで使用するMarkdownコンパイラについての設定で、テンプレートではシンタックスハイライトに使用するライブラリをデフォルトの `shiki` から `prism` に変更しています。これは、Vivliostyle ThemeとVFMで公式に採用しているシンタックスハイライトライブラリがPrismのためで、Vivliostyle Themeを利用する際に互換性を維持するため変更しています。<Footnote>シンタックスハイライトライブラリの設定はオプションです。実際にこのドキュメントではPrismではなくShikiを使用しているため、状況に応じて使い分けてください。</Footnote>
+
+Astroはファイルベースのルーティング機能が備わっており、 `src/pages/` ディレクトリ以下に置いたディレクトリやファイルの名前に応じて自動的にページが作られます。今回の例の場合、このディレクトリの中には3つのAstroファイルがありますが、それぞれが
+
+- `https://example.com` → `src/pages/index.astro` ファイルの結果を表示
+- `https://example.com/article` → `src/pages/article/index.astro` ファイルの結果を表示
+- `https://example.com/article/…` → `src/pages/article/[...slug].astro` ファイルの結果を表示（`…` の部分は任意のパス名）
+
+というように自動的にページが作られるのです。
+
+また、ここでもう一つ紹介しておくべき重要なディレクトリは `src/content/` です。これはAstroの **Content Collections** 機能のためのもので、このディレクトリでコンテンツを一元的に管理します。一般的には、例えばブログ記事のようなWebサイトに必要なコンテンツを管理するものですが、今回紹介する方法ではここに出版物の原稿も含まれます。よって、これから書く出版物の原稿も大部分はこのディレクトリの中に保存していきます。
+
+<URL href="https://docs.astro.build/ja/guides/content-collections/">Content Collectionsの紹介</URL>
+
+他にも紹介していないファイルがありますが、それらについては必要になったタイミングで解説します。まずは色々なファイルを編集してみるところから始めましょう。

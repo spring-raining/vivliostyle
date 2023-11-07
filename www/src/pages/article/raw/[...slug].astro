@@ -1,0 +1,23 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+import ArticlePage from '@/layouts/ArticlePage.astro';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('article');
+  return articles.map((article, i) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
+interface Props {
+  article: CollectionEntry<'article'>;
+}
+
+const { article } = Astro.props;
+const { Content } = await article.render();
+---
+
+<ArticlePage {...article.data} frontmatter={article.data} isRaw>
+  <Content />
+</ArticlePage>

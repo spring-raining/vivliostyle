@@ -1,0 +1,178 @@
+---
+title: 出版物として出力する
+pubDate: 2023-11-11
+order: 40
+theme:
+  - /modules/tbf15-theme/theme.css
+class: part left-side-start
+---
+
+import Anchor from '@/components/tbf15/Anchor.astro';
+import Column from '@/components/tbf15/Column.astro';
+import Footnote from '@/components/tbf15/Footnote.astro';
+import Point from '@/components/tbf15/Point.astro';
+import URL from '@/components/tbf15/URL.astro';
+
+# 出版物として出力する
+
+原稿執筆に使うAstroやContent Collectionに関する長い解説が終わり、ようやく出版物のための作業に取り掛かります。前章の内容が多かったため、ここまでの時点でうんざりと感じているかもしれません。しかし、実際のコンテンツの制作手順自体はすでに理解しているはずです。
+
+この章では、すでにあるコンテンツに対して、出版物としての体裁を整えるための調整などの設定作業が中心となります。この作業のために必要の時間はそれほど多くないので、ぜひ気負わすに読んでみてください。
+
+## vivliostyle.config.jsを使った設定
+
+テンプレートに作成されている `vivliostyle.config.js` は、以下のような内容になっていることはすでに紹介しました。
+
+```js books/my-first-book/vivliostyle.config.js
+/** @type {import('@vivliostyle/cli').VivliostyleConfigSchema} */
+export default {
+  title: '私の最初の本',
+  author: '名無しの権兵衛',
+  language: 'ja',
+  size: 'A4',
+  theme: [
+    '../../themes/my-book-theme/node_modules/@vivliostyle/theme-base',
+    '../../themes/my-book-theme',
+  ],
+  entry: ['manuscript/01_maegaki.md', 'manuscript/99_atogaki.md'],
+  output: ['./book.pdf'],
+  workspaceDir: '.vivliostyle',
+  toc: true,
+  cover: 'cover.jpg',
+  copyAsset: {
+    includes: ['node_modules/www/dist'],
+    excludes: ['node_modules/www/dist/article'],
+  },
+};
+```
+
+主な設定について詳しく見ていきます。
+
+`entry` は、出版物の出力時に読みこむ原稿ファイルを指定しています。この例ではまえがき（ `manuscript/01_maegaki.md` ）とあとがき（ `manuscript/99_atogaki.md` ）の2つがすでに用意されています。
+
+`output` は、出力する出版物の保存場所を指定します。ここではPDF形式で `book.pdf` ファイルを保存するよう指定しています。
+
+`theme` は、出版物のスタイルを定義するVivliostyle Themeを指定します。ここでは、テンプレートにすでに用意されている `../../themes/my-book-theme` 以外に、 `../../themes/my-book-theme/node_modules/@vivliostyle/theme-base` が指定されているのがわかります。これは、Vivliostyle CLIのテーマファイルのインストールロジックが、Monorepoでのパッケージインストールに十分に対応できていないための技術的な制約によるものです。こちらの設定は本来であれば必要ないのですが、依存する他のVivliostyle Themeを明示的に指定することで問題を解決しています。
+
+さらに、`copyAsset` では出版物のビルド時に使用するアセットファイルについて、どのファイルをコピーするかを指定します。実は、Webと出版物のハイブリッド開発を実現する上で、この設定には重要な役割があります。
+
+もう一度 `books/my-first-books` のディレクトリの中身を見てみましょう。 `pnpm i` を実行した後では、このディレクトリに `node_modules` というディレクトリが作られ、その中に `my-book-theme` と `www` ディレクトリが作られているはずです。全体の構造としては以下のような状態です。
+
+```
+.
+├── books
+│   └── my-first-book
+│       ├── manuscript
+│       └── node_modules
+│           ├── my-book-theme -> ../../../themes/my-book-theme
+│           └── www -> ../../../www
+├── themes
+│   └── my-book-theme
+└── www
+    └── node_modules
+        └── my-book-theme -> ../../themes/my-book-theme
+```
+
+ここで、`->` で示されたディレクトリは **シンボリックリンク** です。シンボリックリンクとはショートカットやエイリアスとも呼ばれるもので、別の場所にあるファイルやディレクトリを参照するための仮想的なファイル・ディレクトリのことです。つまり、 `www` の中で編集したファイルは `books/my-first-book/node_modules/www` にも反映され、 `themes/my-book-theme` の中で編集したファイルは `books/my-first-book/node_modules/my-book-theme` に反映されるということです。そのため、上記の `copyAsset` オプションで `node_modules/www/dist` のディレクトリをアセットファイルに指定した設定は、そのままシンボリックの向き先である `www/dist` ディレクトリをアセットファイルに指定したことと同じになります。
+
+<Anchor article="tbf15/30_原稿を書く" secTitle="Webページをビルドする" />で紹介した通り、 `www/dist` にはAstroでビルドしたWebページのためのファイルが保存されています。 `copyAsset` の設定により、これらのファイルは全て出版物にも含めることができます。この仕組みを理解するために、 `www/dist` に生成されたファイルを出版物に利用してみます。
+
+## 出版物にWebページを埋め込む
+
+それでは、Astroに代わってVivliostyle CLIを使った出版物の編集を始めます。コマンドライン上で `books/my-first-book` ディレクトリに移動し、`pnpm preview` コマンドを実行します。すると、ブラウザが起動し、Vivliostyle Viewer上にこの出版物のプレビューが現れます。
+
+<figure>
+<img src="/pages/articles/tbf15/40_first-book-preview.png" alt="プレビューブラウザのスクリーンショット"/>
+<figcaption aria-hidden="true">プレビューブラウザのスクリーンショット</figcaption>
+</figure>
+
+最初の状態では、表紙ページ、目次、まえがき、あとがきの4ページで構成されているはずです。ここに、Webページとしてビルドした `article/sample/index.html` のページを埋め込んでみます。 `vivliostyle.config.js` の `entry` に、以下のようにHTMLファイルを指定する項目を一つ追加してください。
+
+```js books/my-first-book/vivliostyle.config.js
+export default {
+  …………
+  entry: [
+    'manuscript/01_maegaki.md',
+    'node_modules/www/dist/article/sample/index.html',
+    'manuscript/99_atogaki.md',
+  ],
+  …………
+};
+```
+
+すると、再読み込みの後プレビューの内容が更新されます。（更新されない場合はCtrlボタンとCボタンの同時押しで一度プレビューを終了して、もう一度 `pnpm preview` を実行してください）更新後プレビューに表示される出版物には、まえがきとあとがきの間に先ほど作ったWebページの内容が埋め込まれているはずです。
+
+<figure>
+<img src="/pages/articles/tbf15/40_original-content-preview.png" alt="先ほど作られたWebページが出版物に埋め込まれた様子"/>
+<figcaption aria-hidden="true">先ほど作られたWebページが出版物に埋め込まれた様子</figcaption>
+</figure>
+
+Webと出版物を同時に編集できる原理はこれだけです！ CSS組版ツールであるVivliostyleがHTMLファイルを原稿として指定できること、またAstroが複雑なWebページをJavaScriptを含まないHTMLにビルドできること、2つの仕組みが実現してこそ、この驚くほどシンプルなワークフローが成り立っているのです。
+
+## 出版物専用のページを用意する
+
+さて、出版物にWebページの内容を組み合わせることまではできましたが、このままではWebページのスタイルまでもが出版物に反映され、まえがきやあとがきのページとスタイルが合っていない状態です。この状態から、他のページのスタイルと揃えようと思います。
+
+Webと出版物のスタイルの分離は、今あるコンテンツ表示のためのWebページの他に、Vivliostyleに読み込ませるための専用のページを別に用意することで解決します。専用のページのパスは何でも良いのですが、ここでは以下のページとします
+
+- `/article/[...slug]` ：コンテンツ表示のためのページ
+- `/article/raw/[...slug]` ：出版物のためのページ
+
+まず、 `www/src/pages/article` ディレクトリに `raw` という名前のディレクトリを作成し、同じディレクトリにある `[...slug].astro` ファイルを `raw` ディレクトリの中にコピーします。これで、ひとまず出版物のためのページができたので、http://localhost:4321/article/sample にあるページと同じ内容のページが http://localhost:4321/article/raw/sample にも表示されているはずです。
+
+ここから、今適用されているWebページ向けのスタイルを取り除いていきます。 `www/src/pages/article/raw/[...slug].astro` ファイルのコンポーネントテンプレートから、 `ArticlePage` コンポーネントを取り除いて以下のように修正します。（ `charset="utf-8"` はHTMLの文字化け回避に必要です）
+
+```astro www/src/pages/article/raw/[...slug].astro
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+  </head>
+  <body>
+    <Content />
+  </body>
+</html>
+```
+
+すると、http://localhost:4321/article/raw/sample のページは全くスタイルが適用されていない状態になりました。これが出版物のためのページになります。
+
+もう一度 `www` ディレクトリ上で `pnpm build` を実行すると、 `www/dist` に出版物用のページのHTMLファイルが作成されます。作成したらまた `books/my-first-book` に戻り、設定ファイルの `entry` を書き換えます。
+
+```js books/my-first-book/vivliostyle.config.js
+export default {
+  …………
+  entry: [
+    'manuscript/01_maegaki.md',
+    'node_modules/www/dist/article/raw/sample/index.html',
+    'manuscript/99_atogaki.md',
+  ],
+  …………
+};
+```
+
+プレビューを起動すると、先程とは異なり、まえがきやあとがきと同じスタイルが作成したコンテンツに適用されていることがわかります。これで出版物の出力準備は完了です。
+
+<figure>
+<img src="/pages/articles/tbf15/40_styled-content-preview.png" alt="my-book-themeが適用されたコンテンツが出版物に追加された様子"/>
+<figcaption aria-hidden="true">my-book-themeが適用されたコンテンツが出版物に追加された様子</figcaption>
+</figure>
+
+## 出版物をビルドする
+
+最後に、現時点の内容で出版物をビルドしてみます。 `books/my-first-book` ディレクトリ上で `pnpm build` コマンドを実行することで、PDFファイル `book.pdf` が作成されます。
+
+<figure>
+<img src="/pages/articles/tbf15/40_a-screenshot-of-book-output.png" alt="生成されたPDFのスクリーンショット"/>
+<figcaption aria-hidden="true">生成されたPDFのスクリーンショット</figcaption>
+</figure>
+
+以上が出版物ビルドまでの作業の全てです。この後は、Webページとして作成したコンテンツを `entry` に追加していき、出版物を完成させましょう。`vivliostyle.config.js` には `entry` 以外にも様々な設定ができるので、ドキュメントを参考に書き換えてみてください。
+
+<URL href="https://docs.vivliostyle.org/#/ja/vivliostyle-cli">Vivliostyle CLI ドキュメントページ</URL>
+
+<style>{`
+figure > img {
+  max-inline-size: 80%;
+}
+`}</style>
+

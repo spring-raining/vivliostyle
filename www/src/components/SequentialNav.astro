@@ -1,0 +1,47 @@
+---
+interface LinkProp {
+  href: string;
+  title: string;
+}
+interface Props {
+  prev?: LinkProp;
+  next?: LinkProp;
+}
+
+const { prev, next } = Astro.props;
+---
+
+<aside class="sequential-nav">
+  {
+    prev && (
+      <a class="link prev" href={prev.href}>
+        {prev.title}
+      </a>
+    )
+  }
+  {
+    next && (
+      <a class="link next" href={next.href}>
+        {next.title}
+      </a>
+    )
+  }
+</aside>
+
+<style>
+  .sequential-nav {
+    display: grid;
+    grid-template: auto / 1fr 1fr;
+  }
+  .link {
+    padding: 4rem;
+    display: grid;
+    place-items: center;
+  }
+  .prev {
+    grid-template: 1 / 1;
+  }
+  .next {
+    grid-template: 2 / 1;
+  }
+</style>

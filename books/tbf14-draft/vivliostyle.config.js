@@ -15,20 +15,20 @@ module.exports = {
       theme: '../../themes/tbf14',
     },
     {
-      path: 'node_modules/www/dist/articles/grid-system/index.html',
+      path: 'node_modules/www/dist/article/grid-system/index.html',
     },
     {
-      path: 'node_modules/www/dist/articles/theme-photo-book/index.html',
+      path: 'node_modules/www/dist/article/theme-photo-book/index.html',
     },
     {
       path: 'node_modules/@spring-raining/vs-theme-photo-book/example/index.md',
       theme: ['../../themes/grid-system', '../../themes/photo-book'],
     },
     {
-      path: 'node_modules/www/dist/articles/eal-float-system/index.html',
+      path: 'node_modules/www/dist/article/eal-float-system/index.html',
     },
     {
-      path: 'node_modules/www/dist/articles/theme-eal-magazine/index.html',
+      path: 'node_modules/www/dist/article/theme-eal-magazine/index.html',
     },
     {
       path: 'node_modules/@spring-raining/vs-theme-eal-magazine/example/index.md',

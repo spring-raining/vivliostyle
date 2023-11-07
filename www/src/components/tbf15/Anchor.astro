@@ -1,0 +1,32 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getEntry } from 'astro:content';
+
+export interface Props {
+  article: CollectionEntry<'article'>['slug'];
+  secTitle?: string;
+}
+
+const { article, secTitle } = Astro.props;
+
+const content = await getEntry('article', Astro.props.article);
+if (!content) {
+  throw new Error(`Missing article: ${article}`);
+}
+const md = await content.render();
+const heading =
+  secTitle && md.headings.find((h) => h.text === Astro.props.secTitle);
+if (secTitle && !heading) {
+  throw new Error(`Missing secTitle: ${secTitle}`);
+}
+
+const href = new URL(`/article/raw/${content.slug}/index.html`, Astro.url);
+if (heading) {
+  href.hash = heading.slug;
+}
+const displayText = heading ? heading.text : content.data.title;
+---
+
+<a data-component="Anchor" data-ref="sec" href={`${href.pathname}${href.hash}`}>
+  <slot>{displayText}</slot>
+</a>

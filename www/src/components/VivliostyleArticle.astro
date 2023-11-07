@@ -1,4 +1,15 @@
+---
+export interface Props {
+  isRaw?: boolean;
+}
+
+const { isRaw } = Astro.props;
+---
+
 <div>
+  <div data-running-element="heading" aria-hidden="true">
+    <div></div>
+  </div>
   <article>
     <slot />
   </article>
@@ -6,6 +17,10 @@
 
 <style>
   @media screen {
+    [data-running-element='heading'] {
+      display: none;
+    }
+
     article {
       max-width: 48rem;
       margin: 1rem auto;

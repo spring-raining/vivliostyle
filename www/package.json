@@ -17,15 +17,23 @@
     "@spring-raining/vs-theme-eal-magazine": "workspace:*",
     "@spring-raining/vs-theme-grid-system": "workspace:*",
     "@spring-raining/vs-theme-photo-book": "workspace:*",
+    "@vivliostyle/theme-base": "1",
     "astro": "^3.4.3",
     "astro-relative-links": "^0.3.4",
     "tailwindcss": "^3.3.5",
-    "tbf14-theme": "workspace:*"
+    "tbf14-theme": "workspace:*",
+    "tbf15-theme": "workspace:*"
   },
   "devDependencies": {
     "@types/mime": "^3.0.1",
+    "@types/node": "^20.8.10",
+    "globby": "^13.2.2",
     "mime": "^3.0.0",
+    "pkg-dir": "^8.0.0",
+    "rehype-mdx-code-props": "^2.0.0",
     "slash": "^5.0.1",
-    "tiny-glob": "^0.2.9"
+    "tiny-glob": "^0.2.9",
+    "unist-util-visit": "^5.0.0",
+    "unist-util-visit-parents": "^6.0.1"
   }
 }

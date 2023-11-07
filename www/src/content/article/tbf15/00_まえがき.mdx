@@ -1,0 +1,37 @@
+---
+title: まえがき
+pubDate: 2023-11-11
+order: 0
+theme:
+  - /modules/tbf15-theme/theme.css
+---
+
+import Anchor from '@/components/tbf15/Anchor.astro';
+import Column from '@/components/tbf15/Column.astro';
+import Footnote from '@/components/tbf15/Footnote.astro';
+import Point from '@/components/tbf15/Point.astro';
+import URL from '@/components/tbf15/URL.astro';
+
+# まえがき
+
+はじめまして。私はspring-rainingというハンドルネームで活動しており、OSSの組版ソフトウェアVivliostyleのツール「Vivliostyle CLI」のメンテナーとして開発に携わっています。
+
+この本を書くことになったきっかけは、私が技術書典14にて頒布した技術同人誌『CSS組版をマスター！ Vivliostyle Themesレシピ集』の制作体験が始まりです。この本は、新しくなったVivliostyle Themesについて、その使い方やテーマファイルのサンプルを紹介することが目的でしたが、もう一つ裏の目的がありました。それは、「Web & 出版物 & Vivliostyle Themeの完全なワンソースの実現」です。
+
+VivliostyleはWeb技術をもとに成り立つ組版ソフトウェアなので、特にWeb開発の知識を持つ人にとっては非常に扱いやすいもののはずです。一方で、Vivliostyleは「組版」という異なる分野に特化したソフトウェアであるため、そのツールチェインは一般的なWeb技術のものとは若干異なり、結果としてWeb向けと出版物向けで原稿やツールが異なる二重管理になってしまうこともありました。2つの開発環境を共通化できれば、このような無駄は本来起こらないはずです。
+
+この開発環境の共通化には前々から挑戦していたものの、エコシステムの不十分さなどの理由で挫折していました。しかし、これまでよりも柔軟性の高いWebフレームワークAstroの登場により、解決の道筋が立ちました。『Vivliostyle Themesレシピ集』の制作は、Webと出版物の開発環境を共通化する試みでもありました。
+
+『AstroとVivliostyle CLIでWeb&出版物ハイブリッド開発』は、上記の開発環境を整備する上で考案したプロジェクト構成を中心に、順を追ってWebと出版物の同時制作について紹介していきます。次にVivliostyleを使って出版物を作るう予定があれば、ぜひ制作の参考にしてみてください。
+
+#### 免責事項
+
+本書の内容に関して、できるだけ正確な内容になるよう努めて書きましたが、その正確性は保証できません。本書に書かれた情報を利用することで生じた結果に対して、著者はいかなる責任も負いません。
+
+#### 本書の内容の公開について
+
+本書の制作に使用したファイルやソースコードは、本文データやCSSファイルなども含めて、GitHubの **spring-raining/vivliostyle** リポジトリにオープンソースとして公開しています。ぜひ本書の内容と見比べて、紙面デザインや実装の参考にしてください。
+
+<URL href="https://github.com/spring-raining/vivliostyle">spring-raining/vivliostyle</URL>
+
+また、本書の本文デザインは商業誌『[**Web技術で「本」が作れるCSS組版Vivliostyle入門**](https://www.amazon.co.jp/dp/4863544189)』（Vivliostyleの入門に超おすすめ！）の制作元でもある株式会社リブロワークス様（https://www.libroworks.co.jp/ ）のご協力により、本文デザインデータをリブロワークスにて制作していただいた上で、私がVivliostyle Themeとして実装するという形で実現しました。この場をお借りして御礼申し上げます。

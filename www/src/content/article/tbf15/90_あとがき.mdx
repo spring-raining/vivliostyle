@@ -1,0 +1,36 @@
+---
+title: あとがき
+pubDate: 2023-11-11
+order: 90
+theme:
+  - /modules/tbf15-theme/theme.css
+---
+
+import Anchor from '@/components/tbf15/Anchor.astro';
+import Column from '@/components/tbf15/Column.astro';
+import Footnote from '@/components/tbf15/Footnote.astro';
+import Point from '@/components/tbf15/Point.astro';
+import URL from '@/components/tbf15/URL.astro';
+import Colophon from '@/components/tbf15/Colophon.astro'
+
+# あとがき
+
+この本では、Webと出版物を同時に出力するためのアイディアについて紹介していきました。2つの環境を同時に扱う人にとって、ドキュメントの二重管理の煩雑さについては共感してもらえると思います。本書の内容およびhello-astro-vivliostyleテンプレートが、その課題を解決する手助けになれば幸いです。
+
+また、無事に原稿が完成し出版物の出力が完成したら、Webサイトも公開してみましょう。紙面（そして締切）の都合で、この本では実際のWebサイトのデプロイ方法についてまでは紹介することができませんでしたが、Astroでは様々な環境へのデプロイ方法が用意されています。
+
+<URL href="https://docs.astro.build/ja/guides/deploy/">Astroサイトのデプロイ 🚀 Astroドキュメント</URL>
+
+思い出してほしいのは、<Anchor article="tbf15/10_webと出版物のハイブリッド開発とは" secTitle="Astroを使う理由" />で紹介した通り、AstroはSSRモードを有効にしない限りデフォルトではMPAとしてビルドされる点です。これはつまり、`www/dist/` にあるファイルをWebサーバーにアップロードすれば公開が完了することを意味します。上記のドキュメントのデプロイ方法に限らず、あなたの要件に合った方法で公開してください。
+
+<Colophon
+  title="AstroとVivliostyle CLIでWeb&出版物ハイブリッド開発"
+  editions={[
+    {date: '2023-11-11', description: '初版発行'}
+  ]}
+  info={[
+    {key: '発行', value: 'Vivliostyleユーザー会'},
+    {key: '編集', value: 'spring-raining\nhttps://harusamex.com\nharusamex.com@gmail.com'},
+    {key: '本文デザイン', value: '横塚あかり（リブロワークス）'},
+  ]}
+  />

@@ -1,0 +1,20 @@
+---
+export interface Props {
+  href: string;
+}
+
+const { href } = Astro.props;
+---
+
+<cite data-component="URL">
+  <a href={href} target="_blank" rel="noopener noreferrer">
+    <div class="title">
+      <slot />
+    </div>
+    <div class="url">
+      <span class="url-text" aria-hidden="true">
+        {href}
+      </span>
+    </div>
+  </a>
+</cite>
