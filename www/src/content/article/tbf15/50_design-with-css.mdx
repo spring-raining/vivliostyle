@@ -316,7 +316,7 @@ img.small {
 
 上記の編集の過程でAstroとVivliostyle CLI行ったり来たりするので、ときには煩わしく感じるかもしれません。そのようなときに、Vivliostyle CLIを使わずにVivliostyle Viewer単体で出版物をプレビューする方法を伝授します。
 
-<Anchor article="tbf15/50_cssでデザインする" secTitle="テーマを読み込む" />で少し紹介しましたが、Vivliostyle Viewerのnpm packageである `@vivliostyle/viewer` は、他のテーマファイルとともに `/modules/[...file].ts` で公開されています。実際に、Vivliostyle Viewerのエントリーポイント http://localhost:4321/modules/@vivliostyle/viewer/lib/index.html にアクセスすると、Vivliostyle Viewerの初期画面が表示されます。このURLに対して読み込ませたいページをURLハッシュで指定することで、Vivliostyle CLIを起動させずにVivliostyle Viewer上でプレビューできるのです。
+<Anchor article="50" secTitle="テーマを読み込む" />で少し紹介しましたが、Vivliostyle Viewerのnpm packageである `@vivliostyle/viewer` は、他のテーマファイルとともに `/modules/[...file].ts` で公開されています。実際に、Vivliostyle Viewerのエントリーポイント http://localhost:4321/modules/@vivliostyle/viewer/lib/index.html にアクセスすると、Vivliostyle Viewerの初期画面が表示されます。このURLに対して読み込ませたいページをURLハッシュで指定することで、Vivliostyle CLIを起動させずにVivliostyle Viewer上でプレビューできるのです。
 
 <figure>
 <img src="/pages/articles/tbf15/50_vivliostyle-viewer-in-astro.png" alt="Astroプロジェクトから見たVivliostyle Viewerのスクリーンショット"/>

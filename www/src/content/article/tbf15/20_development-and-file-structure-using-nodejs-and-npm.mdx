@@ -197,7 +197,7 @@ export default {
 };
 ```
 
-このファイルの内容を元に、Vivliostyle CLIは出版物を生成します。設定ファイルについては、<Anchor article="tbf15/40_出版物として出力する" secTitle="vivliostyle.config.jsを使った設定" />で改めて詳しく解説します。
+このファイルの内容を元に、Vivliostyle CLIは出版物を生成します。設定ファイルについては、<Anchor article="40" secTitle="vivliostyle.config.jsを使った設定" />で改めて詳しく解説します。
 
 ### themes: 出版物のテーマファイルを管理
 
@@ -231,7 +231,7 @@ export default {
 }
 ```
 
-のようにあらかじめ短いスタイルシートを用意しています。このテーマをカスタマイズする方法は、<Anchor article="tbf15/50_cssでデザインする" secTitle="@vivliostyle/theme-baseを使ったCSSテーマ" />で紹介します。
+のようにあらかじめ短いスタイルシートを用意しています。このテーマをカスタマイズする方法は、<Anchor article="50" secTitle="@vivliostyle/theme-baseを使ったCSSテーマ" />で紹介します。
 
 ### www: Webサイトを管理
 
@@ -294,7 +294,7 @@ export default defineConfig({
 ```
 
 - `site` はWebサイトを公開する際のドメインです。テンプレートでは `https://example.com` になっていますが、公開時のドメインに応じて変更してください。
-- `integration` にはIntegrationと呼ばれるプラグインを設定します。テンプレートでは `@astrojs/mdx` というIntegrationを追加して、MDXファイルの読み込みに対応します。MDXファイルについては、<Anchor article="tbf15/30_原稿を書く" secTitle="MDXで執筆する" />で改めて紹介します。また、出版物向けのHTMLを出力する際に相対パスによるリンクに対応するための `astro-relative-links`、プロジェクトのファイルの編集状況を監視するための `./plugins/watch-module-files` プラグインを追加しています。
+- `integration` にはIntegrationと呼ばれるプラグインを設定します。テンプレートでは `@astrojs/mdx` というIntegrationを追加して、MDXファイルの読み込みに対応します。MDXファイルについては、<Anchor article="30" secTitle="MDXで執筆する" />で改めて紹介します。また、出版物向けのHTMLを出力する際に相対パスによるリンクに対応するための `astro-relative-links`、プロジェクトのファイルの編集状況を監視するための `./plugins/watch-module-files` プラグインを追加しています。
 - `markdown` はAstroで使用するMarkdownコンパイラについての設定で、テンプレートではシンタックスハイライトに使用するライブラリをデフォルトの `shiki` から `prism` に変更しています。これは、Vivliostyle ThemeとVFMで公式に採用しているシンタックスハイライトライブラリがPrismのためで、Vivliostyle Themeを利用する際に互換性を維持するため変更しています。<Footnote>シンタックスハイライトライブラリの設定はオプションです。実際にこのドキュメントではPrismではなくShikiを使用しているため、状況に応じて使い分けてください。</Footnote>
 
 Astroはファイルベースのルーティング機能が備わっており、 `src/pages/` ディレクトリ以下に置いたディレクトリやファイルの名前に応じて自動的にページが作られます。今回の例の場合、このディレクトリの中には3つのAstroファイルがありますが、それぞれが

@@ -56,7 +56,7 @@ npmにはユーザーがあらかじめ設定したスクリプトを実行す�
 
 というnpm scriptに関する設定があり、これにより `build` と `dev` 2つのスクリプトが用意されています。2つのスクリプトは、それぞれ `npm run build` `npm run dev` というコマンドで実行できます。
 
-このようにnpm scriptを実行するコマンドは、一般的には `npm run …` のように紹介されています。ただ、<Anchor article="tbf15/20_node-js-npmを使った開発とファイル構成" secTitle="開発環境を用意する" />でインストールしたpnpmでは、npm scriptを `pnpm …` と短縮して実行する機能が備わっているため、以降はこちらのコマンドで紹介しています。
+このようにnpm scriptを実行するコマンドは、一般的には `npm run …` のように紹介されています。ただ、<Anchor article="20" secTitle="開発環境を用意する" />でインストールしたpnpmでは、npm scriptを `pnpm …` と短縮して実行する機能が備わっているため、以降はこちらのコマンドで紹介しています。
 
 注意してほしいのは、上記のnpm scriptの設定は各 `package.json` ファイルごとに別々に設定されており、ターミナル上で今いるカレントディレクトリに応じて参照されるnpm scriptの設定が異なります。npm scirptの実行を指示する際は「〇〇のディレクトリで〜」という形でどのディレクトリで実行するかを指示しているため、コマンドの実行の際は注意してください。
 
@@ -88,7 +88,7 @@ Astroには編集した内容をリアルタイムで確認することができ
 
 ## AstroのContent Collecitonsにコンテンツを追加する
 
-それでは、実際に原稿を執筆していきましょう。<Anchor article="tbf15/30_原稿を書く" secTitle="Webと出版物、コンテンツの粒度の違い" />で最小単位のコンテンツはWebページであることを紹介しましたが、そのWebページの本体はAstroのContent Collectionとして保存します。では、Content Collectionにコンテンツを追加するにはどうすればよいでしょうか？
+それでは、実際に原稿を執筆していきましょう。<Anchor article="30" secTitle="Webと出版物、コンテンツの粒度の違い" />で最小単位のコンテンツはWebページであることを紹介しましたが、そのWebページの本体はAstroのContent Collectionとして保存します。では、Content Collectionにコンテンツを追加するにはどうすればよいでしょうか？
 
 テンプレートにはすでに一つコンテンツが追加されており、 `www/src/content/article/sample.md` というファイルで保存されています。このファイルの中身は以下のようになっています。
 
@@ -304,7 +304,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts';
 <Footnote>ここでは、 `@/` は `www/src/` ディレクトリへの参照の省略として機能しています。</Footnote>
 。 `BaseHead` はコンポーネントとして使うことができ、この例では `<head>` タグの中で使用しています。そして、BaseHeadの `title` プロパティとして `SITE_TITLE` を、 `description` プロパティとして `SITE_DESCRIPTION` を与えているという構成になっています。
 
-このように、AstroファイルのHTMLは、JavaScript部分で定義されたコンポーネントや変数を埋め込めるようになっています。埋め込みのための書式は、<Anchor article="tbf15/30_原稿を書く" secTitle="MDXで執筆する" />でも紹介したJSXというフォーマットから導入されたものです。本書に出てくる書式でわからないところが出てきた場合は、ドキュメントを読んでみましょう。
+このように、AstroファイルのHTMLは、JavaScript部分で定義されたコンポーネントや変数を埋め込めるようになっています。埋め込みのための書式は、<Anchor article="30" secTitle="MDXで執筆する" />でも紹介したJSXというフォーマットから導入されたものです。本書に出てくる書式でわからないところが出てきた場合は、ドキュメントを読んでみましょう。
 
 <URL href="https://docs.astro.build/ja/core-concepts/astro-syntax/">Astroの構文 🚀 Astroドキュメント</URL>
 
@@ -366,7 +366,7 @@ const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
 
 10行目では、 `Astro.url.pathname` と `Astro.site` から `canonicalURL` という変数を得ていることがわかります。11行目では、 `Astro.props` から参照できるコンポーネントのpropsを `title` `description` `image` という変数名で定義しています。（さらに、 `Astro.props` に `image` が含まれていなかった場合、自動的に `/blog-placeholder-1.jpg` を設定するように指定しています）
 
-ところで、このコンポーネントではCSSファイルをコンポーネントスクリプト内でインポートしていますが、コンポーネントテンプレート内で `<link rel="stylesheet" href="/styles/global.css" />` のように直接インポートしない理由について気になる方がいたかもしれません。この違いについては、<Anchor article="tbf15/50_cssでデザインする" secTitle="Web向けのCSSを編集する" />で詳しく紹介します。
+ところで、このコンポーネントではCSSファイルをコンポーネントスクリプト内でインポートしていますが、コンポーネントテンプレート内で `<link rel="stylesheet" href="/styles/global.css" />` のように直接インポートしない理由について気になる方がいたかもしれません。この違いについては、<Anchor article="50" secTitle="Web向けのCSSを編集する" />で詳しく紹介します。
 
 #### コンポーネントのpropsの受け渡し
 
@@ -428,7 +428,7 @@ const { Content } = await post.render();
 
 #### Markdownをページとして使う
 
-一つレイアウトコンポーネントの便利な使い方を紹介します。<Anchor article="tbf15/30_原稿を書く" secTitle="コンポーネントを使う・作る" />で紹介した通り、AstroではMarkdownファイルもコンポーネントの一種です。そのため、 `www/src/pages` にMarkdownファイルを置くと、その内容がそのままWebページになります。
+一つレイアウトコンポーネントの便利な使い方を紹介します。<Anchor article="30" secTitle="コンポーネントを使う・作る" />で紹介した通り、AstroではMarkdownファイルもコンポーネントの一種です。そのため、 `www/src/pages` にMarkdownファイルを置くと、その内容がそのままWebページになります。
 
 <figure>
 <img src="/pages/articles/tbf15/30_a-screenshot-of-plain-markdown.png" alt="www/src/pages/sample.mdにMarkdownファイルを置いたときの表示結果"/>
@@ -484,7 +484,7 @@ title: ごん狐
 
 - `www/src/pages/article/[...slug].astro` ：[http://localhost:4321/article/sample](http://localhost:4321/article/sample) のようなコンテンツ詳細ページ
 - `www/src/pages/article/index.astro`：[http://localhost:4321/article](http://localhost:4321/article) のようなコンテンツ一覧ページ
-- `www/src/pages/modules/[...file].ts`：外部npm package提供用のエンドポイント（<Anchor article="tbf15/50_cssでデザインする" secTitle="テーマを読み込む" />で改めて紹介します）
+- `www/src/pages/modules/[...file].ts`：外部npm package提供用のエンドポイント（<Anchor article="50" secTitle="テーマを読み込む" />で改めて紹介します）
 
 それぞれのページの内容は、Content Collectionで作成することはこれまでに紹介しました。この章では、Content Collectionの内容を参照してWebページとして表示する方法を紹介します。
 
@@ -509,7 +509,7 @@ const { Content } = await post.render();
 ```
 
 まず見るべき箇所は、 `getStaticPaths` です。Astroでは、動的ルーティング（ `[...slug]` のように、ファイル名に動的なパラメーターが含まれるページ）に対しては `getStaticPaths` という名前の関数を用意する必要があります
-<Footnote>AstroのSSRモードを有効にすると `getStaticPaths` は不要になりますが、それと同時にSSRモードではMPAとしてビルドすることができなくなるため、<Anchor article="tbf15/10_webと出版物のハイブリッド開発とは" secTitle="Astroを使う理由" />で述べた通りVivliostyleで読み込める形式でビルドするという目標が達成できなくなります。</Footnote>
+<Footnote>AstroのSSRモードを有効にすると `getStaticPaths` は不要になりますが、それと同時にSSRモードではMPAとしてビルドすることができなくなるため、<Anchor article="10" secTitle="Astroを使う理由" />で述べた通りVivliostyleで読み込める形式でビルドするという目標が達成できなくなります。</Footnote>
 。
 
 この関数の目的は、Astroが `/article/…` というページを生成するときに、 `…` の部分にどのようなパスが入る可能性があるかという情報を示すことです。例えば、 `/article/A`、`/article/B`、`/article/C` という3つのページを用意したいというケースの場合、 `article/[...slug].astro` というファイル名だけでは3つのページが必要だということが分かりません。そこで、
@@ -528,7 +528,7 @@ export async function getStaticPaths() {
 
 これを踏まえて、実際の関数を見てみます。この関数の中では、 `await getCollection('article')` の部分でarticleコレクションのすべての要素を取得しています。そして、その結果をmap関数で整形して `slug` の部分に取りうる値の一覧を返しています。この部分を詳しく読み解くにはJavaScriptの知識が必要ですが、この段階ではarticleコレクションの内容を全てページに変換できるようにしている、という理解で大丈夫です。
 
-`type Props = …` の部分は、<Anchor article="tbf15/30_原稿を書く" secTitle="コンポーネントを使う・作る" />でも紹介したコンポーネントのpropsの定義です。この部分で、 `getCollection` 関数で受け取ったデータをそのままpropsとして受け渡すことを定義しています。このpropsには `render` という関数が用意されており、この関数を `await post.render()` の部分で実行することで、コンテンツをレンダリングした結果を `Content` 変数として受け取っています。
+`type Props = …` の部分は、<Anchor article="30" secTitle="コンポーネントを使う・作る" />でも紹介したコンポーネントのpropsの定義です。この部分で、 `getCollection` 関数で受け取ったデータをそのままpropsとして受け渡すことを定義しています。このpropsには `render` という関数が用意されており、この関数を `await post.render()` の部分で実行することで、コンテンツをレンダリングした結果を `Content` 変数として受け取っています。
 
 以上の説明は、TypeScriptに馴染みのない人にとっては非常に難しく感じるであろうことは理解しています。単にContent Collectionを表示させるだけであれば、この内容を変える必要はほとんどないはずなので、ひとまずはスルーしてしまっても問題ないです。
 
@@ -568,7 +568,7 @@ const posts = (await getCollection('article')).sort(
 
 ### 別のコレクションを参照する
 
-ところで、<Anchor article="tbf15/30_原稿を書く" secTitle="コレクションを追加する" />ではarticleコレクション以外にauthorコレクションを追加しましたが、このコンテンツはまだWebページ上に表示されていません。あるコンテンツに関連付けられた別のコンテンツを参照する方法を考えます。
+ところで、<Anchor article="30" secTitle="コレクションを追加する" />ではarticleコレクション以外にauthorコレクションを追加しましたが、このコンテンツはまだWebページ上に表示されていません。あるコンテンツに関連付けられた別のコンテンツを参照する方法を考えます。
 
 コレクションの一覧ではなく単一のコンテンツを取得するには、 `getEntry` 関数を使います。
 

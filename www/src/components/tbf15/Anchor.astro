@@ -1,17 +1,21 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { getEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 
 export interface Props {
   article: CollectionEntry<'article'>['slug'];
   secTitle?: string;
 }
 
-const { article, secTitle } = Astro.props;
-
-const content = await getEntry('article', Astro.props.article);
+const { secTitle } = Astro.props;
+let target = new URL(Astro.params.slug || '', 'file://dummy/');
+target = new URL(Astro.props.article, target);
+const slug = decodeURI(target.pathname.replace(/^\//, ''));
+const content = (await getCollection('article')).find(
+  (e) => e.slug === slug || e.slug.replace(/_[^/]*$/g, '') === slug
+);
 if (!content) {
-  throw new Error(`Missing article: ${article}`);
+  throw new Error(`Missing article: ${slug}`);
 }
 const md = await content.render();
 const heading =
